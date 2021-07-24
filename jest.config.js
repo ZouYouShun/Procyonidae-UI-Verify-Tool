@@ -1,7 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/procyonidae',
-    '<rootDir>/apps/procyonidae-electron',
-    '<rootDir>/libs/rainbowfish',
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
