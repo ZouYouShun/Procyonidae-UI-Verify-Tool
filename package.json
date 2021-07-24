@@ -33,6 +33,7 @@
   },
   "private": true,
   "dependencies": {
+    "clsx": "^1.1.1",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "react": "17.0.2",
