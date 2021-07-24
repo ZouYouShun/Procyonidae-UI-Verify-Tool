@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Rainbowfish from './rainbowfish';
+import SearchBar from './search-bar';
 
-describe('Rainbowfish', () => {
+describe('SearchBar', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Rainbowfish />);
+    const { baseElement } = render(<SearchBar />);
     expect(baseElement).toBeTruthy();
   });
 });
