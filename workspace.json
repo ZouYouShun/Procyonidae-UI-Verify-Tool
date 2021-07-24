@@ -8,7 +8,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/procyonidae",
             "index": "apps/procyonidae/src/index.html",
@@ -19,7 +21,9 @@
               "apps/procyonidae/src/favicon.ico",
               "apps/procyonidae/src/assets"
             ],
-            "styles": ["apps/procyonidae/src/styles.scss"],
+            "styles": [
+              "apps/procyonidae/src/styles.scss"
+            ],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -64,12 +68,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/procyonidae/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/procyonidae/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/procyonidae"],
+          "outputs": [
+            "coverage/apps/procyonidae"
+          ],
           "options": {
             "jestConfig": "apps/procyonidae/jest.config.js",
             "passWithNoTests": true
@@ -98,7 +106,82 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/procyonidae-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/procyonidae-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "procyonidae-electron": {
+      "root": "apps/procyonidae-electron",
+      "sourceRoot": "apps/procyonidae-electron/src",
+      "projectType": "application",
+      "prefix": "procyonidae-electron",
+      "targets": {
+        "build": {
+          "executor": "nx-electron:build",
+          "options": {
+            "outputPath": "dist/apps/procyonidae-electron",
+            "main": "apps/procyonidae-electron/src/main.ts",
+            "tsConfig": "apps/procyonidae-electron/tsconfig.app.json",
+            "assets": [
+              "apps/procyonidae-electron/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/procyonidae-electron/src/environments/environment.ts",
+                  "with": "apps/procyonidae-electron/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "nx-electron:execute",
+          "options": {
+            "buildTarget": "procyonidae-electron:build"
+          }
+        },
+        "package": {
+          "executor": "nx-electron:package",
+          "options": {
+            "name": "procyonidae-electron",
+            "frontendProject": "procyonidae",
+            "outputPath": "dist/packages",
+            "prepackageOnly": true
+          }
+        },
+        "make": {
+          "executor": "nx-electron:make",
+          "options": {
+            "name": "procyonidae-electron",
+            "frontendProject": "procyonidae",
+            "outputPath": "dist/executables"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/procyonidae-electron/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/procyonidae-electron"
+          ],
+          "options": {
+            "jestConfig": "apps/procyonidae-electron/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

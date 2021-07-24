@@ -2,6 +2,12 @@
 
 A tool for easy use with UI verify, like https://nimbusweb.me.
 
+## Run app
+
+```bash
+npm start
+```
+
 ## Features
 
 1. [ ] screenshot
@@ -101,3 +107,7 @@ https://egghead.io/lessons/javascript-create-a-new-empty-nx-workspace
 ## Reactant
 
 https://reactant.js.org/docs/using-create-react-app
+
+## Nx Electron
+
+nx g nx-electron:app procyonidae-electron --frontendProject=procyonidae

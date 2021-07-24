@@ -1,3 +1,6 @@
 module.exports = {
-  projects: ['<rootDir>/apps/procyonidae'],
+  projects: [
+    '<rootDir>/apps/procyonidae',
+    '<rootDir>/apps/procyonidae-electron',
+  ],
 };
