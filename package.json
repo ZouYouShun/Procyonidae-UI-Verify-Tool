@@ -8,6 +8,8 @@
     "start-web": "nx serve",
     "build": "nx build",
     "build-electron": "nx run-many --target=build --projects=procyonidae,procyonidae-electron --parallel",
+    "webpack-analyzer:analyze:web:prod": "nx run procyonidae:build --prod --stats-json",
+    "analyzer": "webpack-bundle-analyzer dist/apps/procyonidae/stats.json",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
@@ -83,6 +85,7 @@
     "tailwindcss": "^2.2.7",
     "ts-jest": "27.0.3",
     "ts-node": "~9.1.1",
-    "typescript": "~4.2.4"
+    "typescript": "~4.2.4",
+    "webpack-bundle-analyzer": "^4.4.2"
   }
 }
