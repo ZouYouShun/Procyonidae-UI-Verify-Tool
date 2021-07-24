@@ -1,7 +1,7 @@
-const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind');
+const { join } = require('path');
 
 module.exports = {
-  purge: createGlobPatternsForDependencies(__dirname),
+  purge: [join(__dirname, 'src/**/*.{js,ts,jsx,tsx}')],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
