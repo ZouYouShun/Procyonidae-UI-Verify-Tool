@@ -104,10 +104,17 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 https://egghead.io/lessons/javascript-create-a-new-empty-nx-workspace
 
-## Reactant
-
-https://reactant.js.org/docs/using-create-react-app
-
 ## Nx Electron
 
 nx g nx-electron:app procyonidae-electron --frontendProject=procyonidae
+
+## State management 
+
+https://github.com/pmndrs/zustand
+
+## UI animation
+
+https://www.framer.com/docs/introduction/
+
+## Style with TailWinds
+https://tailwindcss.com/
