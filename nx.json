@@ -1,22 +1,44 @@
 {
   "npmScope": "procyonidae",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
   "targetDependencies": {
-    "build": [{ "target": "build", "projects": "dependencies" }]
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   },
   "projects": {
-    "procyonidae": { "tags": [] },
-    "procyonidae-e2e": { "tags": [], "implicitDependencies": ["procyonidae"] },
-    "procyonidae-electron": { "tags": [] }
+    "procyonidae": {
+      "tags": []
+    },
+    "procyonidae-e2e": {
+      "tags": [],
+      "implicitDependencies": ["procyonidae"]
+    },
+    "procyonidae-electron": {
+      "tags": []
+    },
+    "rainbowfish": {
+      "tags": []
+    }
   }
 }

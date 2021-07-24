@@ -8,9 +8,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/procyonidae",
             "index": "apps/procyonidae/src/index.html",
@@ -21,9 +19,7 @@
               "apps/procyonidae/src/favicon.ico",
               "apps/procyonidae/src/assets"
             ],
-            "styles": [
-              "apps/procyonidae/src/styles.scss"
-            ],
+            "styles": ["apps/procyonidae/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -68,16 +64,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/procyonidae/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/procyonidae/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/procyonidae"
-          ],
+          "outputs": ["coverage/apps/procyonidae"],
           "options": {
             "jestConfig": "apps/procyonidae/jest.config.js",
             "passWithNoTests": true
@@ -106,9 +98,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/procyonidae-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/procyonidae-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -125,9 +115,7 @@
             "outputPath": "dist/apps/procyonidae-electron",
             "main": "apps/procyonidae-electron/src/main.ts",
             "tsConfig": "apps/procyonidae-electron/tsconfig.app.json",
-            "assets": [
-              "apps/procyonidae-electron/src/assets"
-            ]
+            "assets": ["apps/procyonidae-electron/src/assets"]
           },
           "configurations": {
             "production": {
@@ -169,18 +157,35 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/procyonidae-electron/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/procyonidae-electron/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/procyonidae-electron"
-          ],
+          "outputs": ["coverage/apps/procyonidae-electron"],
           "options": {
             "jestConfig": "apps/procyonidae-electron/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "rainbowfish": {
+      "root": "libs/rainbowfish",
+      "sourceRoot": "libs/rainbowfish/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/rainbowfish/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/rainbowfish"],
+          "options": {
+            "jestConfig": "libs/rainbowfish/jest.config.js",
             "passWithNoTests": true
           }
         }

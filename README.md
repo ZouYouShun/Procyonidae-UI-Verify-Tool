@@ -123,3 +123,11 @@ https://tailwindcss.com/
 ## Tailwind
 
 https://nx.dev/latest/react/guides/using-tailwind-css-in-react
+
+## View schematics
+
+```
+yarn nx list @nrwl/reactce.
+```
+
+yarn nx generate @nrwl/react:library --help
