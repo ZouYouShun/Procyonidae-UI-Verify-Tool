@@ -1,1 +1,1 @@
-export * from './lib/rainbowfish';
+export * from './lib/search-bar/search-bar';

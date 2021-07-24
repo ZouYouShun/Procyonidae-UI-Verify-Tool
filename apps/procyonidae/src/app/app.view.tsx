@@ -1,5 +1,6 @@
+import { SearchBar } from '@procyonidae/rainbowfish';
 import { action, injectable, state, useConnector, ViewModule } from 'reactant';
-import { Rainbowfish } from '@procyonidae/rainbowfish';
+
 @injectable()
 class Counter {
   @state
@@ -27,7 +28,7 @@ export class AppView extends ViewModule {
 
     return (
       <div className="bg-gray-50">
-        <Rainbowfish />
+        <SearchBar />
       </div>
     );
   }
