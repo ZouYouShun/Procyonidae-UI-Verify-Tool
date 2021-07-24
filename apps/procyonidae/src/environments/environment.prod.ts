@@ -1,8 +1,3 @@
-import { DevOptions } from 'reactant';
-
-export const environment: { production: boolean; devOptions?: DevOptions } = {
+export const environment: { production: boolean } = {
   production: true,
-  devOptions: {
-    reduxDevTools: false,
-  },
 };
