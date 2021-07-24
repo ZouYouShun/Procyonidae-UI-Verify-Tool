@@ -108,7 +108,7 @@ https://egghead.io/lessons/javascript-create-a-new-empty-nx-workspace
 
 nx g nx-electron:app procyonidae-electron --frontendProject=procyonidae
 
-## State management 
+## State management
 
 https://github.com/pmndrs/zustand
 
@@ -117,4 +117,9 @@ https://github.com/pmndrs/zustand
 https://www.framer.com/docs/introduction/
 
 ## Style with TailWinds
+
 https://tailwindcss.com/
+
+## Tailwind
+
+https://nx.dev/latest/react/guides/using-tailwind-css-in-react
