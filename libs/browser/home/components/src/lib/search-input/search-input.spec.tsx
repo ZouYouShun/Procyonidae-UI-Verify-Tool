@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import SettingHeader from './setting-header';
+import SearchInput from './search-input';
 
-describe('SettingHeader', () => {
+describe('SearchInput', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<SettingHeader />);
+    const { baseElement } = render(<SearchInput />);
     expect(baseElement).toBeTruthy();
   });
 });

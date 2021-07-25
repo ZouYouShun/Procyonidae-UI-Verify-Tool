@@ -1,9 +1,9 @@
-import './search-bar.module.scss';
+import './search-input.module.scss';
 
 /* eslint-disable-next-line */
-export interface SearchBarProps {}
+export interface SearchInputProps {}
 
-export function SearchBar(props: SearchBarProps) {
+export function SearchInput(props: SearchInputProps) {
   return (
     <div className="bg-white flex items-center rounded-full shadow-xl">
       <input
@@ -19,4 +19,4 @@ export function SearchBar(props: SearchBarProps) {
   );
 }
 
-export default SearchBar;
+export default SearchInput;

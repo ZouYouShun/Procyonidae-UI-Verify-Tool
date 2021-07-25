@@ -1,17 +1,16 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
-import Home from './pages/home/home';
-import Settings from './pages/settings/settings';
+import { BrowserHome } from '@procyonidae/browser/home';
+import { BrowserSettings } from '@procyonidae/browser/settings';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 export function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <BrowserHome />
         </Route>
         <Route path="/settings">
-          <Settings />
+          <BrowserSettings />
         </Route>
       </Switch>
     </Router>
