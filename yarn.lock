@@ -3733,6 +3733,11 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
   integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
 
+"@types/url-join@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/url-join/-/url-join-4.0.1.tgz#4989c97f969464647a8586c7252d97b449cdc045"
+  integrity sha512-wDXw9LEEUHyV+7UWy7U315nrJGJ7p1BzaCxDpEoLr789Dk1WDVMMlf3iBfbG2F8NdWnYyFbtTxUn2ZNbm1Q4LQ==
+
 "@types/verror@^1.10.3":
   version "1.10.5"
   resolved "https://registry.yarnpkg.com/@types/verror/-/verror-1.10.5.tgz#2a1413aded46e67a1fe2386800e291123ed75eb1"
@@ -16475,6 +16480,11 @@ url-join@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-2.0.5.tgz#5af22f18c052a000a48d7b82c5e9c2e2feeda728"
   integrity sha1-WvIvGMBSoACkjXuCxenC4v7tpyg=
+
+url-join@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
+  integrity sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
 
 url-loader@^3.0.0:
   version "3.0.0"
