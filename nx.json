@@ -33,6 +33,45 @@
     ]
   },
   "projects": {
+    "browser-home": {
+      "tags": []
+    },
+    "browser-home-components": {
+      "tags": []
+    },
+    "browser-home-services": {
+      "tags": []
+    },
+    "browser-screen": {
+      "tags": []
+    },
+    "browser-screen-views-recorder": {
+      "tags": []
+    },
+    "browser-screen-views-screenshot": {
+      "tags": []
+    },
+    "browser-settings": {
+      "tags": []
+    },
+    "browser-settings-views-account": {
+      "tags": []
+    },
+    "browser-settings-views-snippets": {
+      "tags": []
+    },
+    "browser-shared-assets": {
+      "tags": []
+    },
+    "browser-shared-services": {
+      "tags": []
+    },
+    "browser-shared-utils": {
+      "tags": []
+    },
+    "electron-screen": {
+      "tags": []
+    },
     "procyonidae": {
       "tags": []
     },
