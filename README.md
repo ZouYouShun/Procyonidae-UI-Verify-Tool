@@ -60,6 +60,11 @@ npm start
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 
+## Project structure
+
+We follow the Nx workspace structure, easy to view project structure with [dependency graph](https://nx.dev/latest/angular/structure/dependency-graph)
+https://github.com/trungk18/angular-spotify
+
 ## Generate a library
 
 Run `nx g @nrwl/react:lib my-lib` to generate a library.

@@ -15,6 +15,37 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@procyonidae/browser/home": ["libs/browser/home/src/index.ts"],
+      "@procyonidae/browser/home/components": [
+        "libs/browser/home/components/src/index.ts"
+      ],
+      "@procyonidae/browser/home/services": [
+        "libs/browser/home/services/src/index.ts"
+      ],
+      "@procyonidae/browser/screen": ["libs/browser/screen/src/index.ts"],
+      "@procyonidae/browser/screen/views/recorder": [
+        "libs/browser/screen/views/recorder/src/index.ts"
+      ],
+      "@procyonidae/browser/screen/views/screenshot": [
+        "libs/browser/screen/views/screenshot/src/index.ts"
+      ],
+      "@procyonidae/browser/settings": ["libs/browser/settings/src/index.ts"],
+      "@procyonidae/browser/settings/views/account": [
+        "libs/browser/settings/views/account/src/index.ts"
+      ],
+      "@procyonidae/browser/settings/views/snippets": [
+        "libs/browser/settings/views/snippets/src/index.ts"
+      ],
+      "@procyonidae/browser/shared/assets": [
+        "libs/browser/shared/assets/src/index.ts"
+      ],
+      "@procyonidae/browser/shared/services": [
+        "libs/browser/shared/services/src/index.ts"
+      ],
+      "@procyonidae/browser/shared/utils": [
+        "libs/browser/shared/utils/src/index.ts"
+      ],
+      "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]
     }
   },
