@@ -44,5 +44,3 @@ export function BrowserScreen(props: BrowserScreenProps) {
     </>
   );
 }
-
-export default BrowserScreen;
