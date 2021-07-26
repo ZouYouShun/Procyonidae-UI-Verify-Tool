@@ -1,1 +1,2 @@
-export * from './lib/electron-screen';
+export * from './lib/screenshots';
+export * from './lib/typings';
