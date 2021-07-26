@@ -1,8 +1,19 @@
-import { BrowserWindow, shell, screen } from 'electron';
-import { rendererAppName, rendererAppPort } from './constants';
-import { environment } from '../environments/environment';
+import { OkData, Screenshots } from '@procyonidae/electron/screen';
+import {
+  BrowserWindow,
+  globalShortcut,
+  ipcMain,
+  ipcRenderer,
+  remote,
+  screen,
+  shell,
+} from 'electron';
+import Events from 'events';
 import { join } from 'path';
 import { format } from 'url';
+
+import { environment } from '../environments/environment';
+import { rendererAppName, rendererAppPort } from './constants';
 
 export default class App {
   // Keep a global reference of the window object, if you don't, the window will
@@ -46,6 +57,8 @@ export default class App {
     // Some APIs can only be used after this event occurs.
     App.initMainWindow();
     App.loadMainWindow();
+
+    App.initScreenshotWindow();
   }
 
   private static onActivate() {
@@ -76,9 +89,7 @@ export default class App {
     App.mainWindow.center();
 
     // if main window is ready to show, close the splash window and show the main window
-    App.mainWindow.once('ready-to-show', () => {
-      App.mainWindow.show();
-    });
+    App.mainWindow.once('ready-to-show', () => App.mainWindow.show());
 
     // handle all external redirects in a new browser window
     // App.mainWindow.webContents.on('will-navigate', App.onRedirect);
@@ -87,18 +98,14 @@ export default class App {
     // });
 
     // Emitted when the window is closed.
-    App.mainWindow.on('closed', () => {
-      // Dereference the window object, usually you would store windows
-      // in an array if your app supports multi windows, this is the time
-      // when you should delete the corresponding element.
-      App.mainWindow = null;
-    });
+    App.mainWindow.on('closed', () => (App.mainWindow = null));
   }
 
   private static loadMainWindow() {
     // load the index.html of the app.
     if (!App.application.isPackaged) {
       App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
+      // App.mainWindow.webContents.openDevTools({ mode: 'right' });
     } else {
       App.mainWindow.loadURL(
         format({
@@ -108,6 +115,32 @@ export default class App {
         }),
       );
     }
+  }
+
+  private static initScreenshotWindow() {
+    const screenshots = new Screenshots();
+
+    // globalShortcut.register('ctrl+shift+a', () => {
+    //   App.mainWindow.minimize();
+    //   screenshots.startCapture();
+    // });
+
+    ipcMain.on('SCREENSHOTS::OPEN', () => {
+      App.mainWindow.minimize();
+      screenshots.startCapture();
+    });
+
+    screenshots.on('ok', (e, { dataURL }: OkData) => {
+      App.mainWindow.restore();
+      App.mainWindow.webContents.send('SCREENSHOTS::OK', { dataURL });
+      // console.log('dataURL :>> ', dataURL);
+    });
+
+    screenshots.on('cancel', () => {
+      App.mainWindow.webContents.send('SCREENSHOTS::CANCEL');
+    });
+
+    // screenshots.on('cancel', (e) => e.preventDefault());
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
