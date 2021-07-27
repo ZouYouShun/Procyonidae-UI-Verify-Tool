@@ -20,7 +20,7 @@ export default class App {
   // be closed automatically when the JavaScript object is garbage collected.
   static mainWindow: Electron.BrowserWindow;
   static application: Electron.App;
-  static BrowserWindow;
+  static BrowserWindow: typeof BrowserWindow;
 
   public static isDevelopmentMode() {
     const isEnvironmentSet: boolean = 'ELECTRON_IS_DEV' in process.env;
@@ -80,6 +80,8 @@ export default class App {
       height: height,
       show: false,
       webPreferences: {
+        // * That is important, should alway use contextIsolation
+        // * https://github.com/electron/electron/issues/23506
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'preload.js'),
@@ -105,7 +107,7 @@ export default class App {
     // load the index.html of the app.
     if (!App.application.isPackaged) {
       App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
-      // App.mainWindow.webContents.openDevTools({ mode: 'right' });
+      App.mainWindow.webContents.openDevTools();
     } else {
       App.mainWindow.loadURL(
         format({
