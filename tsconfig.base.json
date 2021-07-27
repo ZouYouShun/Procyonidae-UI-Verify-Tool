@@ -16,35 +16,56 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@procyonidae/browser/home": ["libs/browser/home/src/index.ts"],
-      "@procyonidae/browser/home/components": [
-        "libs/browser/home/components/src/index.ts"
+      "@procyonidae/browser/home/feature": [
+        "libs/browser/home/feature/src/index.ts"
       ],
       "@procyonidae/browser/home/services": [
         "libs/browser/home/services/src/index.ts"
       ],
-      "@procyonidae/browser/screen": ["libs/browser/screen/src/index.ts"],
-      "@procyonidae/browser/screen/views/recorder": [
-        "libs/browser/screen/views/recorder/src/index.ts"
+      "@procyonidae/browser/screen/feature/recorder": [
+        "libs/browser/screen/feature/recorder/src/index.ts"
       ],
-      "@procyonidae/browser/screen/views/screenshot": [
-        "libs/browser/screen/views/screenshot/src/index.ts"
+      "@procyonidae/browser/screen/feature/screenshot": [
+        "libs/browser/screen/feature/screenshot/src/index.ts"
       ],
-      "@procyonidae/browser/settings": ["libs/browser/settings/src/index.ts"],
-      "@procyonidae/browser/settings/views/account": [
-        "libs/browser/settings/views/account/src/index.ts"
+      "@procyonidae/browser/screen/feature/shell": [
+        "libs/browser/screen/feature/shell/src/index.ts"
       ],
-      "@procyonidae/browser/settings/views/snippets": [
-        "libs/browser/settings/views/snippets/src/index.ts"
+      "@procyonidae/browser/settings/feature/account": [
+        "libs/browser/settings/feature/account/src/index.ts"
+      ],
+      "@procyonidae/browser/settings/feature/shell": [
+        "libs/browser/settings/feature/shell/src/index.ts"
+      ],
+      "@procyonidae/browser/settings/feature/snippets": [
+        "libs/browser/settings/feature/snippets/src/index.ts"
       ],
       "@procyonidae/browser/shared/assets": [
         "libs/browser/shared/assets/src/index.ts"
+      ],
+      "@procyonidae/browser/shared/hooks": [
+        "libs/browser/shared/hooks/src/index.ts"
+      ],
+      "@procyonidae/browser/shared/models": [
+        "libs/browser/shared/models/src/index.ts"
       ],
       "@procyonidae/browser/shared/services": [
         "libs/browser/shared/services/src/index.ts"
       ],
       "@procyonidae/browser/shared/utils": [
         "libs/browser/shared/utils/src/index.ts"
+      ],
+      "@procyonidae/browser/snippets/components/search-input": [
+        "libs/browser/snippets/components/search-input/src/index.ts"
+      ],
+      "@procyonidae/browser/snippets/components/search-list": [
+        "libs/browser/snippets/components/search-list/src/index.ts"
+      ],
+      "@procyonidae/browser/snippets/feature": [
+        "libs/browser/snippets/feature/src/index.ts"
+      ],
+      "@procyonidae/electron/ipc-transport": [
+        "libs/electron/ipc-transport/src/index.ts"
       ],
       "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]

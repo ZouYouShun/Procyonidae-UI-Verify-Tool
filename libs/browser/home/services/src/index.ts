@@ -1,1 +1,1 @@
-export * from './lib/browser-home-services';
+export * from './lib/snippets.service';

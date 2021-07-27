@@ -33,40 +33,55 @@
     ]
   },
   "projects": {
-    "browser-home": {
-      "tags": []
-    },
-    "browser-home-components": {
+    "browser-home-feature": {
       "tags": []
     },
     "browser-home-services": {
       "tags": []
     },
-    "browser-screen": {
+    "browser-screen-feature-recorder": {
       "tags": []
     },
-    "browser-screen-views-recorder": {
+    "browser-screen-feature-screenshot": {
       "tags": []
     },
-    "browser-screen-views-screenshot": {
+    "browser-screen-feature-shell": {
       "tags": []
     },
-    "browser-settings": {
+    "browser-settings-feature-account": {
       "tags": []
     },
-    "browser-settings-views-account": {
+    "browser-settings-feature-shell": {
       "tags": []
     },
-    "browser-settings-views-snippets": {
+    "browser-settings-feature-snippets": {
       "tags": []
     },
     "browser-shared-assets": {
+      "tags": []
+    },
+    "browser-shared-hooks": {
+      "tags": []
+    },
+    "browser-shared-models": {
       "tags": []
     },
     "browser-shared-services": {
       "tags": []
     },
     "browser-shared-utils": {
+      "tags": []
+    },
+    "browser-snippets-components-search-input": {
+      "tags": []
+    },
+    "browser-snippets-components-search-list": {
+      "tags": []
+    },
+    "browser-snippets-feature": {
+      "tags": []
+    },
+    "electron-ipc-transport": {
       "tags": []
     },
     "electron-screen": {
