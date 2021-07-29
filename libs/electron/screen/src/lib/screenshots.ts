@@ -1,72 +1,52 @@
-import {
-  BrowserWindow,
-  clipboard,
-  ipcMain,
-  nativeImage,
-  Rectangle,
-} from 'electron';
-import Events from 'events';
+import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
+import { join } from 'path';
 
-import Event from './event';
-import getBoundAndDisplay from './getBoundAndDisplay';
-import { OkData } from './typings';
+import { getScreenshot } from './get-screenshot';
 
-export class Screenshots extends Events {
+export class ScreenshotWindow {
   // Screenshot Window Object
-  public $win: BrowserWindow | null = null;
+  public static captureWindow: BrowserWindow;
 
-  constructor() {
-    super();
-    this.listenIpc();
+  init() {
+    ScreenshotWindow.captureWindow = ScreenshotWindow.createWindow();
   }
 
   /**
    * Start screenshot
    */
-  public startCapture(): void {
-    if (this.$win && !this.$win.isDestroyed()) this.$win.close();
-    const { bound, display } = getBoundAndDisplay();
-    this.$win = this.createWindow(bound);
-    ipcMain.once('SCREENSHOTS::DOM-READY', () => {
-      if (!this.$win) return;
-      this.$win.webContents.send('SCREENSHOTS::SEND-DISPLAY-DATA', display);
-    });
+  public static startCapture() {
+    const { image, bounds } = getScreenshot();
+    ScreenshotWindow.captureWindow.show();
+    ScreenshotWindow.captureWindow.setPosition(bounds.x, bounds.y);
+    ScreenshotWindow.captureWindow.setSize(bounds.width, bounds.height);
 
-    // Display the window after capturing the desktop
-    // Avoid the screenshot window to be screenshot yourself.
-    ipcMain.once('SCREENSHOTS::CAPTURED', () => {
-      if (!this.$win) return;
-      // There is a black screen in the linux screenshot, set it to false here to avoid this problem.
-      this.$win.setFullScreen(true);
-      this.$win.show();
-      this.$win.focus();
-    });
+    return image;
   }
 
   /**
    * End screenshot
    */
-  public endCapture(): void {
-    if (!this.$win) return;
-    this.$win.setSimpleFullScreen(false);
-    this.$win.close();
-    this.$win = null;
+  public static endCapture(): void {
+    if (!this.captureWindow) return;
+    this.captureWindow.setSimpleFullScreen(false);
+    this.captureWindow.close();
+    // * for GC
+    (this.captureWindow as any) = null;
   }
 
   /**
    * Initialize window
    */
-  private createWindow({ x, y, width, height }: Rectangle): BrowserWindow {
-    const $win = new BrowserWindow({
+  private static createWindow(rect?: Rectangle): BrowserWindow {
+    const captureWindow = new BrowserWindow({
       title: 'screenshots',
-      x,
-      y,
-      width,
-      height,
+      ...rect,
       useContentSize: true,
       frame: false,
       show: false,
       autoHideMenuBar: true,
+      minimizable: true,
+      closable: false,
       transparent: true,
       resizable: false,
       movable: false,
@@ -81,42 +61,20 @@ export class Screenshots extends Events {
       alwaysOnTop: true,
       enableLargerThanScreen: true,
       skipTaskbar: true,
-      minimizable: false,
       maximizable: false,
       webPreferences: {
-        nodeIntegration: true,
-        enableRemoteModule: true,
-        contextIsolation: false,
+        contextIsolation: true,
+        backgroundThrottling: false,
+        preload: join(__dirname, 'preload.js'),
       },
     });
+    captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
+    captureWindow.webContents.openDevTools();
 
-    $win.loadURL(`http://localhost:4200/screen/screenshot`);
-
-    return $win;
+    return captureWindow;
   }
 
-  private listenIpc(): void {
-    /**
-     * OK
-     */
-    ipcMain.on('SCREENSHOTS::OK', (e, data: OkData) => {
-      const event = new Event();
-      this.emit('ok', event, data);
-      if (!event.defaultPrevented) {
-        clipboard.writeImage(nativeImage.createFromDataURL(data.dataURL));
-        this.endCapture();
-      }
-    });
-
-    /**
-     * CANCEL
-     */
-    ipcMain.on('SCREENSHOTS::CANCEL', () => {
-      const event = new Event();
-      this.emit('cancel', event);
-      if (!event.defaultPrevented) {
-        this.endCapture();
-      }
-    });
+  private copyImgToKeyboard(dataURL: string): void {
+    clipboard.writeImage(nativeImage.createFromDataURL(dataURL));
   }
 }

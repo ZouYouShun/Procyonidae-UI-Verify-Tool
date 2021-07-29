@@ -10,8 +10,7 @@ export function BrowserHome(props: BrowserHomeProps) {
   const [image, setImage] = useState('');
 
   const handleClick = async () => {
-    const { screenshots } = (window as any).electron;
-    const { dataURL } = await screenshots.open();
+    const dataURL = await (window as any).electron.takeScreenshot();
     setImage(dataURL);
   };
 

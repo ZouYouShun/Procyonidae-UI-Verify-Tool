@@ -1,21 +1,16 @@
+import { RendererTransport } from '@procyonidae/electron/ipc-transport';
 import { contextBridge, ipcRenderer } from 'electron';
 
+const transport = new RendererTransport({
+  ipcRenderer,
+});
+
 contextBridge.exposeInMainWorld('electron', {
-  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
   platform: process.platform,
+  getAppVersion: () => transport.getAppVersion(),
+  takeScreenshot: async () => {
+    const img = await transport.takeScreenshot();
 
-  screenshots: {
-    open: () => {
-      ipcRenderer.send('SCREENSHOTS::OPEN');
-
-      return new Promise((resolve, reject) => {
-        ipcRenderer.once('SCREENSHOTS::OK', (e, { dataURL }) => {
-          resolve({ dataURL });
-        });
-        ipcRenderer.once('SCREENSHOTS::CANCEL', () => {
-          reject();
-        });
-      });
-    },
+    return img;
   },
 });

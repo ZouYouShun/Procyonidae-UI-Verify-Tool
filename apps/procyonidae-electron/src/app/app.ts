@@ -1,14 +1,5 @@
-import { OkData, Screenshots } from '@procyonidae/electron/screen';
-import {
-  BrowserWindow,
-  globalShortcut,
-  ipcMain,
-  ipcRenderer,
-  remote,
-  screen,
-  shell,
-} from 'electron';
-import Events from 'events';
+import { ScreenshotWindow } from '@procyonidae/electron/screen';
+import { BrowserWindow, screen, shell } from 'electron';
 import { join } from 'path';
 import { format } from 'url';
 
@@ -20,6 +11,9 @@ export default class App {
   // be closed automatically when the JavaScript object is garbage collected.
   static mainWindow: Electron.BrowserWindow;
   static application: Electron.App;
+
+  static screenshotWindow: ScreenshotWindow;
+
   static BrowserWindow: typeof BrowserWindow;
 
   public static isDevelopmentMode() {
@@ -58,7 +52,7 @@ export default class App {
     App.initMainWindow();
     App.loadMainWindow();
 
-    App.initScreenshotWindow();
+    new ScreenshotWindow().init();
   }
 
   private static onActivate() {
@@ -80,13 +74,13 @@ export default class App {
       height: height,
       show: false,
       webPreferences: {
-        // * That is important, should alway use contextIsolation
-        // * https://github.com/electron/electron/issues/23506
+        // * That is important, should alway use contextIsolation for security and not pollution window environment
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'preload.js'),
       },
     });
+
     App.mainWindow.setMenu(null);
     App.mainWindow.center();
 
@@ -119,32 +113,6 @@ export default class App {
     }
   }
 
-  private static initScreenshotWindow() {
-    const screenshots = new Screenshots();
-
-    // globalShortcut.register('ctrl+shift+a', () => {
-    //   App.mainWindow.minimize();
-    //   screenshots.startCapture();
-    // });
-
-    ipcMain.on('SCREENSHOTS::OPEN', () => {
-      App.mainWindow.minimize();
-      screenshots.startCapture();
-    });
-
-    screenshots.on('ok', (e, { dataURL }: OkData) => {
-      App.mainWindow.restore();
-      App.mainWindow.webContents.send('SCREENSHOTS::OK', { dataURL });
-      // console.log('dataURL :>> ', dataURL);
-    });
-
-    screenshots.on('cancel', () => {
-      App.mainWindow.webContents.send('SCREENSHOTS::CANCEL');
-    });
-
-    // screenshots.on('cancel', (e) => e.preventDefault());
-  }
-
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
     // we pass the Electron.App object and the
     // Electron.BrowserWindow into this function
@@ -155,7 +123,13 @@ export default class App {
     App.application = app;
 
     App.application.on('window-all-closed', App.onWindowAllClosed); // Quit when all windows are closed.
-    App.application.on('ready', App.onReady); // App is ready to load data
     App.application.on('activate', App.onActivate); // App is activated
+
+    return new Promise<void>((resolve, reject) => {
+      App.application.on('ready', () => {
+        App.onReady();
+        resolve();
+      }); // App is ready to load data
+    });
   }
 }

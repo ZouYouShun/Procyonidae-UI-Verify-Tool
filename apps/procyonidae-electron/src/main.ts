@@ -13,8 +13,9 @@ export default class Main {
     }
   }
 
-  static bootstrapApp() {
-    App.main(app, BrowserWindow);
+  static async bootstrapApp() {
+    await App.main(app, BrowserWindow);
+    Main.bootstrapAppEvents();
   }
 
   static bootstrapAppEvents() {
@@ -32,4 +33,3 @@ Main.initialize();
 
 // bootstrap app
 Main.bootstrapApp();
-Main.bootstrapAppEvents();
