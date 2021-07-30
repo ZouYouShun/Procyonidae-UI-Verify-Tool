@@ -5,48 +5,65 @@ import { getScreenshot } from './get-screenshot';
 
 export class ScreenshotWindow {
   // Screenshot Window Object
-  public static captureWindow: BrowserWindow;
+  captureWindow: Electron.BrowserWindow | undefined;
+  captureSource: Electron.DesktopCapturerSource | undefined;
 
-  init() {
-    ScreenshotWindow.captureWindow = ScreenshotWindow.createWindow();
+  init(parentWindow: BrowserWindow) {
+    this.captureWindow = this.createWindow(parentWindow);
+
+    parentWindow.on('closed', this.endCapture);
+
+    // re-init that window for quick open
+    this.captureWindow.on('closed', () => this.init(parentWindow));
   }
 
   /**
    * Start screenshot
    */
-  public static startCapture() {
-    const { image, bounds } = getScreenshot();
-    ScreenshotWindow.captureWindow.show();
-    ScreenshotWindow.captureWindow.setPosition(bounds.x, bounds.y);
-    ScreenshotWindow.captureWindow.setSize(bounds.width, bounds.height);
+  startCapture() {
+    const { captureSource, bounds } = getScreenshot();
 
-    return image;
+    console.log(this.captureWindow);
+
+    if (this.captureWindow) {
+      this.captureWindow.setPosition(bounds.x, bounds.y);
+      this.captureWindow.setSize(bounds.width, bounds.height);
+      this.captureWindow.show();
+    }
+
+    return captureSource;
   }
 
   /**
    * End screenshot
    */
-  public static endCapture(): void {
+  endCapture(): void {
     if (!this.captureWindow) return;
     this.captureWindow.setSimpleFullScreen(false);
     this.captureWindow.close();
     // * for GC
-    (this.captureWindow as any) = null;
+    // (this.captureWindow as any) = null;
   }
 
   /**
    * Initialize window
    */
-  private static createWindow(rect?: Rectangle): BrowserWindow {
+  private createWindow(
+    parentWindow: BrowserWindow,
+    rect?: Rectangle,
+  ): BrowserWindow {
     const captureWindow = new BrowserWindow({
       title: 'screenshots',
       ...rect,
       useContentSize: true,
-      frame: false,
+      // modal: true,
+      parent: parentWindow,
       show: false,
       autoHideMenuBar: true,
       minimizable: true,
-      closable: false,
+      //
+      closable: true,
+
       transparent: true,
       resizable: false,
       movable: false,
@@ -56,7 +73,6 @@ export class ScreenshotWindow {
       fullscreen: false,
       // Set to true, because mac full-screen windows do not have desktop scrolling effect
       simpleFullscreen: true,
-      backgroundColor: '#00000000',
       titleBarStyle: 'hidden',
       alwaysOnTop: true,
       enableLargerThanScreen: true,
@@ -68,13 +84,23 @@ export class ScreenshotWindow {
         preload: join(__dirname, 'preload.js'),
       },
     });
+
     captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
-    captureWindow.webContents.openDevTools();
+    // captureWindow.webContents.openDevTools();
 
     return captureWindow;
   }
 
   private copyImgToKeyboard(dataURL: string): void {
     clipboard.writeImage(nativeImage.createFromDataURL(dataURL));
+  }
+
+  private static instance?: ScreenshotWindow;
+
+  static getInstance(): ScreenshotWindow {
+    if (!ScreenshotWindow.instance) {
+      ScreenshotWindow.instance = new ScreenshotWindow();
+    }
+    return ScreenshotWindow.instance;
   }
 }

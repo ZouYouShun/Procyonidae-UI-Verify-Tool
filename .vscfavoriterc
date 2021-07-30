@@ -1,0 +1,6 @@
+{
+  "resources": [
+    "libs/electron/ipc-transport/src/lib/context-bridge/ipc-bridge.ts",
+    "libs/electron/screen/src/lib/screenshots.ts"
+  ]
+}

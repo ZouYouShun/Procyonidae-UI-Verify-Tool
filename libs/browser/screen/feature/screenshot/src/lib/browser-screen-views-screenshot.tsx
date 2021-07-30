@@ -1,6 +1,7 @@
 import './browser-screen-views-screenshot.module.scss';
 import 'cropperjs/dist/cropper.css';
 
+import { useContextBridge } from '@procyonidae/browser/shared/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { Cropper } from 'react-cropper';
 
@@ -13,6 +14,8 @@ export function BrowserScreenViewsScreenshot(
   const cropperRef = useRef<Cropper>();
   const [image, setImage] = useState('');
 
+  const { getScreenshotImage } = useContextBridge();
+
   const onKeyUp = ({ code, ctrlKey, shiftKey }: KeyboardEvent) => {
     if (ctrlKey && shiftKey && code === 'Enter') {
       // const canvas = cropper.getCroppedCanvas();
@@ -23,12 +26,25 @@ export function BrowserScreenViewsScreenshot(
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const imgUrl = await getScreenshotImage();
+      if (imgUrl) {
+        setImage(imgUrl);
+      }
+    })();
+
+    return () => {
+      window.removeEventListener('keyup', onKeyUp);
+    };
+  }, []);
+
   return (
     <Cropper
       zoomable={false}
       initialAspectRatio={1}
       preview=".img-preview"
-      src={image}
+      src={image || 'assets/image/example.jpeg'}
       viewMode={1}
       minCropBoxHeight={5}
       minCropBoxWidth={5}

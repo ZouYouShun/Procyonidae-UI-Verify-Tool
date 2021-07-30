@@ -429,7 +429,12 @@
             "tsConfig": "apps/procyonidae/tsconfig.app.json",
             "assets": [
               "apps/procyonidae/src/favicon.ico",
-              "apps/procyonidae/src/assets"
+              "apps/procyonidae/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/browser/shared/assets/src/assets",
+                "output": "assets"
+              }
             ],
             "styles": ["apps/procyonidae/src/styles.scss"],
             "scripts": [],

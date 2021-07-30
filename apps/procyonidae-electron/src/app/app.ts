@@ -52,7 +52,7 @@ export default class App {
     App.initMainWindow();
     App.loadMainWindow();
 
-    new ScreenshotWindow().init();
+    ScreenshotWindow.getInstance().init(App.mainWindow);
   }
 
   private static onActivate() {
@@ -94,7 +94,7 @@ export default class App {
     // });
 
     // Emitted when the window is closed.
-    App.mainWindow.on('closed', () => (App.mainWindow = null));
+    App.mainWindow.on('closed', App.onClose);
   }
 
   private static loadMainWindow() {

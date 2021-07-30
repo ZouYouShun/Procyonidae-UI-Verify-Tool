@@ -49,11 +49,11 @@ export const getScreenshot = () => {
     height: displayArea.height * scale,
   };
 
-  const image = getImageFromRectangle(display.id.toString(), rectangle);
+  const captureSource = getImageFromRectangle(display.id.toString(), rectangle);
 
   return {
     ...display,
     /** that rect of that should display image */
-    image,
+    captureSource,
   };
 };

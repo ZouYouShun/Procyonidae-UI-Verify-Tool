@@ -1,30 +1,28 @@
 import { ScreenshotWindow } from '@procyonidae/electron/screen';
-import {
-  MainTransportType,
-  RendererTransportType,
-} from './data-transport.interface';
+
+import { RendererTransport } from './renderer-transport';
 import { ElectronTransport, listen } from './source';
 
-export class MainTransport
-  extends ElectronTransport.Main<MainTransportType>
-  implements RendererTransportType
-{
+export class MainTransport extends ElectronTransport.Main<
+  InstanceType<typeof RendererTransport>
+> {
   @listen
   async version(): Promise<{ version: string }> {
     return { version: '1.0.0' };
   }
 
   @listen
-  async hello(options: { num: number }) {
-    return {
-      text: `hello, ${options.num}`,
-    };
+  async takeScreenShot() {
+    const screenshotWindow = ScreenshotWindow.getInstance();
+    const img = await screenshotWindow.startCapture();
+
+    return img.thumbnail.toDataURL();
   }
 
   @listen
-  async takeScreenShot() {
-    const img = await ScreenshotWindow.startCapture();
+  async getScreenshotImage() {
+    const screenshotWindow = ScreenshotWindow.getInstance();
 
-    return img.thumbnail.toDataURL();
+    return screenshotWindow.captureSource?.thumbnail.toDataURL();
   }
 }

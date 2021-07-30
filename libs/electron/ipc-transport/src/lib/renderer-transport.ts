@@ -1,26 +1,36 @@
-import {
-  MainTransportType,
-  RendererTransportType,
-} from './data-transport.interface';
+import { ipcRenderer } from 'electron';
+
 import { ElectronTransport } from './source';
 
-export class RendererTransport
-  extends ElectronTransport.Renderer<RendererTransportType>
-  implements MainTransportType
-{
+import type { MainTransport } from './main-transport';
+export class RendererTransport extends ElectronTransport.Renderer<
+  InstanceType<typeof MainTransport>
+> {
   async getAppVersion() {
     const response = await this.emit('version');
-    return response;
-  }
-
-  async sayHello() {
-    const response = await this.emit('hello', { num: 42 });
     return response;
   }
 
   async takeScreenshot() {
     return this.emit('takeScreenShot');
   }
+
+  async getScreenshotImage() {
+    return this.emit('getScreenshotImage');
+  }
 }
 
 export type RendererTransportInstance = InstanceType<typeof RendererTransport>;
+
+export const getIpcBridge = () => {
+  const transport = new RendererTransport({
+    ipcRenderer,
+  });
+
+  return {
+    platform: process.platform,
+    getAppVersion: () => transport.getAppVersion(),
+    takeScreenshot: () => transport.takeScreenshot(),
+    getScreenshotImage: () => transport.getScreenshotImage(),
+  };
+};

@@ -1,16 +1,6 @@
-import { RendererTransport } from '@procyonidae/electron/ipc-transport';
+import { getIpcBridge } from '@procyonidae/electron/ipc-transport';
 import { contextBridge, ipcRenderer } from 'electron';
 
-const transport = new RendererTransport({
-  ipcRenderer,
-});
+const ipcBridge = getIpcBridge();
 
-contextBridge.exposeInMainWorld('electron', {
-  platform: process.platform,
-  getAppVersion: () => transport.getAppVersion(),
-  takeScreenshot: async () => {
-    const img = await transport.takeScreenshot();
-
-    return img;
-  },
-});
+contextBridge.exposeInMainWorld('electron', ipcBridge);
