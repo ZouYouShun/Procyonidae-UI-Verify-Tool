@@ -29,6 +29,7 @@ export function BrowserScreenViewsScreenshot(
   useEffect(() => {
     (async () => {
       const imgUrl = await getScreenshotImage();
+      console.log('!!!!');
       if (imgUrl) {
         setImage(imgUrl);
       }

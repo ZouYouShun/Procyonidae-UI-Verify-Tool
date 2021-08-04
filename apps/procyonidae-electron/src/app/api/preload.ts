@@ -1,5 +1,5 @@
 import { getIpcBridge } from '@procyonidae/electron/ipc-transport';
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge } from 'electron';
 
 const ipcBridge = getIpcBridge();
 

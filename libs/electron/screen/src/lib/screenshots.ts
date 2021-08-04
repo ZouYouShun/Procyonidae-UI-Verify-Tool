@@ -5,8 +5,7 @@ import { getScreenshot } from './get-screenshot';
 
 export class ScreenshotWindow {
   // Screenshot Window Object
-  captureWindow: Electron.BrowserWindow | undefined;
-  captureSource: Electron.DesktopCapturerSource | undefined;
+  captureWindow!: Electron.BrowserWindow;
 
   init(parentWindow: BrowserWindow) {
     this.captureWindow = this.createWindow(parentWindow);
@@ -22,6 +21,7 @@ export class ScreenshotWindow {
    */
   startCapture() {
     const { captureSource, bounds } = getScreenshot();
+    this.captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
 
     if (this.captureWindow) {
       this.captureWindow.setPosition(bounds.x, bounds.y);
@@ -83,8 +83,7 @@ export class ScreenshotWindow {
       },
     });
 
-    captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
-    // captureWindow.webContents.openDevTools();
+    captureWindow.webContents.openDevTools();
 
     return captureWindow;
   }

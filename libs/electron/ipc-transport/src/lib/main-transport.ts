@@ -6,6 +6,8 @@ import { ElectronTransport, listen } from './source';
 export class MainTransport extends ElectronTransport.Main<
   InstanceType<typeof RendererTransport>
 > {
+  photoDataURL = '';
+
   @listen
   async version(): Promise<{ version: string }> {
     return { version: '1.0.0' };
@@ -15,14 +17,16 @@ export class MainTransport extends ElectronTransport.Main<
   async takeScreenShot() {
     const screenshotWindow = ScreenshotWindow.getInstance();
     const img = await screenshotWindow.startCapture();
+    console.log('takeScreenShot');
 
-    return img.thumbnail.toDataURL();
+    this.photoDataURL = img.thumbnail.toDataURL();
+
+    return this.photoDataURL;
   }
 
   @listen
   async getScreenshotImage() {
-    const screenshotWindow = ScreenshotWindow.getInstance();
-
-    return screenshotWindow.captureSource?.thumbnail.toDataURL();
+    console.log('!!getScreenshotImage');
+    return this.photoDataURL;
   }
 }

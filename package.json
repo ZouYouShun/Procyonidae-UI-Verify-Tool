@@ -8,6 +8,7 @@
     "start": "nx run-many --target=serve --projects=procyonidae,procyonidae-electron --parallel",
     "storybook": "nx run rainbowfish:storybook",
     "start:web": "nx serve",
+    "start:electron": "nx serve procyonidae-electron",
     "build": "nx build",
     "build-electron": "nx run-many --target=build --projects=procyonidae,procyonidae-electron --parallel",
     "webpack-analyzer:analyze:web:prod": "nx run procyonidae:build --prod --stats-json",
