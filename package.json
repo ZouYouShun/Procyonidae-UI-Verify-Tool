@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf node_modules",
     "nx": "nx",
     "start": "nx run-many --target=serve --projects=procyonidae,procyonidae-electron --parallel",
     "storybook": "nx run rainbowfish:storybook",
