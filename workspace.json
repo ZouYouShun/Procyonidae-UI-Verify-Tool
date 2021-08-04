@@ -551,7 +551,8 @@
         "serve": {
           "executor": "nx-electron:execute",
           "options": {
-            "buildTarget": "procyonidae-electron:build"
+            "buildTarget": "procyonidae-electron:build",
+            "port": 9229
           }
         },
         "package": {

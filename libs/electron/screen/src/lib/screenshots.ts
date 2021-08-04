@@ -23,8 +23,6 @@ export class ScreenshotWindow {
   startCapture() {
     const { captureSource, bounds } = getScreenshot();
 
-    console.log(this.captureWindow);
-
     if (this.captureWindow) {
       this.captureWindow.setPosition(bounds.x, bounds.y);
       this.captureWindow.setSize(bounds.width, bounds.height);
