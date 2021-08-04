@@ -33,3 +33,8 @@ ipcMain.handle('get-app-version', (event) => {
 ipcMain.on('quit', (event, code) => {
   app.exit(code);
 });
+
+// Handle App termination
+ipcMain.on('cool', (event, code) => {
+  console.log(event, code);
+});

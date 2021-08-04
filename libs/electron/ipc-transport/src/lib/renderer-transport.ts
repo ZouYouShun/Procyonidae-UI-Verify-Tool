@@ -32,5 +32,10 @@ export const getIpcBridge = () => {
     getAppVersion: () => transport.getAppVersion(),
     takeScreenshot: () => transport.takeScreenshot(),
     getScreenshotImage: () => transport.getScreenshotImage(),
+    a: () => {
+      {
+        ipcRenderer.send('cool', 'abc');
+      }
+    },
   };
 };

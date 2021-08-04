@@ -8,7 +8,10 @@
   },
   "files": [
     "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../../node_modules/@nrwl/react/typings/image.d.ts"
+    "../../../node_modules/@nrwl/react/typings/image.d.ts",
+    "./src/lib/source/transports/ElectronMainTransportOptions.ts",
+    "./src/lib/source/transports/defaultChannel.ts",
+    "./src/lib/source/transports/ElectronRendererTransportOptions.ts"
   ],
   "exclude": [
     "**/*.spec.ts",
