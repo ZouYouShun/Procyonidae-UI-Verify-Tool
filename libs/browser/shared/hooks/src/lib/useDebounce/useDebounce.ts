@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { useSleep } from '../useSleep';
 
-interface DebouncedFunc<T extends (...args: any[]) => any> {
+export interface DebouncedFunc<T extends (...args: any[]) => any> {
   /**
    * Call the original function, but applying the debounce rules.
    *
@@ -45,13 +45,14 @@ export const useDebounce = <F extends (...args: any[]) => any>(
 
   const invokeFunc = () => {
     const args = lastArgs.current || [];
+
     resultRef.current = fn(...args);
     lastArgs.current = undefined;
 
     return resultRef.current;
   };
 
-  const debounced = async (...args: any) => {
+  const debounced = async (...args: any[]) => {
     flushRef.current = false;
     lastArgs.current = args;
     try {

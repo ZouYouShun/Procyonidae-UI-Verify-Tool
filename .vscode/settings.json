@@ -3,11 +3,15 @@
     "Rainbowfish",
     "clsx",
     "cropperjs",
+    "fdescribe",
     "focusable",
     "maximizable",
     "minimizable",
     "procyonidae",
+    "rerender",
+    "unmount",
     "urljoin",
+    "xdescribe",
     "zoomable",
     "zustand"
   ]
