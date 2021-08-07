@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@procyonidae/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@procyonidae/browser/home/feature": [
         "libs/browser/home/feature/src/index.ts"
       ],
