@@ -390,29 +390,6 @@
         }
       }
     },
-    "electron-ipc-transport": {
-      "root": "libs/electron/ipc-transport",
-      "sourceRoot": "libs/electron/ipc-transport/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/electron/ipc-transport/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/electron/ipc-transport"],
-          "options": {
-            "jestConfig": "libs/electron/ipc-transport/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "electron-screen": {
       "root": "libs/electron/screen",
       "sourceRoot": "libs/electron/screen/src",
@@ -450,7 +427,12 @@
             "tsConfig": "apps/procyonidae/tsconfig.app.json",
             "assets": [
               "apps/procyonidae/src/favicon.ico",
-              "apps/procyonidae/src/assets"
+              "apps/procyonidae/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/browser/shared/assets/src/assets",
+                "output": "assets"
+              }
             ],
             "styles": ["apps/procyonidae/src/styles.scss"],
             "scripts": [],
@@ -567,7 +549,8 @@
         "serve": {
           "executor": "nx-electron:execute",
           "options": {
-            "buildTarget": "procyonidae-electron:build"
+            "buildTarget": "procyonidae-electron:build",
+            "port": 9229
           }
         },
         "package": {

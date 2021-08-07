@@ -1,2 +1,1 @@
-export * from './lib/screenshots';
-export * from './lib/typings';
+export * from './lib';

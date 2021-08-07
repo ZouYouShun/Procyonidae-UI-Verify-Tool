@@ -136,3 +136,8 @@ yarn nx list @nrwl/reactce.
 ```
 
 yarn nx generate @nrwl/react:library --help
+
+
+## Debug with vscode
+
+when you run electron, with attach, should save file twice currently, that destroy is slow than restart, that will cause restart fail.

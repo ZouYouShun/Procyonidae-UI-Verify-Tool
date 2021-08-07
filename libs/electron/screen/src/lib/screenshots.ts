@@ -1,72 +1,106 @@
-import {
-  BrowserWindow,
-  clipboard,
-  ipcMain,
-  nativeImage,
-  Rectangle,
-} from 'electron';
-import Events from 'events';
+import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
+import { join } from 'path';
 
-import Event from './event';
-import getBoundAndDisplay from './getBoundAndDisplay';
-import { OkData } from './typings';
+import { getScreenshot } from './getScreenshot';
 
-export class Screenshots extends Events {
+export class ScreenshotWindow {
   // Screenshot Window Object
-  public $win: BrowserWindow | null = null;
+  captureWindow: Electron.BrowserWindow | null = null;
 
-  constructor() {
-    super();
-    this.listenIpc();
+  private mainDestroy = false;
+
+  init(parentWindow: BrowserWindow) {
+    this.mainDestroy = false;
+    this.initWindow(parentWindow);
+
+    parentWindow.on('closed', () => {
+      console.log('main close');
+      this.mainDestroy = true;
+      /**
+       * TODO: link to below
+       *
+       * {@link ScreenshotWindow.initWindow}
+       */
+      this.captureWindow?.close();
+      this.captureWindow = null;
+    });
+  }
+
+  private initWindow(parentWindow: BrowserWindow) {
+    this.captureWindow = this.createWindow(parentWindow);
+
+    // * children will trigger before parentWindow close
+    this.captureWindow.once('closed', () => {
+      console.log('captureWindow close');
+      // TODO: should know is that close come from parent window close, if so not init again, current use above close manually
+      if (this.mainDestroy) return;
+
+      this.initWindow(parentWindow);
+    });
   }
 
   /**
    * Start screenshot
    */
-  public startCapture(): void {
-    if (this.$win && !this.$win.isDestroyed()) this.$win.close();
-    const { bound, display } = getBoundAndDisplay();
-    this.$win = this.createWindow(bound);
-    ipcMain.once('SCREENSHOTS::DOM-READY', () => {
-      if (!this.$win) return;
-      this.$win.webContents.send('SCREENSHOTS::SEND-DISPLAY-DATA', display);
-    });
+  async startCapture() {
+    if (!this.captureWindow) return;
 
-    // Display the window after capturing the desktop
-    // Avoid the screenshot window to be screenshot yourself.
-    ipcMain.once('SCREENSHOTS::CAPTURED', () => {
-      if (!this.$win) return;
-      // There is a black screen in the linux screenshot, set it to false here to avoid this problem.
-      this.$win.setFullScreen(true);
-      this.$win.show();
-      this.$win.focus();
-    });
+    // TODO: should calculate the original image size with screen, the original pixel
+    const { captureSource, bounds } = getScreenshot();
+
+    this.captureWindow.setPosition(bounds.x, bounds.y);
+    this.captureWindow.setSize(bounds.width, bounds.height);
+
+    const img = await captureSource;
+    const imgURL = img.thumbnail.toDataURL();
+
+    this.captureWindow.webContents.send('screen:openScreenshot', imgURL);
+
+    setTimeout(() => {
+      // wait that resize complete
+      this.captureWindow?.show();
+    }, 100);
+
+    return captureSource;
+  }
+
+  async getScreenshotImage() {
+    // const img = await this.captureSource;
+    // const imgURL = img.thumbnail.toDataURL();
+    // this.captureWindow.webContents.send('screen:openScreenshot', imgURL);
+    // return imgURL;
   }
 
   /**
    * End screenshot
    */
-  public endCapture(): void {
-    if (!this.$win) return;
-    this.$win.setSimpleFullScreen(false);
-    this.$win.close();
-    this.$win = null;
+  endCapture(): void {
+    if (!this.captureWindow) return;
+    this.captureWindow.setSimpleFullScreen(false);
+    this.captureWindow.close();
+    // * for GC
+    // (this.captureWindow as any) = null;
   }
 
   /**
    * Initialize window
    */
-  private createWindow({ x, y, width, height }: Rectangle): BrowserWindow {
-    const $win = new BrowserWindow({
+  private createWindow(
+    parentWindow: BrowserWindow,
+    rect?: Rectangle,
+  ): BrowserWindow {
+    const captureWindow = new BrowserWindow({
       title: 'screenshots',
-      x,
-      y,
-      width,
-      height,
+      ...rect,
       useContentSize: true,
-      frame: false,
+      // modal: true,
+      parent: parentWindow,
       show: false,
       autoHideMenuBar: true,
+      minimizable: true,
+      //
+      closable: true,
+
       transparent: true,
       resizable: false,
       movable: false,
@@ -76,47 +110,32 @@ export class Screenshots extends Events {
       fullscreen: false,
       // Set to true, because mac full-screen windows do not have desktop scrolling effect
       simpleFullscreen: true,
-      backgroundColor: '#00000000',
       titleBarStyle: 'hidden',
       alwaysOnTop: true,
       enableLargerThanScreen: true,
       skipTaskbar: true,
-      minimizable: false,
       maximizable: false,
       webPreferences: {
-        nodeIntegration: true,
-        enableRemoteModule: true,
-        contextIsolation: false,
+        contextIsolation: true,
+        backgroundThrottling: false,
+        preload: join(__dirname, 'preload.js'),
       },
     });
+    captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
 
-    $win.loadURL(`http://localhost:4200/screen/screenshot`);
-
-    return $win;
+    return captureWindow;
   }
 
-  private listenIpc(): void {
-    /**
-     * OK
-     */
-    ipcMain.on('SCREENSHOTS::OK', (e, data: OkData) => {
-      const event = new Event();
-      this.emit('ok', event, data);
-      if (!event.defaultPrevented) {
-        clipboard.writeImage(nativeImage.createFromDataURL(data.dataURL));
-        this.endCapture();
-      }
-    });
+  private copyImgToKeyboard(dataURL: string): void {
+    clipboard.writeImage(nativeImage.createFromDataURL(dataURL));
+  }
 
-    /**
-     * CANCEL
-     */
-    ipcMain.on('SCREENSHOTS::CANCEL', () => {
-      const event = new Event();
-      this.emit('cancel', event);
-      if (!event.defaultPrevented) {
-        this.endCapture();
-      }
-    });
+  private static instance?: ScreenshotWindow;
+
+  static getInstance(): ScreenshotWindow {
+    if (!ScreenshotWindow.instance) {
+      ScreenshotWindow.instance = new ScreenshotWindow();
+    }
+    return ScreenshotWindow.instance;
   }
 }

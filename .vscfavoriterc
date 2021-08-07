@@ -1,0 +1,5 @@
+{
+  "resources": [
+    "libs/electron/screen/src/lib/screenshots.ts"
+  ]
+}

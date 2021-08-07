@@ -1,21 +1,36 @@
+import { ContextBridgeMap } from '@procyonidae/api-interfaces';
 import { contextBridge, ipcRenderer } from 'electron';
 
-contextBridge.exposeInMainWorld('electron', {
-  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
-  platform: process.platform,
+const getContextBridge = <T extends keyof ContextBridgeMap>(
+  key: T,
+  value: ContextBridgeMap[T],
+) => {
+  return [key, value] as const;
+};
 
-  screenshots: {
-    open: () => {
-      ipcRenderer.send('SCREENSHOTS::OPEN');
-
-      return new Promise((resolve, reject) => {
-        ipcRenderer.once('SCREENSHOTS::OK', (e, { dataURL }) => {
-          resolve({ dataURL });
-        });
-        ipcRenderer.once('SCREENSHOTS::CANCEL', () => {
-          reject();
-        });
-      });
+contextBridge.exposeInMainWorld(
+  ...getContextBridge('electron', {
+    platform: process.platform,
+    getAppVersion: () => ipcRenderer.invoke('root:getAppVersion'),
+    takeScreenshot: () => {
+      ipcRenderer.invoke('screen:takeScreenshot');
     },
-  },
-});
+    getScreenshotImage: () => {
+      return ipcRenderer.invoke('screen:getScreenshotImage');
+    },
+    onOpenScreenshot: (cb) => {
+      console.log('!!!');
+      const key = 'screen:openScreenshot';
+      ipcRenderer.on(key, (e, data) => {
+        cb(data);
+      });
+
+      return () => {
+        ipcRenderer.removeListener(key, cb);
+      };
+    },
+  }),
+);
+
+// const ipcBridge2 = getIpcBridge();
+// contextBridge.exposeInMainWorld('electron2', ipcBridge2);
