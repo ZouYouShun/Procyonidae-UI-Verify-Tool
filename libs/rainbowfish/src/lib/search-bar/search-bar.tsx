@@ -19,3 +19,5 @@ export const SearchBar: React.FC<SearchBarProps> = (props) => {
     </div>
   );
 };
+
+export default SearchBar;
