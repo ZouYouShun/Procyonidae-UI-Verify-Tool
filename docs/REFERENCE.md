@@ -15,3 +15,4 @@ https://stackoverflow.com/questions/57505082/would-it-be-safe-to-enable-nodeinte
 ### should alway use contextIsolation
 
 https://github.com/electron/electron/issues/23506
+https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57656281#57656281

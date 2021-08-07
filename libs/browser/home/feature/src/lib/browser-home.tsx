@@ -1,5 +1,6 @@
 import './browser-home.module.scss';
 
+import { useContextBridge } from '@procyonidae/browser/shared/hooks';
 import { BrowserSnippetsFeature } from '@procyonidae/browser/snippets/feature';
 import { useState } from 'react';
 
@@ -7,12 +8,10 @@ import { useState } from 'react';
 export interface BrowserHomeProps {}
 
 export function BrowserHome(props: BrowserHomeProps) {
-  const [image, setImage] = useState('');
+  const contextBridge = useContextBridge();
 
   const handleClick = async () => {
-    const { screenshots } = (window as any).electron;
-    const { dataURL } = await screenshots.open();
-    setImage(dataURL);
+    contextBridge.takeScreenshot();
   };
 
   return (
@@ -23,7 +22,6 @@ export function BrowserHome(props: BrowserHomeProps) {
       >
         Screenshot!
       </button>
-      <img src={image} />
       <BrowserSnippetsFeature />
     </>
   );

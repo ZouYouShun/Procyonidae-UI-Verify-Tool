@@ -65,9 +65,6 @@
       "@procyonidae/browser/snippets/feature": [
         "libs/browser/snippets/feature/src/index.ts"
       ],
-      "@procyonidae/electron/ipc-transport": [
-        "libs/electron/ipc-transport/src/index.ts"
-      ],
       "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]
     }
