@@ -1,14 +1,5 @@
-import { OkData, Screenshots } from '@procyonidae/electron/screen';
-import {
-  BrowserWindow,
-  globalShortcut,
-  ipcMain,
-  ipcRenderer,
-  remote,
-  screen,
-  shell,
-} from 'electron';
-import Events from 'events';
+import { ScreenshotWindow } from '@procyonidae/electron/screen';
+import { BrowserWindow, screen, shell } from 'electron';
 import { join } from 'path';
 import { format } from 'url';
 
@@ -20,6 +11,9 @@ export default class App {
   // be closed automatically when the JavaScript object is garbage collected.
   static mainWindow: Electron.BrowserWindow;
   static application: Electron.App;
+
+  static screenshotWindow: ScreenshotWindow;
+
   static BrowserWindow: typeof BrowserWindow;
 
   public static isDevelopmentMode() {
@@ -40,7 +34,9 @@ export default class App {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    // App.mainWindow.webContents.closeDevTools();
     App.mainWindow = null;
+    console.log('close');
   }
 
   private static onRedirect(event: any, url: string) {
@@ -58,7 +54,7 @@ export default class App {
     App.initMainWindow();
     App.loadMainWindow();
 
-    App.initScreenshotWindow();
+    ScreenshotWindow.getInstance().init(App.mainWindow);
   }
 
   private static onActivate() {
@@ -80,15 +76,16 @@ export default class App {
       height: height,
       show: false,
       webPreferences: {
-        // * That is important, should alway use contextIsolation
-        // * https://github.com/electron/electron/issues/23506
+        // * That is important, should alway use contextIsolation for security and not pollution window environment
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'preload.js'),
       },
     });
+
     App.mainWindow.setMenu(null);
-    App.mainWindow.center();
+    // TODO: only open in prop make use debug easily
+    // App.mainWindow.center();
 
     // if main window is ready to show, close the splash window and show the main window
     App.mainWindow.once('ready-to-show', () => App.mainWindow.show());
@@ -100,14 +97,15 @@ export default class App {
     // });
 
     // Emitted when the window is closed.
-    App.mainWindow.on('closed', () => (App.mainWindow = null));
+    App.mainWindow.on('closed', App.onClose);
   }
 
   private static loadMainWindow() {
     // load the index.html of the app.
     if (!App.application.isPackaged) {
       App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
-      App.mainWindow.webContents.openDevTools();
+      // TODO: open devtool will cause that app can't auto close by nx-electron
+      // App.mainWindow.webContents.openDevTools();
     } else {
       App.mainWindow.loadURL(
         format({
@@ -117,32 +115,6 @@ export default class App {
         }),
       );
     }
-  }
-
-  private static initScreenshotWindow() {
-    const screenshots = new Screenshots();
-
-    // globalShortcut.register('ctrl+shift+a', () => {
-    //   App.mainWindow.minimize();
-    //   screenshots.startCapture();
-    // });
-
-    ipcMain.on('SCREENSHOTS::OPEN', () => {
-      App.mainWindow.minimize();
-      screenshots.startCapture();
-    });
-
-    screenshots.on('ok', (e, { dataURL }: OkData) => {
-      App.mainWindow.restore();
-      App.mainWindow.webContents.send('SCREENSHOTS::OK', { dataURL });
-      // console.log('dataURL :>> ', dataURL);
-    });
-
-    screenshots.on('cancel', () => {
-      App.mainWindow.webContents.send('SCREENSHOTS::CANCEL');
-    });
-
-    // screenshots.on('cancel', (e) => e.preventDefault());
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {

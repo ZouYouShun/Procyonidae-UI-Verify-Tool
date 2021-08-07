@@ -3,7 +3,8 @@ import './browser-screen-views-recorder.module.scss';
 /* eslint-disable-next-line */
 export interface BrowserScreenViewsRecorderProps {}
 
-export function BrowserScreenViewsRecorder(
+export function
+BrowserScreenViewsRecorder(
   props: BrowserScreenViewsRecorderProps,
 ) {
   return (
