@@ -33,6 +33,9 @@
     ]
   },
   "projects": {
+    "api-interfaces": {
+      "tags": []
+    },
     "browser-home-feature": {
       "tags": []
     },
