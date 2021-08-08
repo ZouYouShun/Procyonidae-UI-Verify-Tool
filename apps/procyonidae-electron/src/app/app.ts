@@ -36,7 +36,6 @@ export default class App {
     // when you should delete the corresponding element.
     // App.mainWindow.webContents.closeDevTools();
     App.mainWindow = null;
-    console.log('close');
   }
 
   private static onRedirect(event: any, url: string) {

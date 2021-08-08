@@ -2,10 +2,15 @@ import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
 import { join } from 'path';
 
 import { getScreenshot } from './getScreenshot';
+import { screenIpcKeys } from './screenIpcKeys';
 
 export class ScreenshotWindow {
   // Screenshot Window Object
   captureWindow: Electron.BrowserWindow | null = null;
+
+  get parentWindow() {
+    return this.captureWindow?.getParentWindow();
+  }
 
   private mainDestroy = false;
 
@@ -14,7 +19,6 @@ export class ScreenshotWindow {
     this.initWindow(parentWindow);
 
     parentWindow.on('closed', () => {
-      console.log('main close');
       this.mainDestroy = true;
       /**
        * TODO: link to below
@@ -54,12 +58,9 @@ export class ScreenshotWindow {
     const img = await captureSource;
     const imgURL = img.thumbnail.toDataURL();
 
-    this.captureWindow.webContents.send('screen:openScreenshot', imgURL);
+    this.captureWindow.webContents.send(screenIpcKeys.onReady, imgURL);
 
-    setTimeout(() => {
-      // wait that resize complete
-      this.captureWindow?.show();
-    }, 100);
+    setTimeout(() => this.captureWindow?.show(), 100);
 
     return captureSource;
   }
@@ -74,11 +75,16 @@ export class ScreenshotWindow {
   /**
    * End screenshot
    */
-  endCapture(): void {
+  endCapture(imgURL?: string): void {
     if (!this.captureWindow) return;
-    this.captureWindow.setSimpleFullScreen(false);
+
+    const parentWindow = this.parentWindow;
+
+    if (imgURL && parentWindow) {
+      parentWindow.webContents.send(screenIpcKeys.onConfirmCapture, imgURL);
+    }
+
     this.captureWindow.close();
-    // * for GC
     // (this.captureWindow as any) = null;
   }
 
@@ -93,34 +99,24 @@ export class ScreenshotWindow {
       title: 'screenshots',
       ...rect,
       useContentSize: true,
-      // modal: true,
       parent: parentWindow,
       show: false,
-      autoHideMenuBar: true,
-      minimizable: true,
-      //
-      closable: true,
-
-      transparent: true,
+      frame: false,
       resizable: false,
-      movable: false,
       focusable: true,
-      // is true, the screenshot is displayed as a black screen
-      // So set it to true after the screenshot image is generated.
-      fullscreen: false,
+      transparent: true,
       // Set to true, because mac full-screen windows do not have desktop scrolling effect
       simpleFullscreen: true,
-      titleBarStyle: 'hidden',
       alwaysOnTop: true,
       enableLargerThanScreen: true,
-      skipTaskbar: true,
-      maximizable: false,
       webPreferences: {
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'preload.js'),
       },
     });
+
+    // TODO: should use different load when prod
     captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
 
     return captureWindow;

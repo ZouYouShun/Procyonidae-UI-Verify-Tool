@@ -16,3 +16,10 @@ https://stackoverflow.com/questions/57505082/would-it-be-safe-to-enable-nodeinte
 
 https://github.com/electron/electron/issues/23506
 https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57656281#57656281
+
+## cropperjs
+
+https://github.com/fengyuanchen/cropperjs#options
+
+
+https://www.huaweicloud.com/articles/ed6d6f592c799a9191c02fc3aa3d0f59.html
