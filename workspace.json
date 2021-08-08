@@ -550,7 +550,8 @@
           "executor": "nx-electron:execute",
           "options": {
             "buildTarget": "procyonidae-electron:build",
-            "port": 9229
+            "port": 9229,
+            "args": ["--remote-debugging-port=9222"]
           }
         },
         "package": {
