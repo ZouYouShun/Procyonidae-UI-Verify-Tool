@@ -193,12 +193,3 @@ describe('useKeyboardMoveFocus()', () => {
     },
   );
 });
-function renderHooks(
-  arg0: () => {
-    getPrevFocusableOption: (index?: number, isInfinite?: any) => number;
-    getNextFocusableOption: (index?: number, isInfinite?: any) => number;
-    onKeyFocusedIndexHandle: (event: React.KeyboardEvent<any>) => void;
-  },
-): { current: any } {
-  throw new Error('Function not implemented.');
-}
