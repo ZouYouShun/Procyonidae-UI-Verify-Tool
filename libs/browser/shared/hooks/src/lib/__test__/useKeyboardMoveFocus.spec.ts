@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import _ from 'lodash';
+import range from 'lodash/range';
 import React from 'react';
 
 import {
@@ -10,7 +10,7 @@ import {
 describe('useKeyboardMoveFocus()', () => {
   let mockOnFocusedIndexChangeFn = jest.fn();
 
-  const options = _.range(0, 20);
+  const options = range(0, 20);
 
   beforeEach(() => {
     mockOnFocusedIndexChangeFn = jest.fn();
