@@ -28,9 +28,7 @@ ipcMain.handle('root:hide', (event) => {
 });
 
 // Handle App termination
-ipcMain.on('quit', (event, code) => {
-  app.exit(code);
-});
+ipcMain.on('quit', (event, code) => app.exit(code));
 
 bindScreenIpcListeners();
 bindSnippetIpcListeners();

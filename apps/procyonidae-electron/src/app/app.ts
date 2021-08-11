@@ -1,5 +1,5 @@
 import { ScreenshotWindow } from '@procyonidae/electron/screen';
-import { BrowserWindow, screen, shell } from 'electron';
+import { BrowserWindow, globalShortcut, Menu, screen, shell } from 'electron';
 import { join } from 'path';
 import { format } from 'url';
 
@@ -16,6 +16,8 @@ export default class App {
 
   static BrowserWindow: typeof BrowserWindow;
 
+  static willQuitApp = false;
+
   public static isDevelopmentMode() {
     const isEnvironmentSet: boolean = 'ELECTRON_IS_DEV' in process.env;
     const getFromEnvironment: boolean =
@@ -28,14 +30,6 @@ export default class App {
     if (process.platform !== 'darwin') {
       App.application.quit();
     }
-  }
-
-  private static onClose() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    // App.mainWindow.webContents.closeDevTools();
-    App.mainWindow = null;
   }
 
   private static onRedirect(event: any, url: string) {
@@ -61,6 +55,8 @@ export default class App {
     // dock icon is clicked and there are no other windows open.
     if (App.mainWindow === null) {
       App.onReady();
+    } else {
+      App.mainWindow.show();
     }
   }
 
@@ -95,8 +91,16 @@ export default class App {
     //     App.onRedirect(event, url);
     // });
 
-    // Emitted when the window is closed.
-    App.mainWindow.on('closed', App.onClose);
+    App.mainWindow.on('close', (e) => {
+      if (App.willQuitApp) {
+        App.mainWindow = null;
+      } else {
+        e.preventDefault();
+        // App.mainWindow.hide();
+        // * use send action to make that cursor restore to previous position
+        Menu.sendActionToFirstResponder('hide:');
+      }
+    });
   }
 
   private static loadMainWindow() {
@@ -116,6 +120,15 @@ export default class App {
     }
   }
 
+  private static bindShortcut() {
+    globalShortcut.register('CommandOrControl+shift+X', () => {
+      if (App.mainWindow) {
+        App.mainWindow.show();
+      }
+    });
+    globalShortcut.register('CommandOrControl+shift+v', () => {});
+  }
+
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
     // we pass the Electron.App object and the
     // Electron.BrowserWindow into this function
@@ -126,7 +139,12 @@ export default class App {
     App.application = app;
 
     App.application.on('window-all-closed', App.onWindowAllClosed); // Quit when all windows are closed.
-    App.application.on('ready', App.onReady); // App is ready to load data
+    App.application.on('ready', () => {
+      App.onReady();
+
+      App.bindShortcut();
+    }); // App is ready to load data
     App.application.on('activate', App.onActivate); // App is activated
+    App.application.on('before-quit', () => (App.willQuitApp = true));
   }
 }
