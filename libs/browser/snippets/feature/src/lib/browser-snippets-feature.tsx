@@ -24,7 +24,7 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [textValue, setTextValue] = useState('');
 
-  const { hide } = useContextBridge();
+  const { hide, snippet } = useContextBridge();
 
   const { snippets, prevSnippet, setPrevSnippet } = useSnippetsStore();
 
@@ -68,7 +68,7 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
 
             setHighlightedIndex(value.length === 0 ? -1 : 0);
           },
-          onKeyDown: (e) => {
+          onKeyDown: async (e) => {
             switch (e.key) {
               case 'Enter':
                 const currItem = items[highlightedIndex];
@@ -77,8 +77,9 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
                   setPrevSnippet(currItem);
                 }
 
+                await snippet.confirm(currItem.value);
 
-
+                hide();
                 setTextValue('');
                 break;
               case 'Escape':

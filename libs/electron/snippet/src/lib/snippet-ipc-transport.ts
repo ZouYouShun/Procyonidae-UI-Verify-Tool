@@ -19,8 +19,6 @@ export const getSnippetContextBridge = () => {
 
 export const bindSnippetIpcListeners = () => {
   ipcMain.handle(SnippetIpcKeys.confirm, (e, value: string) => {
-    console.log(value);
-
     clipboard.writeText(value);
 
     // setTimeout(() => {
