@@ -29,6 +29,8 @@ npm start
    2. [ ] record tab sound
    3. [ ] record web cam
 
+7. [ ] keyboard binding manage
+
 ## Tech solution
 
 1. Electron app,
@@ -136,7 +138,6 @@ yarn nx list @nrwl/reactce.
 ```
 
 yarn nx generate @nrwl/react:library --help
-
 
 ## Debug with vscode
 
