@@ -20,6 +20,7 @@ export function BrowserSnippetsUiSearchInput({
       <input
         className="rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none z-10 bg-transparent"
         id="search"
+        autoFocus
         type="text"
         {...InputProps}
       />
