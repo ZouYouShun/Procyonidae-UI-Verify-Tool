@@ -98,9 +98,17 @@ export default class App {
         e.preventDefault();
         // App.mainWindow.hide();
         // * use send action to make that cursor restore to previous position
-        Menu.sendActionToFirstResponder('hide:');
+        App.hideWindow();
       }
     });
+
+    App.mainWindow.on('blur', () => {
+      App.hideWindow();
+    });
+  }
+
+  static hideWindow() {
+    Menu.sendActionToFirstResponder('hide:');
   }
 
   private static loadMainWindow() {

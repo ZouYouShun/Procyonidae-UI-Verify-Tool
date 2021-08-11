@@ -1,8 +1,9 @@
 import { bindScreenIpcListeners } from '@procyonidae/electron/screen';
 import { bindSnippetIpcListeners } from '@procyonidae/electron/snippet';
-import { app, ipcMain, Menu } from 'electron';
+import { app, ipcMain } from 'electron';
 
 import { environment } from '../../environments/environment';
+import App from '../app';
 
 /**
  * This module is responsible on handling all the inter process communications
@@ -23,7 +24,7 @@ ipcMain.handle('root:getAppVersion', (event) => {
 });
 
 ipcMain.handle('root:hide', (event) => {
-  Menu.sendActionToFirstResponder('hide:');
+  App.hideWindow();
   return true;
 });
 
