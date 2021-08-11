@@ -1,8 +1,8 @@
 import { bindScreenIpcListeners } from '@procyonidae/electron/screen';
+import { bindSnippetIpcListeners } from '@procyonidae/electron/snippet';
 import { app, ipcMain, Menu } from 'electron';
 
 import { environment } from '../../environments/environment';
-import App from '../app';
 
 /**
  * This module is responsible on handling all the inter process communications
@@ -33,3 +33,4 @@ ipcMain.on('quit', (event, code) => {
 });
 
 bindScreenIpcListeners();
+bindSnippetIpcListeners();

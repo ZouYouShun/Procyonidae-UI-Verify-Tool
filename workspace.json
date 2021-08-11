@@ -411,6 +411,27 @@
         }
       }
     },
+    "electron-snippet": {
+      "root": "libs/electron/snippet",
+      "sourceRoot": "libs/electron/snippet/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/snippet/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/snippet"],
+          "options": {
+            "jestConfig": "libs/electron/snippet/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "procyonidae": {
       "root": "apps/procyonidae",
       "sourceRoot": "apps/procyonidae/src",

@@ -12,7 +12,8 @@ export type ElectronContextBridge = {
     onConfirmCapture: (cd: (url: string) => void) => () => void;
   };
   snippet: {
-    confirm: (text: string) => void;
+    confirm: (text: string) => Promise<boolean
+    >;
   };
 };
 

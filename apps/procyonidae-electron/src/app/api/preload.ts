@@ -1,5 +1,6 @@
 import { ContextBridgeMap } from '@procyonidae/api-interfaces';
 import { getScreenContextBridge } from '@procyonidae/electron/screen';
+import { getSnippetContextBridge } from '@procyonidae/electron/snippet';
 import { contextBridge, ipcRenderer } from 'electron';
 
 const electron: ContextBridgeMap['electron'] = {
@@ -7,9 +8,7 @@ const electron: ContextBridgeMap['electron'] = {
   getAppVersion: () => ipcRenderer.invoke('root:getAppVersion'),
   hide: () => ipcRenderer.invoke('root:hide'),
   ...getScreenContextBridge(),
-  snippet: {
-    confirm: () => ipcRenderer.invoke('root:hide'),
-  },
+  ...getSnippetContextBridge(),
 };
 
 contextBridge.exposeInMainWorld('electron', electron);
