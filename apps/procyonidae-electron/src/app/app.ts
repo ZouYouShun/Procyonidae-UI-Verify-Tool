@@ -6,6 +6,8 @@ import { format } from 'url';
 import { environment } from '../environments/environment';
 import { rendererAppName, rendererAppPort } from './constants';
 
+const DEFAULT_HEIGHT = 60;
+
 export default class App {
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
@@ -60,16 +62,34 @@ export default class App {
     }
   }
 
+  private static setWindowInCurrentDesktop() {
+    App.mainWindow.setVisibleOnAllWorkspaces(true); // put the window on all screens
+    App.mainWindow.focus(); // focus the window up front on the active screen
+    App.mainWindow.setVisibleOnAllWorkspaces(false); // disable all screen behavior
+
+    const { x, y } = screen.getCursorScreenPoint();
+    const currentDisplay = screen.getDisplayNearestPoint({ x, y });
+    App.mainWindow.setPosition(
+      currentDisplay.workArea.x,
+      currentDisplay.workArea.y,
+    );
+    App.mainWindow.center();
+  }
+
   private static initMainWindow() {
     const workAreaSize = screen.getPrimaryDisplay().workAreaSize;
     const width = Math.min(1280, workAreaSize.width || 1280);
-    const height = Math.min(720, workAreaSize.height || 720);
 
     // Create the browser window.
     App.mainWindow = new BrowserWindow({
-      width: width,
-      height: height,
+      width: width / 2,
+      height: DEFAULT_HEIGHT,
+
       show: false,
+      alwaysOnTop: true,
+      frame: false,
+      // transparent: true,
+      resizable: false,
       webPreferences: {
         // * That is important, should alway use contextIsolation for security and not pollution window environment
         contextIsolation: true,
@@ -83,7 +103,11 @@ export default class App {
     // App.mainWindow.center();
 
     // if main window is ready to show, close the splash window and show the main window
-    App.mainWindow.once('ready-to-show', () => App.mainWindow.show());
+    App.mainWindow.once('ready-to-show', () => {
+      App.setWindowInCurrentDesktop();
+
+      App.mainWindow.show();
+    });
 
     // handle all external redirects in a new browser window
     // App.mainWindow.webContents.on('will-navigate', App.onRedirect);
@@ -102,9 +126,9 @@ export default class App {
       }
     });
 
-    App.mainWindow.on('blur', () => {
-      App.hideWindow();
-    });
+    // App.mainWindow.on('blur', () => {
+    //   App.hideWindow();
+    // });
   }
 
   static hideWindow() {
@@ -135,6 +159,11 @@ export default class App {
       }
     });
     globalShortcut.register('CommandOrControl+shift+v', () => {});
+  }
+
+  static setHeight(height: number) {
+    const [width] = App.mainWindow.getSize();
+    App.mainWindow.setSize(width, height);
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {

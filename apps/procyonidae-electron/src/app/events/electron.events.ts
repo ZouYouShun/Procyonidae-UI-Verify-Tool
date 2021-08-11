@@ -32,4 +32,6 @@ ipcMain.handle('root:hide', (event) => {
 ipcMain.on('quit', (event, code) => app.exit(code));
 
 bindScreenIpcListeners();
-bindSnippetIpcListeners();
+bindSnippetIpcListeners((height) => {
+  App.setHeight(height);
+});

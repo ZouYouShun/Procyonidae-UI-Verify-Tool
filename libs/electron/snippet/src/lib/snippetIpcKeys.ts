@@ -5,4 +5,5 @@ export const SnippetIpcKeys: Record<
   `${SnippetKey}:${keyof SnippetContextBridge}`
 > = {
   confirm: 'snippet:confirm',
+  setHeight: 'snippet:setHeight',
 };

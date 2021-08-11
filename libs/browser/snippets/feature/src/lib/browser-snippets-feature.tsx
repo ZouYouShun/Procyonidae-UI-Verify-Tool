@@ -12,7 +12,7 @@ import {
 } from '@procyonidae/browser/shared/utils';
 import { BrowserSnippetsUiSearchInput } from '@procyonidae/browser/snippets/components/search-input';
 import { BrowserSnippetsUiSearchList } from '@procyonidae/browser/snippets/components/search-list';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /* eslint-disable-next-line */
 export interface BrowserSnippetsFeatureProps {}
@@ -20,6 +20,7 @@ export interface BrowserSnippetsFeatureProps {}
 export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
   const containerRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [textValue, setTextValue] = useState('');
@@ -47,8 +48,15 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
 
   const placeholder = currPrevSnippet?.key || 'Search snippet for auto typing';
 
+  useEffect(() => {
+    if (mainRef.current) {
+      console.log('!', mainRef.current.clientHeight);
+      snippet.setHeight(mainRef.current.clientHeight);
+    }
+  }, [items]);
+
   return (
-    <>
+    <main ref={mainRef}>
       <BrowserSnippetsUiSearchInput
         placeholder={placeholder}
         InputProps={{
@@ -144,7 +152,7 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
           }}
         />
       )}
-    </>
+    </main>
   );
 }
 

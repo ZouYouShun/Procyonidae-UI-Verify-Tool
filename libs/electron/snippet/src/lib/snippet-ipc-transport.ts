@@ -12,14 +12,27 @@ export type SnippetContextBridge = ElectronContextBridge[SnippetKey];
 export const getSnippetContextBridge = () => {
   const snippet: SnippetContextBridge = {
     confirm: (value) => ipcRenderer.invoke(SnippetIpcKeys.confirm, value),
+    setHeight: (value) => ipcRenderer.invoke(SnippetIpcKeys.setHeight, value),
   };
 
   return { snippet };
 };
 
-export const bindSnippetIpcListeners = () => {
+export const bindSnippetIpcListeners = (
+  onHeightChange: (height: number) => void,
+) => {
   ipcMain.handle(SnippetIpcKeys.confirm, (e, value: string) => {
     clipboard.writeText(value);
+
+    // setTimeout(() => {
+    //   robot.typeString(value);
+    // }, 50);
+
+    return true;
+  });
+
+  ipcMain.handle(SnippetIpcKeys.setHeight, (e, value: number) => {
+    onHeightChange(value);
 
     // setTimeout(() => {
     //   robot.typeString(value);
