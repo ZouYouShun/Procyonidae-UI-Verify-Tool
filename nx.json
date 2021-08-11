@@ -84,6 +84,9 @@
     "browser-snippets-feature": {
       "tags": []
     },
+    "electron-keyboard": {
+      "tags": []
+    },
     "electron-screen": {
       "tags": []
     },

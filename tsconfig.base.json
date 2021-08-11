@@ -65,6 +65,7 @@
       "@procyonidae/browser/snippets/feature": [
         "libs/browser/snippets/feature/src/index.ts"
       ],
+      "@procyonidae/electron/keyboard": ["libs/electron/keyboard/src/index.ts"],
       "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
       "@procyonidae/electron/snippet": ["libs/electron/snippet/src/index.ts"],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]

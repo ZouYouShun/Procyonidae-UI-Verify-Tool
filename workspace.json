@@ -390,6 +390,27 @@
         }
       }
     },
+    "electron-keyboard": {
+      "root": "libs/electron/keyboard",
+      "sourceRoot": "libs/electron/keyboard/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/keyboard/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/keyboard"],
+          "options": {
+            "jestConfig": "libs/electron/keyboard/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "electron-screen": {
       "root": "libs/electron/screen",
       "sourceRoot": "libs/electron/screen/src",
