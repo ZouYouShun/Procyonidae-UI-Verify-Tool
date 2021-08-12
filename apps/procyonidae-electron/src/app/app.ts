@@ -80,7 +80,7 @@ export default class App {
       show: false,
       alwaysOnTop: true,
       frame: false,
-      // transparent: true,
+      transparent: true,
       resizable: false,
       webPreferences: {
         // * That is important, should alway use contextIsolation for security and not pollution window environment
@@ -116,9 +116,9 @@ export default class App {
       }
     });
 
-    // this.mainWindow.on('blur', () => {
-    //   this.hideWindow();
-    // });
+    this.mainWindow.on('blur', () => {
+      this.hideWindow();
+    });
   }
 
   private loadMainWindow() {
@@ -166,7 +166,7 @@ export default class App {
 
   setHeight(height: number) {
     const [width] = this.mainWindow.getSize();
-    this.mainWindow.setSize(width, height);
+    this.mainWindow.setSize(width, Math.ceil(height));
   }
 
   main(app: Electron.App, browserWindow: typeof BrowserWindow) {
@@ -184,7 +184,7 @@ export default class App {
 
       this.bindShortcut();
     }); // App is ready to load data
-    this.application.on('activate', this.onActivate); // App is activated
+    this.application.on('activate', () => this.onActivate()); // App is activated
     this.application.on('before-quit', () => (this.willQuitApp = true));
   }
 

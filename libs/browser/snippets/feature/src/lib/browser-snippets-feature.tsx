@@ -4,6 +4,7 @@ import { useSnippetsStore } from '@procyonidae/browser/home/services';
 import {
   useContextBridge,
   useKeyboardMoveFocus,
+  useResizeObserver,
 } from '@procyonidae/browser/shared/hooks';
 import { SnippetModel } from '@procyonidae/browser/shared/models';
 import {
@@ -48,12 +49,15 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
 
   const placeholder = currPrevSnippet?.key || 'Search snippet for auto typing';
 
-  useEffect(() => {
-    if (mainRef.current) {
-      console.log('!', mainRef.current.clientHeight);
-      snippet.setHeight(mainRef.current.clientHeight);
-    }
-  }, [items]);
+  useResizeObserver(
+    mainRef,
+    ([e]) => {
+      snippet.setHeight(e.contentRect.height);
+    },
+    {
+      mode: 'none',
+    },
+  );
 
   return (
     <main ref={mainRef}>
