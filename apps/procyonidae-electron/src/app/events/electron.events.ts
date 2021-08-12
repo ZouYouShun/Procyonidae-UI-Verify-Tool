@@ -23,8 +23,10 @@ ipcMain.handle('root:getAppVersion', (event) => {
   return environment.version;
 });
 
+const mainApp = App.getInstance();
+
 ipcMain.handle('root:hide', (event) => {
-  App.hideWindow();
+  mainApp.hideWindow();
   return true;
 });
 
@@ -33,5 +35,5 @@ ipcMain.on('quit', (event, code) => app.exit(code));
 
 bindScreenIpcListeners();
 bindSnippetIpcListeners((height) => {
-  App.setHeight(height);
+  mainApp.setHeight(height);
 });
