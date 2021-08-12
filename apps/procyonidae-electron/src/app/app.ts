@@ -58,7 +58,7 @@ export default class App {
     if (App.mainWindow === null) {
       App.onReady();
     } else {
-      App.mainWindow.show();
+      App.showWindow();
     }
   }
 
@@ -104,9 +104,7 @@ export default class App {
 
     // if main window is ready to show, close the splash window and show the main window
     App.mainWindow.once('ready-to-show', () => {
-      App.setWindowInCurrentDesktop();
-
-      App.mainWindow.show();
+      App.showWindow();
     });
 
     // handle all external redirects in a new browser window
@@ -155,10 +153,15 @@ export default class App {
   private static bindShortcut() {
     globalShortcut.register('CommandOrControl+shift+X', () => {
       if (App.mainWindow) {
-        App.mainWindow.show();
+        App.showWindow();
       }
     });
     globalShortcut.register('CommandOrControl+shift+v', () => {});
+  }
+
+  private static showWindow() {
+    App.setWindowInCurrentDesktop();
+    App.mainWindow.show();
   }
 
   static setHeight(height: number) {
