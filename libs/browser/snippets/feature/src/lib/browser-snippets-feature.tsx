@@ -26,7 +26,7 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [textValue, setTextValue] = useState('');
 
-  const { hide, snippet } = useContextBridge();
+  const { hide, snippet, settings } = useContextBridge();
 
   const { snippets, prevSnippet, setPrevSnippet } = useSnippetsStore();
 
@@ -140,7 +140,7 @@ export function BrowserSnippetsFeature(props: BrowserSnippetsFeatureProps) {
           },
         }}
         onSetting={() => {
-          console.log('go setting');
+          settings.open();
         }}
       />
       {open && (
