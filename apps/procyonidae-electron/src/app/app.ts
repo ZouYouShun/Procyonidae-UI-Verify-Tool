@@ -1,5 +1,6 @@
 import { ScreenshotWindow } from '@procyonidae/electron/screen';
 import { BrowserWindow, globalShortcut, Menu, screen, shell } from 'electron';
+import { SettingsWindow } from 'libs/electron/settings/src/lib/settings.window';
 import { join } from 'path';
 import { format } from 'url';
 
@@ -13,8 +14,6 @@ export default class App {
   // be closed automatically when the JavaScript object is garbage collected.
   mainWindow: Electron.BrowserWindow;
   application: Electron.App;
-
-  screenshotWindow: ScreenshotWindow;
 
   BrowserWindow: typeof BrowserWindow;
 
@@ -38,10 +37,19 @@ export default class App {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    this.initMainWindow();
-    this.loadMainWindow();
 
-    ScreenshotWindow.getInstance().init(this.mainWindow);
+    const loadURL = this.getLoadURL();
+    this.initMainWindow();
+    this.mainWindow.loadURL(loadURL);
+
+    ScreenshotWindow.getInstance().init(this.mainWindow, {
+      url: loadURL,
+      route: 'screen/screenshot',
+    });
+    SettingsWindow.getInstance().init(this.mainWindow, {
+      url: loadURL,
+      route: 'settings',
+    });
   }
 
   private onActivate() {
@@ -91,7 +99,6 @@ export default class App {
     });
 
     this.mainWindow.setMenu(null);
-    // TODO: only open in prop make use debug easily
     // this.mainWindow.center();
 
     // if main window is ready to show, close the splash window and show the main window
@@ -116,25 +123,23 @@ export default class App {
       }
     });
 
-    this.mainWindow.on('blur', () => {
-      this.hideWindow();
-    });
+    // this.mainWindow.on('blur', () => {
+    //   this.hideWindow();
+    // });
   }
 
-  private loadMainWindow() {
+  private getLoadURL() {
     // load the index.html of the this.
     if (!this.application.isPackaged) {
-      this.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
+      return `http://localhost:${rendererAppPort}`;
       // TODO: open devtool will cause that app can't auto close by nx-electron
       // this.mainWindow.webContents.openDevTools();
     } else {
-      this.mainWindow.loadURL(
-        format({
-          pathname: join(__dirname, '..', rendererAppName, 'index.html'),
-          protocol: 'file:',
-          slashes: true,
-        }),
-      );
+      return format({
+        pathname: join(__dirname, '..', rendererAppName, 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+      });
     }
   }
 
@@ -144,7 +149,12 @@ export default class App {
         this.showWindow();
       }
     });
-    globalShortcut.register('CommandOrControl+shift+v', () => {});
+    globalShortcut.register('CommandOrControl+shift+V', () => {});
+    globalShortcut.register('CommandOrControl+Control+Z', () => {
+      const screenshotWindow = ScreenshotWindow.getInstance();
+
+      screenshotWindow.startCapture();
+    });
   }
 
   isDevelopmentMode() {

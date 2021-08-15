@@ -1,5 +1,6 @@
 import { bindScreenIpcListeners } from '@procyonidae/electron/screen';
 import { bindSnippetIpcListeners } from '@procyonidae/electron/snippet';
+import { bindSettingsIpcListeners } from '@procyonidae/electron/settings';
 import { app, ipcMain } from 'electron';
 
 import { environment } from '../../environments/environment';
@@ -37,3 +38,5 @@ bindScreenIpcListeners();
 bindSnippetIpcListeners((height) => {
   mainApp.setHeight(height);
 });
+
+bindSettingsIpcListeners();
