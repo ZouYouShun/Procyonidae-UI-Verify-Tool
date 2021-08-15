@@ -1,8 +1,13 @@
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
-import { join } from 'path';
+import path, { join } from 'path';
 
 import { getScreenshot } from './getScreenshot';
 import { screenIpcKeys } from './screenIpcKeys';
+
+type WindowOptions = {
+  url: string;
+  route: string;
+};
 
 export class ScreenshotWindow {
   // Screenshot Window Object
@@ -12,9 +17,12 @@ export class ScreenshotWindow {
     return this.captureWindow?.getParentWindow();
   }
 
+  private options!: WindowOptions;
+
   private mainDestroy = false;
 
-  init(parentWindow: BrowserWindow) {
+  init(parentWindow: BrowserWindow, options: WindowOptions) {
+    this.options = options;
     this.mainDestroy = false;
     this.initWindow(parentWindow);
 
@@ -116,8 +124,7 @@ export class ScreenshotWindow {
       },
     });
 
-    // TODO: should use different load when prod
-    captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
+    captureWindow.loadURL(path.join(this.options.url, this.options.route));
 
     return captureWindow;
   }
