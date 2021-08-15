@@ -123,9 +123,14 @@ export default class App {
       }
     });
 
-    // this.mainWindow.on('blur', () => {
-    //   this.hideWindow();
-    // });
+    this.mainWindow.on('blur', () => {
+      const children = this.mainWindow.getChildWindows();
+
+      // * alway have screen window, so that always have that window
+      if (children.length === 1) {
+        this.hideWindow();
+      }
+    });
   }
 
   private getLoadURL() {
