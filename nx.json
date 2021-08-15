@@ -90,6 +90,9 @@
     "electron-screen": {
       "tags": []
     },
+    "electron-settings": {
+      "tags": []
+    },
     "electron-snippet": {
       "tags": []
     },

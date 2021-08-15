@@ -5,6 +5,9 @@ export type ElectronContextBridge = {
   }>;
   /** close window */
   hide: () => void;
+  settings: {
+    open: () => void;
+  };
   screen: {
     open: (type?: 'screenshot' | 'video') => void;
     onReady: (cd: (url: string) => void) => () => void;

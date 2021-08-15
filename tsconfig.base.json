@@ -67,6 +67,7 @@
       ],
       "@procyonidae/electron/keyboard": ["libs/electron/keyboard/src/index.ts"],
       "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
+      "@procyonidae/electron/settings": ["libs/electron/settings/src/index.ts"],
       "@procyonidae/electron/snippet": ["libs/electron/snippet/src/index.ts"],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]
     }
