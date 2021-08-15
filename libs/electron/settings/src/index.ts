@@ -1,1 +1,1 @@
-export * from './lib/electron-settings';
+export * from './lib';
