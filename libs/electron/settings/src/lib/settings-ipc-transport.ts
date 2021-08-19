@@ -18,9 +18,8 @@ export const getSettingsContextBridge = () => {
 
 export const bindSettingsIpcListeners = () => {
   ipcMain.handle(SettingsIpcKeys.open, (e, value: string) => {
-    console.log('!!');
-
-    SettingsWindow.getInstance().open();
+    const settingsWindow = SettingsWindow.getInstance();
+    settingsWindow.open();
     return true;
   });
   // ipcMain.handle(SettingsIpcKeys.setHeight, (e, value: number) => {
