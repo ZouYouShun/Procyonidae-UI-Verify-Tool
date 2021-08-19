@@ -2,6 +2,7 @@ import './browser-settings.module.scss';
 
 import { BrowserSettingsViewsAccount } from '@procyonidae/browser/settings/feature/account';
 import { BrowserSettingsViewsSnippets } from '@procyonidae/browser/settings/feature/snippets';
+import { BrowserSettingsFeatureSpeechToText } from '@procyonidae/browser/settings/feature/speech-to-text';
 import { Link, Route, useRouteMatch } from 'react-router-dom';
 import urljoin from 'url-join';
 
@@ -32,6 +33,14 @@ export function BrowserSettings(props: BrowserSettingsProps) {
               snippets
             </Link>
           </li>
+          <li>
+            <Link
+              className="text-indigo-600 hover:text-indigo-900"
+              to={urljoin(url, 'speech-to-text')}
+            >
+              speech-to-text
+            </Link>
+          </li>
         </ul>
       </Route>
       <Route exact path={urljoin(path, 'account')}>
@@ -39,6 +48,9 @@ export function BrowserSettings(props: BrowserSettingsProps) {
       </Route>
       <Route path={urljoin(path, 'snippets')}>
         <BrowserSettingsViewsSnippets />
+      </Route>
+      <Route path={urljoin(path, 'speech-to-text')}>
+        <BrowserSettingsFeatureSpeechToText />
       </Route>
     </>
   );
