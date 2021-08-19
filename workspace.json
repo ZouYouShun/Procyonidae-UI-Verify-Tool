@@ -206,6 +206,29 @@
         }
       }
     },
+    "browser-settings-feature-speech-to-text": {
+      "root": "libs/browser/settings/feature/speech-to-text",
+      "sourceRoot": "libs/browser/settings/feature/speech-to-text/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/browser/settings/feature/speech-to-text/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/browser/settings/feature/speech-to-text"],
+          "options": {
+            "jestConfig": "libs/browser/settings/feature/speech-to-text/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "browser-shared-assets": {
       "root": "libs/browser/shared/assets",
       "sourceRoot": "libs/browser/shared/assets/src",

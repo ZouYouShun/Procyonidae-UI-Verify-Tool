@@ -41,6 +41,9 @@
       "@procyonidae/browser/settings/feature/snippets": [
         "libs/browser/settings/feature/snippets/src/index.ts"
       ],
+      "@procyonidae/browser/settings/feature/speech-to-text": [
+        "libs/browser/settings/feature/speech-to-text/src/index.ts"
+      ],
       "@procyonidae/browser/shared/assets": [
         "libs/browser/shared/assets/src/index.ts"
       ],
