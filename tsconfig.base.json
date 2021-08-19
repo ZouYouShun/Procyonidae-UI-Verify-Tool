@@ -69,6 +69,9 @@
       "@procyonidae/electron/screen": ["libs/electron/screen/src/index.ts"],
       "@procyonidae/electron/settings": ["libs/electron/settings/src/index.ts"],
       "@procyonidae/electron/snippet": ["libs/electron/snippet/src/index.ts"],
+      "@procyonidae/electron/speech-to-text": [
+        "libs/electron/speech-to-text/src/index.ts"
+      ],
       "@procyonidae/rainbowfish": ["libs/rainbowfish/src/index.ts"]
     }
   },

@@ -35,6 +35,7 @@
   },
   "private": true,
   "dependencies": {
+    "@google-cloud/speech": "^4.6.1",
     "@material-ui/core": "^5.0.0-beta.3",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",

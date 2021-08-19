@@ -474,6 +474,37 @@
         }
       }
     },
+    "electron-speech-to-text": {
+      "root": "libs/electron/speech-to-text",
+      "sourceRoot": "libs/electron/speech-to-text/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/workspace:tsc",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/electron/speech-to-text",
+            "main": "libs/electron/speech-to-text/src/index.ts",
+            "tsConfig": "libs/electron/speech-to-text/tsconfig.lib.json",
+            "assets": ["libs/electron/speech-to-text/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/speech-to-text/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/speech-to-text"],
+          "options": {
+            "jestConfig": "libs/electron/speech-to-text/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "procyonidae": {
       "root": "apps/procyonidae",
       "sourceRoot": "apps/procyonidae/src",
