@@ -1,4 +1,5 @@
 import { ScreenshotWindow } from '@procyonidae/electron/screen';
+import { SpeechToText } from '@procyonidae/electron/speech-to-text';
 import { BrowserWindow, globalShortcut, Menu, screen, shell } from 'electron';
 import { SettingsWindow } from 'libs/electron/settings/src/lib/settings.window';
 import { join } from 'path';
@@ -50,6 +51,8 @@ export default class App {
       url: loadURL,
       route: 'settings',
     });
+
+    SpeechToText.getInstance().init();
   }
 
   private onActivate() {

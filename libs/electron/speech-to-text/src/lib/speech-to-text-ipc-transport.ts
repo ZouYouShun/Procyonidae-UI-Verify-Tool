@@ -11,6 +11,8 @@ export type SpeechToTextContextBridge = ElectronContextBridge[SpeechToTextKey];
 export const getSpeechToTextContextBridge = () => {
   const speechToText: SpeechToTextContextBridge = {
     selectFile: () => ipcRenderer.invoke(SpeechToTextIpcKeys.selectFile),
+    setServiceAccountFile: () =>
+      ipcRenderer.invoke(SpeechToTextIpcKeys.setServiceAccountFile),
   };
 
   return { speechToText };
@@ -31,11 +33,12 @@ export const bindSpeechToTextIpcListeners = () => {
 
     return { result: [], text: '' };
   });
-  // ipcMain.handle(SpeechToTextIpcKeys.setHeight, (e, value: number) => {
-  //   onHeightChange(value);
-  //   // setTimeout(() => {
-  //   //   robot.typeString(value);
-  //   // }, 50);
-  //   return true;
-  // });
+
+  ipcMain.handle(SpeechToTextIpcKeys.setServiceAccountFile, (e) => {
+    const speechToText = SpeechToText.getInstance();
+
+    speechToText.setServiceAccountPath();
+
+    return true;
+  });
 };

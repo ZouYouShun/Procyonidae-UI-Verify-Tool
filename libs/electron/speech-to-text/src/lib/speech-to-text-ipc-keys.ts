@@ -8,4 +8,5 @@ export const SpeechToTextIpcKeys: Record<
   `${SpeechToTextKey}:${keyof SpeechToTextContextBridge}`
 > = {
   selectFile: 'speechToText:selectFile',
+  setServiceAccountFile: 'speechToText:setServiceAccountFile',
 };

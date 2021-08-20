@@ -1,9 +1,30 @@
 import speech from '@google-cloud/speech';
-import type { google } from '@google-cloud/speech/build/protos/protos';
-import { dialog } from 'electron';
+import { app, dialog } from 'electron';
 import fs from 'fs-extra';
+import path, { join } from 'path';
 
+import type { google } from '@google-cloud/speech/build/protos/protos';
 export class SpeechToText {
+  serviceAccountPath = join(app.getAppPath(), 'system/service_account.json');
+
+  init() {
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = this.serviceAccountPath;
+  }
+
+  async setServiceAccountPath() {
+    const filePath = await this.selectFile();
+
+    try {
+      const serviceAccount = fs.readJSONSync(filePath);
+      if ('type' in serviceAccount && 'project_id' in serviceAccount) {
+        fs.ensureDirSync(path.dirname(this.serviceAccountPath));
+        fs.copyFileSync(filePath, this.serviceAccountPath);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async selectFile() {
     const result = await dialog.showOpenDialog({ properties: ['openFile'] });
 
