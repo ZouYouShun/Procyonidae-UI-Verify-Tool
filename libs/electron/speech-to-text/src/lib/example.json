@@ -1,0 +1,32 @@
+[
+  {
+    "alternatives": [
+      {
+        "words": [],
+        "transcript": "Ok LINE的語音是可以儲存的，那我們今天就來嚐試看看這個LINE語音的翻譯由聲音變成文字的效果是多好的，今天天氣晴朗，今天是星期五，我工作了1天，現在休息一下了，今天寫了不少在嗎？不過主要還是在storybook上。",
+        "confidence": 0.9226904511451721
+      }
+    ],
+    "channelTag": 0
+  },
+  {
+    "alternatives": [
+      {
+        "words": [],
+        "transcript": " 我想說晚上可以再來嘗試一下這個bitatek的功能。",
+        "confidence": 0.911912202835083
+      }
+    ],
+    "channelTag": 0
+  },
+  {
+    "alternatives": [
+      {
+        "words": [],
+        "transcript": " 那看看Google到底有多厲害，就讓我們來試試看。",
+        "confidence": 0.9259988069534302
+      }
+    ],
+    "channelTag": 0
+  }
+]

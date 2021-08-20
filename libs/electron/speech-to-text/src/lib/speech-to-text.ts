@@ -1,16 +1,16 @@
 import speech from '@google-cloud/speech';
+import type { google } from '@google-cloud/speech/build/protos/protos';
 import { dialog } from 'electron';
-import fs from 'fs';
+import fs from 'fs-extra';
 
 export class SpeechToText {
   async selectFile() {
     const result = await dialog.showOpenDialog({ properties: ['openFile'] });
 
     if (result.filePaths && result.filePaths?.length > 0) {
-      return { text: await this.getTextFromAudio(result.filePaths[0]) };
+      return result.filePaths[0];
     }
-
-    return { text: '' };
+    return '';
   }
 
   async getTextFromAudio(filePath: string) {
@@ -26,23 +26,36 @@ export class SpeechToText {
         enableAutomaticPunctuation: true,
         sampleRateHertz: 16000,
         encoding: 'LINEAR16',
+        enableWordTimeOffsets: true,
         languageCode: 'cmn-Hant-TW',
         model: 'default',
       },
     });
 
     if (response) {
-      const text = response.results
-        ?.map((x) => {
-          return x.alternatives
-            ?.map((alternatives) => alternatives.transcript)
-            .join('\n');
-        })
-        .join();
-      return text;
+      if (response.results.length === 0) {
+        // TODO When fail write file log
+        // fs.w
+
+        return null;
+      }
+
+      return response;
     }
 
-    return '';
+    return null;
+  }
+
+  responseToString(response: google.cloud.speech.v1.IRecognizeResponse) {
+    const text = response.results
+      ?.map((x) => {
+        return x.alternatives
+          ?.map((alternatives) => alternatives.transcript)
+          .join('\n');
+      })
+      .join();
+
+    return text;
   }
 
   private static instance?: SpeechToText;

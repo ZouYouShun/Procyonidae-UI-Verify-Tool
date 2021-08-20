@@ -17,10 +17,19 @@ export const getSpeechToTextContextBridge = () => {
 };
 
 export const bindSpeechToTextIpcListeners = () => {
-  ipcMain.handle(SpeechToTextIpcKeys.selectFile, (e, value: string) => {
+  ipcMain.handle(SpeechToTextIpcKeys.selectFile, async (e, value: string) => {
     const speechToText = SpeechToText.getInstance();
 
-    return speechToText.selectFile();
+    const filePath = await speechToText.selectFile();
+
+    if (filePath) {
+      const result = await speechToText.getTextFromAudio(filePath);
+      const text = speechToText.responseToString(result);
+
+      return { result, text };
+    }
+
+    return { result: [], text: '' };
   });
   // ipcMain.handle(SpeechToTextIpcKeys.setHeight, (e, value: number) => {
   //   onHeightChange(value);

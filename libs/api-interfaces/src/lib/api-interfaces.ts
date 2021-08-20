@@ -1,3 +1,5 @@
+import type { protos } from '@google-cloud/speech';
+
 export type ElectronContextBridge = {
   platform: NodeJS.Platform;
   getAppVersion: () => Promise<{
@@ -20,6 +22,7 @@ export type ElectronContextBridge = {
   };
   speechToText: {
     selectFile: () => Promise<{
+      result: protos.google.cloud.speech.v1.IRecognizeResponse;
       text: string;
     }>;
   };
