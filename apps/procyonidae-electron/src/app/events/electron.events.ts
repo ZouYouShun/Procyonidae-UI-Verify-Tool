@@ -1,6 +1,7 @@
 import { bindScreenIpcListeners } from '@procyonidae/electron/screen';
-import { bindSnippetIpcListeners } from '@procyonidae/electron/snippet';
 import { bindSettingsIpcListeners } from '@procyonidae/electron/settings';
+import { bindSnippetIpcListeners } from '@procyonidae/electron/snippet';
+import { bindSpeechToTextIpcListeners } from '@procyonidae/electron/speech-to-text';
 import { app, ipcMain } from 'electron';
 
 import { environment } from '../../environments/environment';
@@ -40,3 +41,4 @@ bindSnippetIpcListeners((height) => {
 });
 
 bindSettingsIpcListeners();
+bindSpeechToTextIpcListeners();

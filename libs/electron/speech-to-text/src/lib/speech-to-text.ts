@@ -7,8 +7,10 @@ export class SpeechToText {
     const result = await dialog.showOpenDialog({ properties: ['openFile'] });
 
     if (result.filePaths && result.filePaths?.length > 0) {
-      this.getTextFromAudio(result.filePaths[0]);
+      return { text: await this.getTextFromAudio(result.filePaths[0]) };
     }
+
+    return { text: '' };
   }
 
   async getTextFromAudio(filePath: string) {

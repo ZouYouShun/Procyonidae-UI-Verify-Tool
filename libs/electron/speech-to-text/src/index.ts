@@ -1,1 +1,1 @@
-export * from './lib/electron-speech-to-text';
+export * from './lib';

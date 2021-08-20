@@ -2,6 +2,7 @@ import { ContextBridgeMap } from '@procyonidae/api-interfaces';
 import { getScreenContextBridge } from '@procyonidae/electron/screen';
 import { getSettingsContextBridge } from '@procyonidae/electron/settings';
 import { getSnippetContextBridge } from '@procyonidae/electron/snippet';
+import { getSpeechToTextContextBridge } from '@procyonidae/electron/speech-to-text';
 import { contextBridge, ipcRenderer } from 'electron';
 
 const electron: ContextBridgeMap['electron'] = {
@@ -11,6 +12,7 @@ const electron: ContextBridgeMap['electron'] = {
   ...getScreenContextBridge(),
   ...getSnippetContextBridge(),
   ...getSettingsContextBridge(),
+  ...getSpeechToTextContextBridge(),
 };
 
 contextBridge.exposeInMainWorld('electron', electron);

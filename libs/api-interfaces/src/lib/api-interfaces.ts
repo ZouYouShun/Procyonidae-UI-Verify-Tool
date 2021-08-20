@@ -18,6 +18,11 @@ export type ElectronContextBridge = {
     confirm: (text: string) => Promise<boolean>;
     setHeight: (height: number) => void;
   };
+  speechToText: {
+    selectFile: () => Promise<{
+      text: string;
+    }>;
+  };
 };
 
 export type ContextBridgeMap = {
