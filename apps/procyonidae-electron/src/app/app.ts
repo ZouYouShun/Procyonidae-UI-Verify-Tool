@@ -124,10 +124,11 @@ export default class App {
     });
 
     this.mainWindow.on('blur', () => {
-      const children = this.mainWindow.getChildWindows();
+      const settingsWindow = SettingsWindow.getInstance();
 
-      // * alway have screen window, so that always have that window
-      if (children.length === 1) {
+      if (settingsWindow.window) {
+        this.mainWindow.hide();
+      } else {
         this.hideWindow();
       }
     });
@@ -170,6 +171,10 @@ export default class App {
     return isEnvironmentSet ? getFromEnvironment : !environment.production;
   }
 
+  /**
+   * use `Menu.sendActionToFirstResponder('hide:');`
+   * will auto restore focus to previous window and cursor position
+   */
   hideWindow() {
     Menu.sendActionToFirstResponder('hide:');
   }

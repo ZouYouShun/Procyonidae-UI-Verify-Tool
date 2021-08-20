@@ -7,33 +7,26 @@ type WindowOptions = {
 };
 
 export class SettingsWindow {
-  settingsWindow: Electron.BrowserWindow | null = null;
-
-  private parentWindow!: BrowserWindow;
+  window: Electron.BrowserWindow | null = null;
 
   private options!: WindowOptions;
 
   init(parentWindow: BrowserWindow, options: WindowOptions) {
     this.options = options;
-    this.parentWindow = parentWindow;
-
-    parentWindow.on('closed', () => {
-      this.settingsWindow = null;
-    });
   }
 
   open() {
-    if (this.settingsWindow) {
-      this.settingsWindow?.show();
+    if (this.window) {
+      this.window?.show();
     } else {
-      this.settingsWindow = this.createWindow(this.parentWindow);
+      this.window = this.createWindow();
 
-      this.settingsWindow.once('ready-to-show', () => {
-        this.settingsWindow?.show();
+      this.window.once('ready-to-show', () => {
+        this.window?.show();
       });
 
-      this.settingsWindow.on('close', (e) => {
-        this.settingsWindow = null;
+      this.window.on('close', (e) => {
+        this.window = null;
       });
     }
   }
@@ -41,14 +34,10 @@ export class SettingsWindow {
   /**
    * Initialize window
    */
-  private createWindow(
-    parentWindow: BrowserWindow,
-    rect?: Rectangle,
-  ): BrowserWindow {
+  private createWindow(rect?: Rectangle): BrowserWindow {
     const captureWindow = new BrowserWindow({
       title: 'Settings',
       ...rect,
-      parent: parentWindow,
       show: false,
       resizable: true,
       focusable: true,
