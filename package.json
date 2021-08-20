@@ -35,6 +35,8 @@
   },
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@google-cloud/speech": "^4.6.1",
     "@material-ui/core": "^5.0.0-beta.3",
     "clsx": "^1.1.1",
