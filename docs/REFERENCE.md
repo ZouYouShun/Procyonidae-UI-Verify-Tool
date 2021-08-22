@@ -21,5 +21,12 @@ https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57
 
 https://github.com/fengyuanchen/cropperjs#options
 
-
 https://www.huaweicloud.com/articles/ed6d6f592c799a9191c02fc3aa3d0f59.html
+
+## tailwind
+
+https://tailwindcomponents.com/
+
+https://www.creative-tim.com/learning-lab/tailwind/react/inputs/notus
+
+https://www.tailwindtoolbox.com/templates/minimal-admin-template
