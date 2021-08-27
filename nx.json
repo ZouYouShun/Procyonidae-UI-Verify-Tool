@@ -118,6 +118,13 @@
     "rainbowfish-e2e": {
       "tags": [],
       "implicitDependencies": ["rainbowfish"]
+    },
+    "speech-to-text": {
+      "tags": []
+    },
+    "speech-to-text-e2e": {
+      "tags": [],
+      "implicitDependencies": ["speech-to-text"]
     }
   }
 }

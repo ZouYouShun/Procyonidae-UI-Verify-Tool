@@ -781,6 +781,108 @@
           }
         }
       }
+    },
+    "speech-to-text": {
+      "root": "apps/speech-to-text",
+      "sourceRoot": "apps/speech-to-text/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/speech-to-text",
+            "index": "apps/speech-to-text/src/index.html",
+            "main": "apps/speech-to-text/src/main.tsx",
+            "polyfills": "apps/speech-to-text/src/polyfills.ts",
+            "tsConfig": "apps/speech-to-text/tsconfig.app.json",
+            "assets": [
+              "apps/speech-to-text/src/favicon.ico",
+              "apps/speech-to-text/src/assets"
+            ],
+            "styles": ["apps/speech-to-text/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/speech-to-text/src/environments/environment.ts",
+                  "with": "apps/speech-to-text/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "speech-to-text:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "speech-to-text:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/speech-to-text/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/speech-to-text"],
+          "options": {
+            "jestConfig": "apps/speech-to-text/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "speech-to-text-e2e": {
+      "root": "apps/speech-to-text-e2e",
+      "sourceRoot": "apps/speech-to-text-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/speech-to-text-e2e/cypress.json",
+            "tsConfig": "apps/speech-to-text-e2e/tsconfig.e2e.json",
+            "devServerTarget": "speech-to-text:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "speech-to-text:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/speech-to-text-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   },
   "cli": {
