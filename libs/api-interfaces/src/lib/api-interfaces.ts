@@ -1,4 +1,4 @@
-import type { google } from '@google-cloud/speech/build/protos/protos';
+import { SpeechToTextResponse } from './speech-to-text.interface';
 
 export type ElectronContextBridge = {
   platform: NodeJS.Platform;
@@ -23,9 +23,10 @@ export type ElectronContextBridge = {
   speechToText: {
     setServiceAccountFile: () => void;
     selectFile: () => Promise<{
-      result: google.cloud.speech.v1.IRecognizeResponse;
       text: string;
+      data: SpeechToTextResponse[];
     }>;
+    saveFile: (data: SpeechToTextResponse[]) => Promise<string>;
   };
 };
 

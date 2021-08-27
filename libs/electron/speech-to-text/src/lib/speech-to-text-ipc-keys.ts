@@ -9,4 +9,5 @@ export const SpeechToTextIpcKeys: Record<
 > = {
   selectFile: 'speechToText:selectFile',
   setServiceAccountFile: 'speechToText:setServiceAccountFile',
+  saveFile: 'speechToText:saveFile',
 };

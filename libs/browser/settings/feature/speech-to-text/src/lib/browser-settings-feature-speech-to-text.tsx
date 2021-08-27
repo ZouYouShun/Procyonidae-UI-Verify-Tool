@@ -5,6 +5,7 @@ import { useContextBridge } from '@procyonidae/browser/shared/hooks';
 import { useState } from 'react';
 
 import type { google } from '@google-cloud/speech/build/protos/protos';
+import { SpeechToTextResponse } from '@procyonidae/api-interfaces';
 /* eslint-disable-next-line */
 export interface BrowserSettingsFeatureSpeechToTextProps {}
 
@@ -15,9 +16,7 @@ export function BrowserSettingsFeatureSpeechToText(
 
   const [text, setText] = useState('');
 
-  const [recognize, setRecognize] = useState<
-    google.cloud.speech.v1.ISpeechRecognitionResult[]
-  >([]);
+  const [data, setData] = useState<SpeechToTextResponse[]>([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -35,10 +34,12 @@ export function BrowserSettingsFeatureSpeechToText(
         className="w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200"
         onClick={async () => {
           setLoading(true);
-          const { result, text } = await speechToText.selectFile();
+          const { data, text } = await speechToText.selectFile();
 
-          if (result.results) {
-            setRecognize(result.results);
+          console.log(JSON.stringify(data));
+
+          if (data) {
+            setData(data);
             setText(text);
           }
           setLoading(false);
@@ -46,9 +47,17 @@ export function BrowserSettingsFeatureSpeechToText(
       >
         Choice file
       </button>
+      <button
+        className="w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200"
+        onClick={() => {
+          speechToText.saveFile(data);
+        }}
+      >
+        Save file
+      </button>
       {loading && <CircularProgress />}
       <p className="whitespace-pre-wrap">{text}</p>
-      <pre>{JSON.stringify(recognize, null, 2)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
       {/* {recognize.map((item) => {
         return <div>{item.alternatives.}</div>
       })} */}

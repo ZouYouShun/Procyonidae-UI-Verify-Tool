@@ -30,3 +30,14 @@ https://tailwindcomponents.com/
 https://www.creative-tim.com/learning-lab/tailwind/react/inputs/notus
 
 https://www.tailwindtoolbox.com/templates/minimal-admin-template
+
+https://tailwindcomponents.com/component/dashboard-template
+
+
+# speech-to-text
+
+https://cloud.google.com/speech-to-text/quotas
+https://cloud.google.com/speech-to-text/docs/async-recognize#speech_transcribe_async_gcs-nodejs
+https://unix.stackexchange.com/questions/182602/trim-audio-file-using-start-and-stop-times
+
+https://studio.youtube.com/video/f3UFODZ7a2s/edit

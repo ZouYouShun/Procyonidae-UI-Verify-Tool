@@ -3,54 +3,20 @@ import './browser-settings.module.scss';
 import { BrowserSettingsViewsAccount } from '@procyonidae/browser/settings/feature/account';
 import { BrowserSettingsViewsSnippets } from '@procyonidae/browser/settings/feature/snippets';
 import { BrowserSettingsFeatureSpeechToText } from '@procyonidae/browser/settings/feature/speech-to-text';
-import { Link, Route, useRouteMatch } from 'react-router-dom';
+import { Link, NavLink, Route, useRouteMatch } from 'react-router-dom';
 import urljoin from 'url-join';
-
-{
-  /* <Route exact path={path}>
-<h1>Welcome to browser-settings!</h1>
-<ul>
-  <li>
-    <Link
-      className="text-indigo-600 hover:text-indigo-900"
-      to={urljoin(url, 'account')}
-    >
-      account
-    </Link>
-  </li>
-  <li>
-    <Link
-      className="text-indigo-600 hover:text-indigo-900"
-      to={urljoin(url, 'snippets')}
-    >
-      snippets
-    </Link>
-  </li>
-  <li>
-    <Link
-      className="text-indigo-600 hover:text-indigo-900"
-      to={urljoin(url, 'speech-to-text')}
-    >
-      speech-to-text
-    </Link>
-  </li>
-</ul>
-</Route>
-<Route exact path={urljoin(path, 'account')}>
-<BrowserSettingsViewsAccount />
-</Route>
-<Route path={urljoin(path, 'snippets')}>
-<BrowserSettingsViewsSnippets />
-</Route>
-<Route path={urljoin(path, 'speech-to-text')}>
-<BrowserSettingsFeatureSpeechToText />
-</Route> */
-}
 
 /* eslint-disable-next-line */
 export interface BrowserSettingsProps {}
 
 const routes = [
+  {
+    path: 'account',
+    component: BrowserSettingsViewsAccount,
+    data: {
+      title: 'Account',
+    },
+  },
   {
     path: 'snippets',
     component: BrowserSettingsViewsSnippets,
@@ -65,49 +31,40 @@ const routes = [
       title: 'Speech',
     },
   },
-  {
-    path: 'account',
-    component: BrowserSettingsViewsAccount,
-    data: {
-      title: 'Account',
-    },
-  },
 ];
 
 export function BrowserSettings(props: BrowserSettingsProps) {
   const { url, path } = useRouteMatch();
 
   return (
-    <section className="container">
-      <nav className="w-25 p-3">
-        <header className="d-flex pb-3">
-          <h2>
-            <Link to={url}>AstralStar</Link>
-          </h2>
+    <section className="flex min-h-screen bg-gray-300">
+      <nav className="w-60 bg-gray-900 p-3">
+        <header className="flex justify-center">
+          <Link className="text-4xl text-white m-3" to={url}>
+            AstralStar
+          </Link>
         </header>
-        <ul>
-          {routes.map((route) => {
-            return (
-              <li key={route.path}>
-                <Link
-                  className="text-indigo-600 hover:text-indigo-900"
-                  to={urljoin(url, route.path)}
-                >
-                  {route.data.title}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        {routes.map((route) => {
+          return (
+            <NavLink
+              key={route.path}
+              className="flex text-gray-100 text-opacity-50 hover:bg-gray-700 hover:bg-opacity-25 hover:text-opacity-100 items-center mt-4 px-6 py-2 "
+              activeClassName="bg-gray-700 text-opacity-100 hover:bg-opacity-100"
+              to={urljoin(url, route.path)}
+            >
+              {route.data.title}
+            </NavLink>
+          );
+        })}
       </nav>
-      <main className="py-3 pl-0 w-100">
+      <main className="p-3 flex-auto overflow-auto h-screen">
         <Route exact path={path}>
           <h1>Welcome to browser-settings!</h1>
         </Route>
         {routes.map((route) => {
           const Component = route.component;
           return (
-            <Route exact path={urljoin(path, route.path)}>
+            <Route key={route.path} path={urljoin(path, route.path)}>
               <Component />
             </Route>
           );

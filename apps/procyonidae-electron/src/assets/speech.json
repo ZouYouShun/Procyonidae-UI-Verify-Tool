@@ -1,0 +1,776 @@
+{
+  "results": [
+    {
+      "alternatives": [
+        {
+          "words": [
+            {
+              "startTime": { "seconds": "0", "nanos": 0 },
+              "endTime": { "seconds": "1", "nanos": 0 },
+              "word": "ok",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "1", "nanos": 0 },
+              "endTime": { "seconds": "1", "nanos": 600000000 },
+              "word": "line",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "1", "nanos": 600000000 },
+              "endTime": { "seconds": "1", "nanos": 800000000 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "1", "nanos": 800000000 },
+              "endTime": { "seconds": "1", "nanos": 800000000 },
+              "word": "語",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "1", "nanos": 800000000 },
+              "endTime": { "seconds": "2", "nanos": 0 },
+              "word": "音",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 0 },
+              "endTime": { "seconds": "2", "nanos": 200000000 },
+              "word": "是",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 200000000 },
+              "endTime": { "seconds": "2", "nanos": 300000000 },
+              "word": "可",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 300000000 },
+              "endTime": { "seconds": "2", "nanos": 400000000 },
+              "word": "以",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 400000000 },
+              "endTime": { "seconds": "2", "nanos": 600000000 },
+              "word": "儲",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 600000000 },
+              "endTime": { "seconds": "2", "nanos": 700000000 },
+              "word": "存",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "2", "nanos": 700000000 },
+              "endTime": { "seconds": "3", "nanos": 0 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "3", "nanos": 0 },
+              "endTime": { "seconds": "4", "nanos": 100000000 },
+              "word": "那",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "4", "nanos": 100000000 },
+              "endTime": { "seconds": "4", "nanos": 200000000 },
+              "word": "我",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "4", "nanos": 200000000 },
+              "endTime": { "seconds": "4", "nanos": 300000000 },
+              "word": "們",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "4", "nanos": 300000000 },
+              "endTime": { "seconds": "4", "nanos": 400000000 },
+              "word": "今",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "4", "nanos": 400000000 },
+              "endTime": { "seconds": "4", "nanos": 600000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "4", "nanos": 600000000 },
+              "endTime": { "seconds": "5", "nanos": 100000000 },
+              "word": "就",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "5", "nanos": 100000000 },
+              "endTime": { "seconds": "5", "nanos": 100000000 },
+              "word": "來",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "5", "nanos": 100000000 },
+              "endTime": { "seconds": "5", "nanos": 400000000 },
+              "word": "嚐",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "5", "nanos": 400000000 },
+              "endTime": { "seconds": "5", "nanos": 600000000 },
+              "word": "試",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "5", "nanos": 600000000 },
+              "endTime": { "seconds": "5", "nanos": 800000000 },
+              "word": "看",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "5", "nanos": 800000000 },
+              "endTime": { "seconds": "6", "nanos": 0 },
+              "word": "看",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "6", "nanos": 0 },
+              "endTime": { "seconds": "6", "nanos": 200000000 },
+              "word": "這",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "6", "nanos": 200000000 },
+              "endTime": { "seconds": "6", "nanos": 300000000 },
+              "word": "個",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "6", "nanos": 300000000 },
+              "endTime": { "seconds": "6", "nanos": 500000000 },
+              "word": "line",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "6", "nanos": 500000000 },
+              "endTime": { "seconds": "6", "nanos": 800000000 },
+              "word": "語",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "6", "nanos": 800000000 },
+              "endTime": { "seconds": "7", "nanos": 0 },
+              "word": "音",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "7", "nanos": 0 },
+              "endTime": { "seconds": "7", "nanos": 200000000 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "7", "nanos": 200000000 },
+              "endTime": { "seconds": "7", "nanos": 500000000 },
+              "word": "翻",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "7", "nanos": 500000000 },
+              "endTime": { "seconds": "7", "nanos": 600000000 },
+              "word": "譯",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "7", "nanos": 600000000 },
+              "endTime": { "seconds": "8", "nanos": 600000000 },
+              "word": "由",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "8", "nanos": 600000000 },
+              "endTime": { "seconds": "8", "nanos": 900000000 },
+              "word": "聲",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "8", "nanos": 900000000 },
+              "endTime": { "seconds": "9", "nanos": 100000000 },
+              "word": "音",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "9", "nanos": 100000000 },
+              "endTime": { "seconds": "9", "nanos": 300000000 },
+              "word": "變",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "9", "nanos": 300000000 },
+              "endTime": { "seconds": "9", "nanos": 400000000 },
+              "word": "成",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "9", "nanos": 400000000 },
+              "endTime": { "seconds": "9", "nanos": 600000000 },
+              "word": "文",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "9", "nanos": 600000000 },
+              "endTime": { "seconds": "9", "nanos": 800000000 },
+              "word": "字",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "9", "nanos": 800000000 },
+              "endTime": { "seconds": "10", "nanos": 0 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "10", "nanos": 0 },
+              "endTime": { "seconds": "10", "nanos": 200000000 },
+              "word": "效",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "10", "nanos": 200000000 },
+              "endTime": { "seconds": "10", "nanos": 400000000 },
+              "word": "果",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "10", "nanos": 400000000 },
+              "endTime": { "seconds": "10", "nanos": 800000000 },
+              "word": "是",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "10", "nanos": 800000000 },
+              "endTime": { "seconds": "11", "nanos": 0 },
+              "word": "多",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "11", "nanos": 0 },
+              "endTime": { "seconds": "11", "nanos": 200000000 },
+              "word": "好",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "11", "nanos": 200000000 },
+              "endTime": { "seconds": "11", "nanos": 400000000 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "11", "nanos": 400000000 },
+              "endTime": { "seconds": "13", "nanos": 600000000 },
+              "word": "今",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "13", "nanos": 600000000 },
+              "endTime": { "seconds": "13", "nanos": 600000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "13", "nanos": 600000000 },
+              "endTime": { "seconds": "13", "nanos": 800000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "13", "nanos": 800000000 },
+              "endTime": { "seconds": "14", "nanos": 0 },
+              "word": "氣",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "14", "nanos": 0 },
+              "endTime": { "seconds": "14", "nanos": 600000000 },
+              "word": "晴",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "14", "nanos": 600000000 },
+              "endTime": { "seconds": "15", "nanos": 0 },
+              "word": "朗",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "15", "nanos": 0 },
+              "endTime": { "seconds": "16", "nanos": 200000000 },
+              "word": "今",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "16", "nanos": 200000000 },
+              "endTime": { "seconds": "16", "nanos": 300000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "16", "nanos": 300000000 },
+              "endTime": { "seconds": "16", "nanos": 500000000 },
+              "word": "是",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "16", "nanos": 500000000 },
+              "endTime": { "seconds": "16", "nanos": 800000000 },
+              "word": "星",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "16", "nanos": 800000000 },
+              "endTime": { "seconds": "16", "nanos": 900000000 },
+              "word": "期",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "16", "nanos": 900000000 },
+              "endTime": { "seconds": "17", "nanos": 100000000 },
+              "word": "五",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "17", "nanos": 100000000 },
+              "endTime": { "seconds": "17", "nanos": 500000000 },
+              "word": "我",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "17", "nanos": 500000000 },
+              "endTime": { "seconds": "19", "nanos": 100000000 },
+              "word": "工",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "19", "nanos": 100000000 },
+              "endTime": { "seconds": "19", "nanos": 300000000 },
+              "word": "作",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "19", "nanos": 300000000 },
+              "endTime": { "seconds": "19", "nanos": 400000000 },
+              "word": "了",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "19", "nanos": 500000000 },
+              "endTime": { "seconds": "19", "nanos": 500000000 },
+              "word": "一",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "19", "nanos": 500000000 },
+              "endTime": { "seconds": "19", "nanos": 700000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "19", "nanos": 700000000 },
+              "endTime": { "seconds": "20", "nanos": 500000000 },
+              "word": "現",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "20", "nanos": 500000000 },
+              "endTime": { "seconds": "20", "nanos": 600000000 },
+              "word": "在",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "20", "nanos": 600000000 },
+              "endTime": { "seconds": "20", "nanos": 800000000 },
+              "word": "休",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "20", "nanos": 800000000 },
+              "endTime": { "seconds": "20", "nanos": 900000000 },
+              "word": "息",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "20", "nanos": 900000000 },
+              "endTime": { "seconds": "20", "nanos": 900000000 },
+              "word": "一",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "20", "nanos": 900000000 },
+              "endTime": { "seconds": "21", "nanos": 0 },
+              "word": "下",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "21", "nanos": 0 },
+              "endTime": { "seconds": "21", "nanos": 400000000 },
+              "word": "了",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "21", "nanos": 400000000 },
+              "endTime": { "seconds": "22", "nanos": 600000000 },
+              "word": "今",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "22", "nanos": 600000000 },
+              "endTime": { "seconds": "22", "nanos": 700000000 },
+              "word": "天",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "22", "nanos": 700000000 },
+              "endTime": { "seconds": "23", "nanos": 700000000 },
+              "word": "寫",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "23", "nanos": 700000000 },
+              "endTime": { "seconds": "23", "nanos": 900000000 },
+              "word": "了",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "23", "nanos": 900000000 },
+              "endTime": { "seconds": "24", "nanos": 100000000 },
+              "word": "不",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "24", "nanos": 100000000 },
+              "endTime": { "seconds": "24", "nanos": 200000000 },
+              "word": "少",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "24", "nanos": 200000000 },
+              "endTime": { "seconds": "24", "nanos": 400000000 },
+              "word": "在",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "24", "nanos": 400000000 },
+              "endTime": { "seconds": "24", "nanos": 600000000 },
+              "word": "嗎",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "24", "nanos": 600000000 },
+              "endTime": { "seconds": "26", "nanos": 600000000 },
+              "word": "不",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "26", "nanos": 600000000 },
+              "endTime": { "seconds": "26", "nanos": 700000000 },
+              "word": "過",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "26", "nanos": 700000000 },
+              "endTime": { "seconds": "26", "nanos": 900000000 },
+              "word": "主",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "26", "nanos": 900000000 },
+              "endTime": { "seconds": "27", "nanos": 0 },
+              "word": "要",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "27", "nanos": 0 },
+              "endTime": { "seconds": "27", "nanos": 100000000 },
+              "word": "還",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "27", "nanos": 100000000 },
+              "endTime": { "seconds": "27", "nanos": 200000000 },
+              "word": "是",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "27", "nanos": 200000000 },
+              "endTime": { "seconds": "27", "nanos": 300000000 },
+              "word": "在",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "27", "nanos": 300000000 },
+              "endTime": { "seconds": "28", "nanos": 0 },
+              "word": "storybook",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "28", "nanos": 0 },
+              "endTime": { "seconds": "28", "nanos": 300000000 },
+              "word": "上",
+              "speakerTag": 0
+            }
+          ],
+          "transcript": "Ok LINE的語音是可以儲存的，那我們今天就來嚐試看看這個LINE語音的翻譯由聲音變成文字的效果是多好的，今天天氣晴朗，今天是星期五，我工作了1天，現在休息一下了，今天寫了不少在嗎？不過主要還是在storybook上。",
+          "confidence": 0.9226905107498169
+        }
+      ],
+      "channelTag": 0
+    },
+    {
+      "alternatives": [
+        {
+          "words": [
+            {
+              "startTime": { "seconds": "30", "nanos": 400000000 },
+              "endTime": { "seconds": "30", "nanos": 500000000 },
+              "word": "我",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "30", "nanos": 500000000 },
+              "endTime": { "seconds": "31", "nanos": 500000000 },
+              "word": "想",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "31", "nanos": 500000000 },
+              "endTime": { "seconds": "31", "nanos": 600000000 },
+              "word": "說",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "31", "nanos": 600000000 },
+              "endTime": { "seconds": "33", "nanos": 200000000 },
+              "word": "晚",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "33", "nanos": 200000000 },
+              "endTime": { "seconds": "33", "nanos": 300000000 },
+              "word": "上",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "33", "nanos": 300000000 },
+              "endTime": { "seconds": "33", "nanos": 600000000 },
+              "word": "可",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "33", "nanos": 600000000 },
+              "endTime": { "seconds": "33", "nanos": 600000000 },
+              "word": "以",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "33", "nanos": 600000000 },
+              "endTime": { "seconds": "33", "nanos": 800000000 },
+              "word": "再",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "33", "nanos": 800000000 },
+              "endTime": { "seconds": "34", "nanos": 0 },
+              "word": "來",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "34", "nanos": 0 },
+              "endTime": { "seconds": "34", "nanos": 300000000 },
+              "word": "嘗",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "34", "nanos": 300000000 },
+              "endTime": { "seconds": "34", "nanos": 400000000 },
+              "word": "試",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "34", "nanos": 400000000 },
+              "endTime": { "seconds": "34", "nanos": 600000000 },
+              "word": "一",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "34", "nanos": 600000000 },
+              "endTime": { "seconds": "34", "nanos": 800000000 },
+              "word": "下",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "34", "nanos": 800000000 },
+              "endTime": { "seconds": "35", "nanos": 0 },
+              "word": "這",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "35", "nanos": 0 },
+              "endTime": { "seconds": "35", "nanos": 0 },
+              "word": "個",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "35", "nanos": 0 },
+              "endTime": { "seconds": "36", "nanos": 300000000 },
+              "word": "bitatek",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "36", "nanos": 300000000 },
+              "endTime": { "seconds": "36", "nanos": 700000000 },
+              "word": "的",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "36", "nanos": 700000000 },
+              "endTime": { "seconds": "36", "nanos": 900000000 },
+              "word": "功",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "36", "nanos": 900000000 },
+              "endTime": { "seconds": "37", "nanos": 0 },
+              "word": "能",
+              "speakerTag": 0
+            }
+          ],
+          "transcript": " 我想說晚上可以再來嘗試一下這個bitatek的功能。",
+          "confidence": 0.911912202835083
+        }
+      ],
+      "channelTag": 0
+    },
+    {
+      "alternatives": [
+        {
+          "words": [
+            {
+              "startTime": { "seconds": "38", "nanos": 300000000 },
+              "endTime": { "seconds": "38", "nanos": 700000000 },
+              "word": "那",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "38", "nanos": 700000000 },
+              "endTime": { "seconds": "39", "nanos": 100000000 },
+              "word": "看",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "39", "nanos": 100000000 },
+              "endTime": { "seconds": "39", "nanos": 200000000 },
+              "word": "看",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "39", "nanos": 200000000 },
+              "endTime": { "seconds": "39", "nanos": 500000000 },
+              "word": "google",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "39", "nanos": 500000000 },
+              "endTime": { "seconds": "40", "nanos": 100000000 },
+              "word": "到",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 100000000 },
+              "endTime": { "seconds": "40", "nanos": 300000000 },
+              "word": "底",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 300000000 },
+              "endTime": { "seconds": "40", "nanos": 400000000 },
+              "word": "有",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 400000000 },
+              "endTime": { "seconds": "40", "nanos": 400000000 },
+              "word": "多",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 400000000 },
+              "endTime": { "seconds": "40", "nanos": 700000000 },
+              "word": "厲",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 700000000 },
+              "endTime": { "seconds": "40", "nanos": 800000000 },
+              "word": "害",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "40", "nanos": 800000000 },
+              "endTime": { "seconds": "41", "nanos": 500000000 },
+              "word": "就",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "41", "nanos": 500000000 },
+              "endTime": { "seconds": "41", "nanos": 600000000 },
+              "word": "讓",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "41", "nanos": 600000000 },
+              "endTime": { "seconds": "41", "nanos": 700000000 },
+              "word": "我",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "41", "nanos": 700000000 },
+              "endTime": { "seconds": "41", "nanos": 700000000 },
+              "word": "們",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "41", "nanos": 700000000 },
+              "endTime": { "seconds": "41", "nanos": 800000000 },
+              "word": "來",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "41", "nanos": 800000000 },
+              "endTime": { "seconds": "42", "nanos": 0 },
+              "word": "試",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "42", "nanos": 0 },
+              "endTime": { "seconds": "42", "nanos": 100000000 },
+              "word": "試",
+              "speakerTag": 0
+            },
+            {
+              "startTime": { "seconds": "42", "nanos": 100000000 },
+              "endTime": { "seconds": "42", "nanos": 300000000 },
+              "word": "看",
+              "speakerTag": 0
+            }
+          ],
+          "transcript": " 那看看Google到底有多厲害，就讓我們來試試看。",
+          "confidence": 0.9259988069534302
+        }
+      ],
+      "channelTag": 0
+    }
+  ],
+  "totalBilledTime": { "seconds": "45", "nanos": 0 }
+}
