@@ -798,11 +798,16 @@
             "tsConfig": "apps/speech-to-text/tsconfig.app.json",
             "assets": [
               "apps/speech-to-text/src/favicon.ico",
-              "apps/speech-to-text/src/assets"
+              "apps/speech-to-text/src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@ffmpeg/core/dist",
+                "output": "@ffmpeg"
+              }
             ],
             "styles": ["apps/speech-to-text/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/speech-to-text/webpack.config.js"
           },
           "configurations": {
             "production": {

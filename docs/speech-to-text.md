@@ -20,3 +20,11 @@ https://einverne.github.io/post/2015/02/ffprobe-show-media-info.html
 ffprobe -show_streams -show_entries format=bit_rate,filename,start_time:stream=duration,width,height,display_aspect_ratio,r_frame_rate,bit_rate -of json -v quiet -i 98a74a06741a091b8a42aaa31b4edc66.mp4
 
 ```
+
+https://github.com/ffmpegwasm/ffmpeg.wasm#installation
+
+# need add that in dev server
+
+<!-- node_modules/@nrwl/react/plugins/webpack.js -->
+config.devServer.headers['Cross-Origin-Embedder-Policy']='require-corp';
+config.devServer.headers['Cross-Origin-Opener-Policy']='same-origin';
