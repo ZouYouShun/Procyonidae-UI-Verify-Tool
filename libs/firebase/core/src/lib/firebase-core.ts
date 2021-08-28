@@ -3,23 +3,25 @@ import { initializeApp } from 'firebase/app';
 import {
   browserLocalPersistence,
   getAuth,
+  getRedirectResult,
   GoogleAuthProvider,
   NextOrObserver,
   onAuthStateChanged,
   setPersistence,
   signInWithPopup,
+  signInWithRedirect,
   User,
 } from 'firebase/auth';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD8O13I9cBrfdBSO8800dyPoASyd7aBVvs",
-  authDomain: "speech-to-text-97033.firebaseapp.com",
-  projectId: "speech-to-text-97033",
-  storageBucket: "speech-to-text-97033.appspot.com",
-  messagingSenderId: "19610473048",
-  appId: "1:19610473048:web:1d7f590afbbd1e845cb02d",
-  measurementId: "G-Q7M4X9HKNF"
+  apiKey: 'AIzaSyD8O13I9cBrfdBSO8800dyPoASyd7aBVvs',
+  authDomain: 'speech-to-text-97033.firebaseapp.com',
+  projectId: 'speech-to-text-97033',
+  storageBucket: 'speech-to-text-97033.appspot.com',
+  messagingSenderId: '19610473048',
+  appId: '1:19610473048:web:1d7f590afbbd1e845cb02d',
+  measurementId: 'G-Q7M4X9HKNF',
 };
 
 export const initFirebase = () => {
@@ -63,6 +65,22 @@ export const signInGoogle = () => {
         }),
     );
   });
+};
+
+export const getFirebaseRedirectResult = async () => {
+  const auth = getAuth();
+
+  const result = await getRedirectResult(auth);
+
+  if (result) {
+    const user = result.user;
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential?.accessToken;
+
+    return { token, user };
+  }
+
+  return null;
 };
 
 export const signOutGoogle = () => {
