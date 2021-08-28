@@ -1,7 +1,17 @@
 import './App.css';
 
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import {
+  getFirebaseRedirectResult,
+  initFirebase,
+  onFireAuthStateChanged,
+  signInGoogle,
+  signOutGoogle,
+} from '@procyonidae/firebase/core';
+import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+
+initFirebase();
 
 const ffmpeg = createFFmpeg({
   corePath: './@ffmpeg/ffmpeg-core.js',
@@ -11,6 +21,9 @@ function App() {
   const [ready, setReady] = useState(false);
   const [video, setVideo] = useState<File>();
   const [gif, setGif] = useState<string>();
+
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const load = async () => {
     await ffmpeg.load();
@@ -45,36 +58,83 @@ function App() {
   };
 
   useEffect(() => {
-    load();
+    // load();
+
+    (async () => {
+      console.log('!!!');
+      const a = await getFirebaseRedirectResult();
+      console.log(a);
+    })();
+
+    const unSubscript = onFireAuthStateChanged((u) => {
+      console.log(u);
+      setLoading(false);
+
+      if (u) {
+        // if (!u?.email.includes('ringcentral.com')) {
+        //   signOutGoogle();
+        //   setUser(null);
+        //   return;
+        // }
+        // firebaseAnalytics.podcastInit();
+      }
+
+      setUser(u);
+    });
+
+    return () => {
+      unSubscript();
+    };
   }, []);
 
-  return ready ? (
+  return (
     <div className="App">
-      {video && (
-        <video controls width="250">
-          <source src={URL.createObjectURL(video)} type="video/mp4" />
-          Your browser does not support HTML video.
-        </video>
-      )}
-
-      <input
-        type="file"
-        onChange={(e) => {
-          const item = e.target.files?.item(0);
-          if (item) {
-            setVideo(item);
+      <button
+        onClick={async () => {
+          try {
+            setLoading(true);
+            await signInGoogle();
+          } catch (error) {
+            setLoading(false);
           }
         }}
-      />
+      >
+        Sign in
+      </button>
+      {user?.email}
 
-      <h3>Result</h3>
-
-      <button onClick={convertToGif}>Convert</button>
-
-      {gif && <img src={gif} width="250" />}
+      <button
+        onClick={() => {
+          signOutGoogle();
+        }}
+      >
+        sign out
+      </button>
+      {ready ? (
+        <>
+          {video && (
+            <video controls width="250">
+              <source src={URL.createObjectURL(video)} type="video/mp4" />
+              Your browser does not support HTML video.
+            </video>
+          )}
+          <input
+            type="file"
+            onChange={(e) => {
+              const item = e.target.files?.item(0);
+              if (item) {
+                setVideo(item);
+              }
+            }}
+          />
+          <h3>Result</h3>
+          <button onClick={convertToGif}>Convert</button>
+          {gif && <img src={gif} width="250" />}
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
-  ) : (
-    <p>Loading...</p>
   );
 }
 
