@@ -1,11 +1,14 @@
 import speech from '@google-cloud/speech';
+import { execSync } from 'child_process';
 import { SpeechToTextResponse } from '@procyonidae/api-interfaces';
 import { app, dialog } from 'electron';
 import fs from 'fs-extra';
 import os from 'os';
 import path, { join } from 'path';
+import FileType from 'file-type';
 
 import type { google } from '@google-cloud/speech/build/protos/protos';
+
 function pad(num: number, size = 2) {
   let s = `${num}`;
   while (s.length < size) {
@@ -28,7 +31,9 @@ const getNanosecondString = (nanoseconds: number) => {
 };
 
 export class SpeechToText {
-  serviceAccountPath = join(app.getAppPath(), 'system/service_account.json');
+  rootPath = app.getAppPath();
+
+  serviceAccountPath = join(this.rootPath, 'system/service_account.json');
 
   init() {
     process.env.GOOGLE_APPLICATION_CREDENTIALS = this.serviceAccountPath;
@@ -48,12 +53,39 @@ export class SpeechToText {
     }
   }
 
+  videoToAudio() {}
+
   async selectFile() {
     const result = await dialog.showOpenDialog({ properties: ['openFile'] });
 
     if (result.filePaths && result.filePaths?.length > 0) {
-      return result.filePaths[0];
+      const sourcePath = result.filePaths[0];
+      let outputPath = sourcePath;
+      const fileParse = path.parse(sourcePath);
+
+      const type = await FileType.fromFile(sourcePath);
+      if (type.mime.includes('video')) {
+        const targetPath = path.join(fileParse.dir, `${fileParse.name}.wav`);
+
+        execSync(
+          [
+            path.join(this.rootPath, './assets/ffmpeg'),
+            '-y',
+            '-i',
+            sourcePath,
+            // sampleRateHertz
+            '-ar 16000',
+            // audio_channel_count
+            '-ac 1',
+            targetPath,
+          ].join(' '),
+        );
+        outputPath = targetPath;
+      }
+
+      return outputPath;
     }
+
     return '';
   }
 
