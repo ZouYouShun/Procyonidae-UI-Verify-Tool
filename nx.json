@@ -102,6 +102,9 @@
     "electron-speech-to-text": {
       "tags": []
     },
+    "firebase-core": {
+      "tags": []
+    },
     "procyonidae": {
       "tags": []
     },
