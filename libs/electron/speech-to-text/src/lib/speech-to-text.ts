@@ -295,7 +295,7 @@ export class SpeechToText {
         curr.results.map((result) => {
           result.alternatives.map((alternative) => {
             acc.words.push(...alternative.words);
-            acc.transcript = acc.transcript + alternative.transcript;
+            acc.transcript = acc.transcript + alternative.transcript.trim();
           });
         });
 
@@ -320,12 +320,16 @@ export class SpeechToText {
       // https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/271625/
       if (checkRegex.test(text)) {
         wordIndex++;
-        toList.push({
-          index: `${wordIndex}`,
-          from: getString(words[startIndex].startTime),
-          to: getString(words[i - 1 - wordIndex].endTime),
-          transcript: currTranscript,
-        });
+        try {
+          toList.push({
+            index: `${wordIndex}`,
+            from: getString(words[startIndex].startTime),
+            to: getString(words[i - 1 - wordIndex].endTime),
+            transcript: currTranscript,
+          });
+        } catch (error) {
+          console.log(error);
+        }
         startIndex = 0;
         currTranscript = '';
       } else {

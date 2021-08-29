@@ -39,11 +39,9 @@ export const bindSpeechToTextIpcListeners = () => {
         return speechToText.getSrt(results);
       }
 
-      const result = await speechToText.getTextFromAudio(filePath);
-      const text = speechToText.responseToString(result);
-      const data = speechToText.responseToSrt(result);
+      const result = await speechToText.getTextFromAudio(transpileResult);
 
-      return { text, data };
+      return speechToText.getSrt([result]);
     }
 
     return { text: '', data: [] };
