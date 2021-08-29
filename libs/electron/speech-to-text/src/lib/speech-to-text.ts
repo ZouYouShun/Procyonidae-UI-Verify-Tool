@@ -17,6 +17,8 @@ function pad(num: number, size = 2) {
   return s;
 }
 
+const MB = 1024 * 1024;
+
 const getTimeString = (secs: number) => {
   const hours = Math.floor(secs / (60 * 60));
   const minutes = Math.floor((secs % (60 * 60)) / 60);
@@ -60,12 +62,81 @@ export class SpeechToText {
 
     if (result.filePaths && result.filePaths?.length > 0) {
       const sourcePath = result.filePaths[0];
-      let outputPath = sourcePath;
-      const fileParse = path.parse(sourcePath);
 
-      const type = await FileType.fromFile(sourcePath);
-      if (type.mime.includes('video')) {
-        const targetPath = path.join(fileParse.dir, `${fileParse.name}.wav`);
+      return sourcePath;
+    }
+
+    return '';
+  }
+
+  async tmpValue() {
+    const response = fs.readJsonSync(
+      path.join(this.rootPath, '/assets/full.json'),
+    );
+
+    console.log(response);
+    return response;
+  }
+
+  async transpileFile(sourcePath: string) {
+    let outputPath = sourcePath;
+    const fileParse = path.parse(sourcePath);
+
+    const type = await FileType.fromFile(sourcePath);
+
+    if (type.mime.includes('video')) {
+      const targetPath = path.join(fileParse.dir, `${fileParse.name}.wav`);
+
+      execSync(
+        [
+          path.join(this.rootPath, './assets/ffmpeg'),
+          '-y',
+          '-i',
+          sourcePath,
+          // sampleRateHertz
+          '-ar 16000',
+          // audio_channel_count
+          '-ac 1',
+          targetPath,
+        ].join(' '),
+      );
+      outputPath = targetPath;
+    }
+
+    const stat = fs.statSync(outputPath);
+
+    const result = execSync(
+      [
+        path.join(this.rootPath, './assets/ffmpeg'),
+        '-i',
+        sourcePath,
+        `2>&1 | grep Duration | awk '{print $2}' | tr -d ,`,
+      ].join(' '),
+    )
+      .toString()
+      .trim();
+
+    const [hour, min, seconds] = result.split(':') as any as [
+      string,
+      string,
+      string,
+    ];
+
+    const ms = (+hour * 60 * 60 + +min * 60 + +seconds) * 1000;
+
+    const ONE_MINTIER = 60 * 1000;
+    // const count = Math.ceil(stat.size / (MB * 10));
+
+    if (stat.size > MB * 10 || ms > ONE_MINTIER) {
+      const outputPathArr: string[] = [];
+
+      const count = Math.ceil(ms / ONE_MINTIER);
+
+      for (let i = 0; i < count; i++) {
+        const targetPath = path.join(
+          fileParse.dir,
+          `${fileParse.name}_${i}.wav`,
+        );
 
         execSync(
           [
@@ -73,6 +144,7 @@ export class SpeechToText {
             '-y',
             '-i',
             sourcePath,
+            `-ss '${i * ONE_MINTIER}ms' -t '${ONE_MINTIER - 1000}ms'`,
             // sampleRateHertz
             '-ar 16000',
             // audio_channel_count
@@ -80,13 +152,14 @@ export class SpeechToText {
             targetPath,
           ].join(' '),
         );
-        outputPath = targetPath;
+
+        outputPathArr.push(targetPath);
       }
 
-      return outputPath;
+      return outputPathArr;
     }
 
-    return '';
+    return outputPath;
   }
 
   getSavePath() {
