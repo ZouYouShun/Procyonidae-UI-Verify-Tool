@@ -2,9 +2,7 @@ import {
   ElectronContextBridge,
   SpeechToTextResponse,
 } from '@procyonidae/api-interfaces';
-import { app, ipcMain, ipcRenderer } from 'electron';
-import fs from 'fs';
-import path from 'path';
+import { ipcMain, ipcRenderer } from 'electron';
 
 import { SpeechToText } from './speech-to-text';
 import { SpeechToTextIpcKeys } from './speech-to-text-ipc-keys';
@@ -24,43 +22,29 @@ export const getSpeechToTextContextBridge = () => {
   return { speechToText };
 };
 
-let dataTmp;
-
 export const bindSpeechToTextIpcListeners = () => {
   ipcMain.handle(SpeechToTextIpcKeys.selectFile, async (e, value: string) => {
     const speechToText = SpeechToText.getInstance();
 
-    const results = await speechToText.tmpValue();
+    const filePath = await speechToText.selectFile();
 
-    fs.writeFileSync(
-      path.join(app.getAppPath(), 'assets/full.json'),
-      JSON.stringify(results, null, 2),
-    );
+    if (filePath) {
+      const transpileResult = await speechToText.transpileFile(filePath);
 
-    // const filePath = await speechToText.selectFile();
-    // if (filePath) {
-    //   const transpileResult = await speechToText.transpileFile(filePath);
+      if (transpileResult instanceof Array) {
+        const results = await Promise.all(
+          transpileResult.map((x) => speechToText.getTextFromAudio(x)),
+        );
 
-    //   if (transpileResult instanceof Array) {
-    //     const results = await Promise.all(
-    //       transpileResult.map((x) => speechToText.getTextFromAudio(x)),
-    //     );
+        return speechToText.getSrt(results);
+      }
 
-    //     fs.writeFileSync(
-    //       path.join(app.getAppPath(), 'assets/full.json'),
-    //       JSON.stringify(results, null, 2),
-    //     );
+      const result = await speechToText.getTextFromAudio(filePath);
+      const text = speechToText.responseToString(result);
+      const data = speechToText.responseToSrt(result);
 
-    //     return { text: '', data: '' };
-    //   }
-
-    //   // const result = await speechToText.getTextFromAudio(filePath);
-    //   // const text = speechToText.responseToString(result);
-    //   // const data = speechToText.responseToSrt(result);
-    //   // // dataTmp = data;
-    //   // return { text, data };
-    //   return { text: '', data: '' };
-    // }
+      return { text, data };
+    }
 
     return { text: '', data: [] };
   });

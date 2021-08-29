@@ -32,6 +32,13 @@ const getNanosecondString = (nanoseconds: number) => {
   return (nanoseconds / oneNanosecond).toFixed(3).slice(2);
 };
 
+const getString = (duration: google.protobuf.IDuration) => {
+  const timeString = getTimeString(+duration.seconds);
+  const nanoString = getNanosecondString(duration.nanos);
+
+  return `${timeString},${nanoString}`;
+};
+
 export class SpeechToText {
   rootPath = app.getAppPath();
 
@@ -272,13 +279,6 @@ export class SpeechToText {
 
     // TODO: split time with to large alternative
 
-    const getString = (duration: google.protobuf.IDuration) => {
-      const timeString = getTimeString(+duration.seconds);
-      const nanoString = getNanosecondString(duration.nanos);
-
-      return `${timeString},${nanoString}`;
-    };
-
     return list.map((item, i) => {
       return {
         index: `${i + 1}`,
@@ -287,6 +287,56 @@ export class SpeechToText {
         transcript: item.transcript,
       };
     });
+  }
+
+  getSrt(responses: google.cloud.speech.v1.IRecognizeResponse[]) {
+    const { words, transcript } = responses.reduce(
+      (acc, curr) => {
+        curr.results.map((result) => {
+          result.alternatives.map((alternative) => {
+            acc.words.push(...alternative.words);
+            acc.transcript = acc.transcript + alternative.transcript;
+          });
+        });
+
+        return acc;
+      },
+      {
+        words: [] as google.cloud.speech.v1.IWordInfo[],
+        transcript: '',
+      },
+    );
+
+    let wordIndex = 0;
+    let startIndex = 0;
+
+    let currTranscript = '';
+
+    const toList: SpeechToTextResponse[] = [];
+
+    transcript.split('').forEach((text, i) => {
+      const checkRegex =
+        /[\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/gm;
+      // https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/271625/
+      if (checkRegex.test(text)) {
+        wordIndex++;
+        toList.push({
+          index: `${wordIndex}`,
+          from: getString(words[startIndex].startTime),
+          to: getString(words[i - 1 - wordIndex].endTime),
+          transcript: currTranscript,
+        });
+        startIndex = 0;
+        currTranscript = '';
+      } else {
+        if (currTranscript === '') {
+          startIndex = i - wordIndex;
+        }
+        currTranscript += text;
+      }
+    });
+
+    return { text: transcript, data: toList };
   }
 
   private static instance?: SpeechToText;
