@@ -35,6 +35,7 @@
   },
   "private": true,
   "dependencies": {
+    "fs-extra": "9.1.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@ffmpeg/core": "^0.10.0",
