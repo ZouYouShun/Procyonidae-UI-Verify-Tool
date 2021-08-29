@@ -502,16 +502,6 @@
       "sourceRoot": "libs/electron/speech-to-text/src",
       "projectType": "library",
       "targets": {
-        "build": {
-          "executor": "@nrwl/workspace:tsc",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/libs/electron/speech-to-text",
-            "main": "libs/electron/speech-to-text/src/index.ts",
-            "tsConfig": "libs/electron/speech-to-text/tsconfig.lib.json",
-            "assets": ["libs/electron/speech-to-text/*.md"]
-          }
-        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
