@@ -1,6 +1,8 @@
 const { join } = require('path');
 // const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind');
 
+console.log('!!!', process.env.NODE_ENV);
+
 module.exports = {
   purge: [
     join(__dirname, 'src/**/*.{js,ts,jsx,tsx}'),

@@ -41,3 +41,8 @@ https://cloud.google.com/speech-to-text/docs/async-recognize#speech_transcribe_a
 https://unix.stackexchange.com/questions/182602/trim-audio-file-using-start-and-stop-times
 
 https://studio.youtube.com/video/f3UFODZ7a2s/edit
+
+
+# use `asar` to unzip build result file
+
+https://www.cnblogs.com/xuhai/p/9955310.html

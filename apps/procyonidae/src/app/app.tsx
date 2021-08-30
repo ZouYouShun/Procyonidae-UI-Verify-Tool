@@ -3,6 +3,8 @@ import { BrowserScreen } from '@procyonidae/browser/screen/feature/shell';
 import { BrowserSettings } from '@procyonidae/browser/settings/feature/shell';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+console.log('init !');
+
 export function App() {
   return (
     <Router>

@@ -126,15 +126,15 @@ export default class App {
       }
     });
 
-    this.mainWindow.on('blur', () => {
-      const settingsWindow = SettingsWindow.getInstance();
+    // this.mainWindow.on('blur', () => {
+    //   const settingsWindow = SettingsWindow.getInstance();
 
-      if (settingsWindow.window) {
-        this.mainWindow.hide();
-      } else {
-        this.hideWindow();
-      }
-    });
+    //   if (settingsWindow.window) {
+    //     this.mainWindow.hide();
+    //   } else {
+    //     this.hideWindow();
+    //   }
+    // });
   }
 
   private getLoadURL() {
