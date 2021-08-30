@@ -2,6 +2,8 @@ import './browser-screen-views-screenshot.module.scss';
 import 'cropperjs/dist/cropper.css';
 
 import { useContextBridge } from '@procyonidae/browser/shared/hooks';
+import { cloneDeep, max, min, orderBy } from 'lodash-es';
+import mergeImages from 'merge-images';
 import { useEffect, useRef, useState } from 'react';
 import { Cropper } from 'react-cropper';
 import { useEvent } from 'react-use';
@@ -36,8 +38,29 @@ export function BrowserScreenViewsScreenshot(
   useEvent('contextmenu', () => window.close());
 
   useEffect(() => {
-    const destroy = screen.onReady((url) => {
-      setImage(url);
+    const destroy = screen.onReady(async (originalSources) => {
+      if (!Array.isArray(originalSources)) {
+        return;
+      }
+
+      const sources = cloneDeep(originalSources);
+
+      const min_x = min(sources.map((o) => o.x)) || 0;
+      orderBy(sources, ['x'], ['asc']).forEach((o, i) => {
+        o.x = i === 0 ? 0 : o.x - min_x;
+      });
+
+      const min_y = min(sources.map((o) => o.y)) || 0;
+      orderBy(sources, ['y'], ['asc']).forEach((o, i) => {
+        o.y = i === 0 ? 0 : Math.abs(o.y - min_y);
+      });
+
+      const mergedImage = await mergeImages(sources, {
+        width: max(sources.map(({ x, width }) => x + width)),
+        height: max(sources.map(({ y, height }) => y + height)),
+      });
+
+      setImage(mergedImage);
     });
 
     return () => {

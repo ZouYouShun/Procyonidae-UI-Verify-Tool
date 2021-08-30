@@ -1,4 +1,5 @@
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
+import { max, min } from 'lodash-es';
 import { join } from 'path';
 
 import { getScreenshot } from './getScreenshot';
@@ -25,8 +26,8 @@ export class ScreenshotWindow {
        *
        * {@link ScreenshotWindow.initWindow}
        */
-      this.captureWindow?.close();
-      this.captureWindow = null;
+       this.captureWindow?.close();
+       this.captureWindow = null;
     });
   }
 
@@ -50,26 +51,21 @@ export class ScreenshotWindow {
     if (!this.captureWindow) return;
 
     // TODO: should calculate the original image size with screen, the original pixel
-    const { captureSource, bounds } = getScreenshot();
+    const { captureSources } = getScreenshot();
 
-    this.captureWindow.setPosition(bounds.x, bounds.y);
-    this.captureWindow.setSize(bounds.width, bounds.height);
+    const sources = await captureSources;
 
-    const img = await captureSource;
-    const imgURL = img.thumbnail.toDataURL();
+    const x = min(sources.map((o) => o.x)) || 0;
+    const y = min(sources.map((o) => o.y)) || 0;
+    const width = max(sources.map((o) => o.x - x + o.width)) || 0;
+    const height = max(sources.map((o) => o.y + -y + o.height)) || 0;
 
-    this.captureWindow.webContents.send(screenIpcKeys.onReady, imgURL);
+    this.captureWindow.setPosition(x, y);
+    this.captureWindow.setSize(width, height);
+
+    this.captureWindow.webContents.send(screenIpcKeys.onReady, sources);
 
     setTimeout(() => this.captureWindow?.show(), 100);
-
-    return captureSource;
-  }
-
-  async getScreenshotImage() {
-    // const img = await this.captureSource;
-    // const imgURL = img.thumbnail.toDataURL();
-    // this.captureWindow.webContents.send('screen:openScreenshot', imgURL);
-    // return imgURL;
   }
 
   /**

@@ -5,7 +5,17 @@ export type ElectronContextBridge = {
   }>;
   screen: {
     open: (type?: 'screenshot' | 'video') => void;
-    onReady: (cd: (url: string) => void) => () => void;
+    onReady: (
+      cd: (
+        data: Array<{
+          src: string;
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+        }>,
+      ) => void,
+    ) => () => void;
     confirmCapture: (url: string) => void;
     onConfirmCapture: (cd: (url: string) => void) => () => void;
   };
