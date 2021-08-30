@@ -1,5 +1,6 @@
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
-import { max, min } from 'lodash-es';
+import max from 'lodash/max';
+import min from 'lodash/min';
 import { join } from 'path';
 
 import { getScreenshot } from './getScreenshot';
@@ -26,8 +27,8 @@ export class ScreenshotWindow {
        *
        * {@link ScreenshotWindow.initWindow}
        */
-       this.captureWindow?.close();
-       this.captureWindow = null;
+      this.captureWindow?.close();
+      this.captureWindow = null;
     });
   }
 
