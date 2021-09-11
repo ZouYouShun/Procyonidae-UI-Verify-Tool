@@ -104,6 +104,7 @@ export default class App {
       frame: false,
       transparent: true,
       resizable: false,
+      skipTaskbar: true,
       webPreferences: {
         // * That is important, should alway use contextIsolation for security and not pollution window environment
         contextIsolation: true,
