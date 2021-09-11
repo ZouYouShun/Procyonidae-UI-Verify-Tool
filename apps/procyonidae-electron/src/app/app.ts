@@ -186,6 +186,10 @@ export default class App {
    * will auto restore focus to previous window and cursor position
    */
   hideWindow() {
+    if (process.platform === 'win32') {
+      this.mainWindow.hide();
+      return;
+    }
     Menu.sendActionToFirstResponder('hide:');
   }
 
