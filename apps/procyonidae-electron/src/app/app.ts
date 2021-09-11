@@ -160,7 +160,7 @@ export default class App {
       }
     });
     globalShortcut.register('CommandOrControl+shift+V', () => {});
-    globalShortcut.register('CommandOrControl+Control+Z', () => {
+    globalShortcut.register('Alt+CommandOrControl+A', () => {
       const screenshotWindow = ScreenshotWindow.getInstance();
 
       screenshotWindow.startCapture();
