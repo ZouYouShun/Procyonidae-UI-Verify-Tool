@@ -156,7 +156,7 @@ export default class App {
   private bindShortcut() {
     globalShortcut.register('CommandOrControl+shift+X', () => {
       if (this.mainWindow) {
-        this.showWindow();
+        this.mainWindow.isVisible() ? this.hideWindow() : this.showWindow();
       }
     });
     globalShortcut.register('CommandOrControl+shift+V', () => {});
