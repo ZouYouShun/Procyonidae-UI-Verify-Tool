@@ -1,1 +1,1 @@
-export * from './lib/browser-shared-utils';
+export * from './lib/selectionHandler';

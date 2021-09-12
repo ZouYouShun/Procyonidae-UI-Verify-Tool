@@ -9,26 +9,18 @@ export interface SnippetsStore {
   setPrevSnippet: (snippet: SnippetModel) => void;
 }
 
-export const useSnippetsStore = create<SnippetsStore>(
-  persist(
-    (set, get) => ({
-      snippets: [
-        {
-          key: 'a',
-          value: 'ga',
-        },
-        {
-          key: 'b',
-          value: 'abc',
-        },
-      ],
-      setSnippets: (snippets) => set({ snippets }),
-      prevSnippet: undefined,
-      setPrevSnippet: (prevSnippet) => set({ prevSnippet }),
-    }),
+export const useSnippetsStore = create<SnippetsStore>((set, get) => ({
+  snippets: [
     {
-      name: 'snippets', // unique name
-      // getStorage: () => , // (optional) by default the 'localStorage' is used
+      key: 'ga',
+      value: 'ga7777',
     },
-  ),
-);
+    {
+      key: 'git auth',
+      value: 'git commit --amend --author="Alan Zou <itisalanlife@gmail.com>"',
+    },
+  ],
+  setSnippets: (snippets) => set({ snippets }),
+  prevSnippet: undefined,
+  setPrevSnippet: (prevSnippet) => set({ prevSnippet }),
+}));
