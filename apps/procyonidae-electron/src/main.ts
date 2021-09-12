@@ -4,6 +4,8 @@ import App from './app/app';
 import ElectronEvents from './app/events/electron.events';
 import SquirrelEvents from './app/events/squirrel.events';
 
+const mainApp = App.getInstance();
+
 // import UpdateEvents from './app/events/update.events';
 export default class Main {
   static initialize() {
@@ -14,14 +16,14 @@ export default class Main {
   }
 
   static bootstrapApp() {
-    App.main(app, BrowserWindow);
+    mainApp.main(app, BrowserWindow);
   }
 
   static bootstrapAppEvents() {
     ElectronEvents.bootstrapElectronEvents();
 
     // initialize auto updater service
-    if (!App.isDevelopmentMode()) {
+    if (!mainApp.isDevelopmentMode()) {
       // UpdateEvents.initAutoUpdateService();
     }
   }

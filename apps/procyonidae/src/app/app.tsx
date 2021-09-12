@@ -1,7 +1,7 @@
 import { BrowserHome } from '@procyonidae/browser/home/feature';
 import { BrowserScreen } from '@procyonidae/browser/screen/feature/shell';
 import { BrowserSettings } from '@procyonidae/browser/settings/feature/shell';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 export function App() {
   return (

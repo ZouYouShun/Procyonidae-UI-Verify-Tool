@@ -3,6 +3,8 @@ import { platform, arch } from 'os';
 import { updateServerUrl } from '../constants';
 import App from '../app';
 
+const mainApp = App.getInstance();
+
 export default class UpdateEvents {
   // initialize auto update service - most be invoked only in production
   static initAutoUpdateService() {
@@ -13,7 +15,7 @@ export default class UpdateEvents {
       url: `${updateServerUrl}/update/${platform_arch}/${version}`,
     };
 
-    if (!App.isDevelopmentMode()) {
+    if (!mainApp.isDevelopmentMode()) {
       console.log('Initializing auto update service...\n');
 
       autoUpdater.setFeedURL(feed);
@@ -23,7 +25,7 @@ export default class UpdateEvents {
 
   // check for updates - most be invoked after initAutoUpdateService() and only in production
   static checkForUpdates() {
-    if (!App.isDevelopmentMode() && autoUpdater.getFeedURL() !== '') {
+    if (!mainApp.isDevelopmentMode() && autoUpdater.getFeedURL() !== '') {
       autoUpdater.checkForUpdates();
     }
   }

@@ -1,79 +1,109 @@
 import { ScreenshotWindow } from '@procyonidae/electron/screen';
-import { BrowserWindow, screen, shell } from 'electron';
+import { SpeechToText } from '@procyonidae/electron/speech-to-text';
+import { BrowserWindow, globalShortcut, Menu, screen, shell } from 'electron';
+import { SettingsWindow } from 'libs/electron/settings/src/lib/settings.window';
 import { join } from 'path';
 import { format } from 'url';
 
 import { environment } from '../environments/environment';
 import { rendererAppName, rendererAppPort } from './constants';
 
+const DEFAULT_HEIGHT = 60;
+
 export default class App {
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
-  static mainWindow: Electron.BrowserWindow;
-  static application: Electron.App;
+  mainWindow: Electron.BrowserWindow;
+  application: Electron.App;
 
-  static screenshotWindow: ScreenshotWindow;
+  BrowserWindow: typeof BrowserWindow;
 
-  static BrowserWindow: typeof BrowserWindow;
+  private willQuitApp = false;
 
-  public static isDevelopmentMode() {
-    const isEnvironmentSet: boolean = 'ELECTRON_IS_DEV' in process.env;
-    const getFromEnvironment: boolean =
-      parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
-
-    return isEnvironmentSet ? getFromEnvironment : !environment.production;
-  }
-
-  private static onWindowAllClosed() {
+  private onWindowAllClosed() {
     if (process.platform !== 'darwin') {
-      App.application.quit();
+      this.application.quit();
     }
   }
 
-  private static onClose() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    // App.mainWindow.webContents.closeDevTools();
-    App.mainWindow = null;
-  }
-
-  private static onRedirect(event: any, url: string) {
-    if (url !== App.mainWindow.webContents.getURL()) {
+  private onRedirect(event: any, url: string) {
+    if (url !== this.mainWindow.webContents.getURL()) {
       // this is a normal external redirect, open it in a new browser window
       event.preventDefault();
       shell.openExternal(url);
     }
   }
 
-  private static onReady() {
+  private onReady() {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    App.initMainWindow();
-    App.loadMainWindow();
 
-    ScreenshotWindow.getInstance().init(App.mainWindow);
+    const loadURL = this.getLoadURL();
+    this.initMainWindow();
+    const screenshotWindow = ScreenshotWindow.getInstance();
+    const settingsWindow = SettingsWindow.getInstance();
+    const speechToText = SpeechToText.getInstance();
+    // if main window is ready to show, close the splash window and show the main window
+
+    this.mainWindow.once('ready-to-show', () => {
+      this.showWindow();
+    });
+
+    this.mainWindow.loadURL(loadURL);
+
+    screenshotWindow.init(this.mainWindow, {
+      url: loadURL,
+      route: 'screen/screenshot',
+    });
+
+    settingsWindow.init(this.mainWindow, {
+      url: loadURL,
+      route: 'settings/speech-to-text',
+    });
+    // settingsWindow.open();
+
+    speechToText.init();
   }
 
-  private static onActivate() {
+  private onActivate() {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (App.mainWindow === null) {
-      App.onReady();
+    if (this.mainWindow === null) {
+      this.onReady();
+    } else {
+      this.showWindow();
     }
   }
 
-  private static initMainWindow() {
+  private setWindowInCurrentDesktop() {
+    this.mainWindow.setVisibleOnAllWorkspaces(true); // put the window on all screens
+    this.mainWindow.focus(); // focus the window up front on the active screen
+    this.mainWindow.setVisibleOnAllWorkspaces(false); // disable all screen behavior
+
+    const { x, y } = screen.getCursorScreenPoint();
+    const currentDisplay = screen.getDisplayNearestPoint({ x, y });
+    this.mainWindow.setPosition(
+      currentDisplay.workArea.x,
+      currentDisplay.workArea.y,
+    );
+    this.mainWindow.center();
+  }
+
+  private initMainWindow() {
     const workAreaSize = screen.getPrimaryDisplay().workAreaSize;
     const width = Math.min(1280, workAreaSize.width || 1280);
-    const height = Math.min(720, workAreaSize.height || 720);
 
     // Create the browser window.
-    App.mainWindow = new BrowserWindow({
-      width: width,
-      height: height,
+    this.mainWindow = new BrowserWindow({
+      width: width / 2,
+      height: DEFAULT_HEIGHT,
+
       show: false,
+      alwaysOnTop: false,
+      frame: false,
+      transparent: true,
+      resizable: false,
       webPreferences: {
         // * That is important, should alway use contextIsolation for security and not pollution window environment
         contextIsolation: true,
@@ -82,51 +112,117 @@ export default class App {
       },
     });
 
-    App.mainWindow.setMenu(null);
-    // TODO: only open in prop make use debug easily
-    // App.mainWindow.center();
-
-    // if main window is ready to show, close the splash window and show the main window
-    App.mainWindow.once('ready-to-show', () => App.mainWindow.show());
+    this.mainWindow.setMenu(null);
+    // this.mainWindow.center();
 
     // handle all external redirects in a new browser window
-    // App.mainWindow.webContents.on('will-navigate', App.onRedirect);
-    // App.mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
-    //     App.onRedirect(event, url);
+    // this.mainWindow.webContents.on('will-navigate', this.onRedirect);
+    // this.mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
+    //     this.onRedirect(event, url);
     // });
 
-    // Emitted when the window is closed.
-    App.mainWindow.on('closed', App.onClose);
+    this.mainWindow.on('close', (e) => {
+      if (this.willQuitApp) {
+        this.mainWindow = null;
+      } else {
+        e.preventDefault();
+        // this.mainWindow.hide();
+        // * use send action to make that cursor restore to previous position
+        this.hideWindow();
+      }
+    });
+
+    // this.mainWindow.on('blur', () => {
+    //   const settingsWindow = SettingsWindow.getInstance();
+
+    //   if (settingsWindow.window) {
+    //     this.mainWindow.hide();
+    //   } else {
+    //     this.hideWindow();
+    //   }
+    // });
   }
 
-  private static loadMainWindow() {
-    // load the index.html of the app.
-    if (!App.application.isPackaged) {
-      App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
+  private getLoadURL() {
+    // load the index.html of the this.
+    if (!this.application.isPackaged) {
+      return `http://localhost:${rendererAppPort}`;
       // TODO: open devtool will cause that app can't auto close by nx-electron
-      // App.mainWindow.webContents.openDevTools();
-    } else {
-      App.mainWindow.loadURL(
-        format({
-          pathname: join(__dirname, '..', rendererAppName, 'index.html'),
-          protocol: 'file:',
-          slashes: true,
-        }),
-      );
+      // this.mainWindow.webContents.openDevTools();
     }
+
+    return format({
+      pathname: join(__dirname, '..', rendererAppName, 'index.html'),
+      protocol: 'file:',
+      slashes: true,
+    });
   }
 
-  static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
+  private bindShortcut() {
+    globalShortcut.register('CommandOrControl+shift+X', () => {
+      if (this.mainWindow) {
+        this.showWindow();
+      }
+    });
+    globalShortcut.register('CommandOrControl+shift+V', () => {});
+    globalShortcut.register('CommandOrControl+Control+Z', () => {
+      const screenshotWindow = ScreenshotWindow.getInstance();
+
+      screenshotWindow.startCapture();
+    });
+  }
+
+  isDevelopmentMode() {
+    const isEnvironmentSet: boolean = 'ELECTRON_IS_DEV' in process.env;
+    const getFromEnvironment: boolean =
+      parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
+
+    return isEnvironmentSet ? getFromEnvironment : !environment.production;
+  }
+
+  /**
+   * use `Menu.sendActionToFirstResponder('hide:');`
+   * will auto restore focus to previous window and cursor position
+   */
+  hideWindow() {
+    Menu.sendActionToFirstResponder('hide:');
+  }
+
+  showWindow() {
+    this.setWindowInCurrentDesktop();
+    this.mainWindow.show();
+  }
+
+  setHeight(height: number) {
+    const [width] = this.mainWindow.getSize();
+    this.mainWindow.setSize(width, Math.ceil(height));
+  }
+
+  main(app: Electron.App, browserWindow: typeof BrowserWindow) {
     // we pass the Electron.App object and the
     // Electron.BrowserWindow into this function
     // so this class has no dependencies. This
     // makes the code easier to write tests for
 
-    App.BrowserWindow = browserWindow;
-    App.application = app;
+    this.BrowserWindow = browserWindow;
+    this.application = app;
 
-    App.application.on('window-all-closed', App.onWindowAllClosed); // Quit when all windows are closed.
-    App.application.on('ready', App.onReady); // App is ready to load data
-    App.application.on('activate', App.onActivate); // App is activated
+    this.application.on('window-all-closed', this.onWindowAllClosed); // Quit when all windows are closed.
+    this.application.on('ready', () => {
+      this.onReady();
+
+      this.bindShortcut();
+    }); // App is ready to load data
+    this.application.on('activate', () => this.onActivate()); // App is activated
+    this.application.on('before-quit', () => (this.willQuitApp = true));
+  }
+
+  private static instance?: App;
+
+  static getInstance(): App {
+    if (!App.instance) {
+      App.instance = new App();
+    }
+    return App.instance;
   }
 }
