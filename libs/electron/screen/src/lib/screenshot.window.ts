@@ -1,22 +1,30 @@
+import {
+  getWindowRouteUrl,
+  WindowOptions,
+} from '@procyonidae/electron/shared/utils';
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
 import max from 'lodash/max';
 import min from 'lodash/min';
-import { join } from 'path';
+import path, { join } from 'path';
 
 import { getScreenshot } from './getScreenshot';
 import { screenIpcKeys } from './screenIpcKeys';
 
 export class ScreenshotWindow {
-  // Screenshot Window Object
   captureWindow: Electron.BrowserWindow | null = null;
 
   get parentWindow() {
     return this.captureWindow?.getParentWindow();
   }
 
+  private options!: WindowOptions;
+
+  private initRouteUrl: string = '';
   private mainDestroy = false;
 
-  init(parentWindow: BrowserWindow) {
+  init(parentWindow: BrowserWindow, options: WindowOptions) {
+    this.options = options;
+    this.initRouteUrl = getWindowRouteUrl(options);
     this.mainDestroy = false;
     this.initWindow(parentWindow);
 
@@ -113,8 +121,7 @@ export class ScreenshotWindow {
       },
     });
 
-    // TODO: should use different load when prod
-    captureWindow.loadURL(`http://localhost:4200/screen/screenshot`);
+    captureWindow.loadURL(this.initRouteUrl);
 
     return captureWindow;
   }

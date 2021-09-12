@@ -2,7 +2,7 @@ import { ElectronContextBridge } from '@procyonidae/api-interfaces';
 import { ipcMain, ipcRenderer } from 'electron';
 
 import { screenIpcKeys } from './screenIpcKeys';
-import { ScreenshotWindow } from './screenshots';
+import { ScreenshotWindow } from './screenshot.window';
 
 export type ScreenKey = 'screen';
 
