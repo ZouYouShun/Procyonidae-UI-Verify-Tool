@@ -21,5 +21,39 @@ https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57
 
 https://github.com/fengyuanchen/cropperjs#options
 
-
 https://www.huaweicloud.com/articles/ed6d6f592c799a9191c02fc3aa3d0f59.html
+
+## tailwind
+
+https://tailwindcomponents.com/
+
+https://www.creative-tim.com/learning-lab/tailwind/react/inputs/notus
+
+https://www.tailwindtoolbox.com/templates/minimal-admin-template
+
+https://tailwindcomponents.com/component/dashboard-template
+
+# speech-to-text
+
+https://cloud.google.com/speech-to-text/quotas
+https://cloud.google.com/speech-to-text/docs/async-recognize#speech_transcribe_async_gcs-nodejs
+https://unix.stackexchange.com/questions/182602/trim-audio-file-using-start-and-stop-times
+
+https://studio.youtube.com/video/f3UFODZ7a2s/edit
+
+# use `asar` to unzip build result file
+
+https://www.cnblogs.com/xuhai/p/9955310.html
+
+```shell
+asar extract app.asar ./dir
+```
+
+# Electron use file system, should use hash route
+
+https://stackoverflow.com/questions/36505404/how-to-use-react-router-with-electron
+https://reactrouter.com/web/api/HashRouter
+
+# Card
+
+https://codepen.io/kevinpowell/pen/LYLEPwz

@@ -206,6 +206,29 @@
         }
       }
     },
+    "browser-settings-feature-speech-to-text": {
+      "root": "libs/browser/settings/feature/speech-to-text",
+      "sourceRoot": "libs/browser/settings/feature/speech-to-text/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/browser/settings/feature/speech-to-text/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/browser/settings/feature/speech-to-text"],
+          "options": {
+            "jestConfig": "libs/browser/settings/feature/speech-to-text/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "browser-shared-assets": {
       "root": "libs/browser/shared/assets",
       "sourceRoot": "libs/browser/shared/assets/src",
@@ -390,6 +413,27 @@
         }
       }
     },
+    "electron-keyboard": {
+      "root": "libs/electron/keyboard",
+      "sourceRoot": "libs/electron/keyboard/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/keyboard/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/keyboard"],
+          "options": {
+            "jestConfig": "libs/electron/keyboard/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "electron-screen": {
       "root": "libs/electron/screen",
       "sourceRoot": "libs/electron/screen/src",
@@ -406,6 +450,111 @@
           "outputs": ["coverage/libs/electron/screen"],
           "options": {
             "jestConfig": "libs/electron/screen/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "electron-settings": {
+      "root": "libs/electron/settings",
+      "sourceRoot": "libs/electron/settings/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/settings/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/settings"],
+          "options": {
+            "jestConfig": "libs/electron/settings/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "electron-shared-utils": {
+      "root": "libs/electron/shared/utils",
+      "sourceRoot": "libs/electron/shared/utils/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/shared/utils/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/shared/utils"],
+          "options": {
+            "jestConfig": "libs/electron/shared/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "electron-snippet": {
+      "root": "libs/electron/snippet",
+      "sourceRoot": "libs/electron/snippet/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/snippet/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/snippet"],
+          "options": {
+            "jestConfig": "libs/electron/snippet/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "electron-speech-to-text": {
+      "root": "libs/electron/speech-to-text",
+      "sourceRoot": "libs/electron/speech-to-text/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/electron/speech-to-text/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/electron/speech-to-text"],
+          "options": {
+            "jestConfig": "libs/electron/speech-to-text/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ffmpeg": {
+      "root": "libs/ffmpeg",
+      "sourceRoot": "libs/ffmpeg/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ffmpeg/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ffmpeg"],
+          "options": {
+            "jestConfig": "libs/ffmpeg/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -436,7 +585,8 @@
             ],
             "styles": ["apps/procyonidae/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "@nrwl/react/plugins/webpack",
+            "baseHref": "./"
           },
           "configurations": {
             "production": {
@@ -448,10 +598,10 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
+              "sourceMap": false,
               "vendorChunk": false,
               "budgets": [
                 {
@@ -536,7 +686,9 @@
             "production": {
               "optimization": true,
               "extractLicenses": true,
-              "inspect": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "vendorChunk": false,
               "fileReplacements": [
                 {
                   "replace": "apps/procyonidae-electron/src/environments/environment.ts",
@@ -582,6 +734,27 @@
           "outputs": ["coverage/apps/procyonidae-electron"],
           "options": {
             "jestConfig": "apps/procyonidae-electron/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-utils": {
+      "root": "libs/shared/utils",
+      "sourceRoot": "libs/shared/utils/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/utils/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/utils"],
+          "options": {
+            "jestConfig": "libs/shared/utils/jest.config.js",
             "passWithNoTests": true
           }
         }

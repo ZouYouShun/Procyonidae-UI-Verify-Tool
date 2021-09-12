@@ -60,6 +60,9 @@
     "browser-settings-feature-snippets": {
       "tags": []
     },
+    "browser-settings-feature-speech-to-text": {
+      "tags": []
+    },
     "browser-shared-assets": {
       "tags": []
     },
@@ -84,7 +87,25 @@
     "browser-snippets-feature": {
       "tags": []
     },
+    "electron-keyboard": {
+      "tags": []
+    },
     "electron-screen": {
+      "tags": []
+    },
+    "electron-settings": {
+      "tags": []
+    },
+    "electron-shared-utils": {
+      "tags": []
+    },
+    "electron-snippet": {
+      "tags": []
+    },
+    "electron-speech-to-text": {
+      "tags": []
+    },
+    "ffmpeg": {
       "tags": []
     },
     "procyonidae": {
@@ -95,6 +116,9 @@
       "implicitDependencies": ["procyonidae"]
     },
     "procyonidae-electron": {
+      "tags": []
+    },
+    "shared-utils": {
       "tags": []
     },
     "rainbowfish": {
