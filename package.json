@@ -33,7 +33,8 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "postinstall": "exitzero electron-builder install-app-deps"
+    "postinstall": "exitzero electron-builder install-app-deps",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
