@@ -5,9 +5,9 @@ import {
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
 import max from 'lodash/max';
 import min from 'lodash/min';
-import path, { join } from 'path';
+import path from 'path';
 
-import { getScreenshot } from './getScreenshot';
+import { DisplayScreenDetail, getAllDisplayScreenshots } from './getScreenshot';
 import { screenIpcKeys } from './screenIpcKeys';
 
 export class ScreenshotWindow {
@@ -19,12 +19,13 @@ export class ScreenshotWindow {
 
   private options!: WindowOptions;
 
-  private initRouteUrl: string = '';
+  private initRouteUrl = '';
   private mainDestroy = false;
 
   init(parentWindow: BrowserWindow, options: WindowOptions) {
     this.options = options;
     this.initRouteUrl = getWindowRouteUrl(options);
+
     this.mainDestroy = false;
     this.initWindow(parentWindow);
 
@@ -59,22 +60,24 @@ export class ScreenshotWindow {
   async startCapture() {
     if (!this.captureWindow) return;
 
-    // TODO: should calculate the original image size with screen, the original pixel
-    const { captureSources } = getScreenshot();
+    const sources = await getAllDisplayScreenshots();
 
-    const sources = await captureSources;
+    this.captureWindow.webContents.send(screenIpcKeys.onReady, sources);
 
+    this.setWindowCoverAllDisplays(sources);
+    this.captureWindow.show();
+  }
+
+  private setWindowCoverAllDisplays(sources: DisplayScreenDetail[]) {
     const x = min(sources.map((o) => o.x)) || 0;
     const y = min(sources.map((o) => o.y)) || 0;
     const width = max(sources.map((o) => o.x - x + o.width)) || 0;
     const height = max(sources.map((o) => o.y + -y + o.height)) || 0;
 
-    this.captureWindow.setPosition(x, y);
-    this.captureWindow.setSize(width, height);
-
-    this.captureWindow.webContents.send(screenIpcKeys.onReady, sources);
-
-    setTimeout(() => this.captureWindow?.show(), 100);
+    if (this.captureWindow) {
+      this.captureWindow.setPosition(x, y);
+      this.captureWindow.setSize(width, height);
+    }
   }
 
   /**
@@ -117,7 +120,7 @@ export class ScreenshotWindow {
       webPreferences: {
         contextIsolation: true,
         backgroundThrottling: false,
-        preload: join(__dirname, 'preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
       },
     });
 

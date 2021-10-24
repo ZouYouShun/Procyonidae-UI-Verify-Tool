@@ -30,53 +30,52 @@ const getImageFromRectangle = async (
   return source as Electron.DesktopCapturerSource;
 };
 
-export const getScreenshot = () => {
-  // TODO: show all screen and cover with a big window, and put image in correct position
-  const allDisplay = screen.getAllDisplays();
+export const getCurrentCursorDisplay = () => {
+  const { x, y } = screen.getCursorScreenPoint();
+  const currentDisplay = screen.getDisplayNearestPoint({ x, y });
 
-  const displaySources = allDisplay.map((display) => {
-    // win32 darwin linux platforms are handled separately
-    const { x, y, width, height } =
-      process.platform === 'linux' ? display.workArea : display.bounds;
+  return currentDisplay;
+};
 
-    // The mac image is too large, causing the screenshot window to lag, and the screenshot window display delay is very serious
-    const scale = process.platform === 'darwin' ? 1 : display.scaleFactor;
+export const getDisplayDetail = (display: Electron.Display) => {
+  // win32 darwin linux platforms are handled separately
+  const { x, y, width, height } =
+    process.platform === 'linux' ? display.workArea : display.bounds;
 
-    return {
-      id: display.id,
-      rectangle: {
-        x: x * scale,
-        y: y * scale,
-        width: width * scale,
-        height: height * scale,
-      },
-    };
-  });
-
-  const displaySourceMap = new Map(
-    displaySources.map((source) => [source.id.toString(), source]),
-  );
-
-  const captureSources = (async () => {
-    const imageSources = await Promise.all(
-      displaySources.map(({ id, rectangle }) =>
-        getImageFromRectangle(id.toString(), rectangle),
-      ),
-    );
-
-    return imageSources.map((img) => ({
-      ...(displaySourceMap.get(img.display_id)?.rectangle || {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-      }),
-      src: img.thumbnail.toDataURL(),
-    }));
-  })();
+  // The mac image is too large, causing the screenshot window to lag, and the screenshot window display delay is very serious
+  const scale = process.platform === 'darwin' ? 1 : display.scaleFactor;
 
   return {
-    /** that rect of that should display image */
-    captureSources,
+    id: display.id,
+    rectangle: {
+      x: x * scale,
+      y: y * scale,
+      width: width * scale,
+      height: height * scale,
+    },
   };
+};
+
+export type DisplayScreenDetail = {
+  id: number;
+  src: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export const getAllDisplayScreenshots = () => {
+  const displays = screen.getAllDisplays().map(getDisplayDetail);
+
+  return Promise.all(
+    displays.map(async ({ id, rectangle }) => {
+      const img = await getImageFromRectangle(id.toString(), rectangle);
+      return {
+        id,
+        ...rectangle,
+        src: img.thumbnail.toDataURL(),
+      } as DisplayScreenDetail;
+    }),
+  );
 };

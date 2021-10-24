@@ -1,4 +1,4 @@
-import useEventCallback from '@material-ui/core/utils/useEventCallback';
+import { useEventCallback } from '@ringcentral/juno';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 import { useLayoutEffect, useRef } from 'react';

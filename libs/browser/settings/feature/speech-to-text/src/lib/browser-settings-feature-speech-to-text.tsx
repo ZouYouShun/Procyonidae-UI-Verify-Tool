@@ -1,6 +1,6 @@
 import './browser-settings-feature-speech-to-text.module.scss';
 
-import { CircularProgress } from '@material-ui/core';
+import { RcCircularProgress } from '@ringcentral/juno';
 import { useContextBridge } from '@procyonidae/browser/shared/hooks';
 import { useState } from 'react';
 
@@ -55,7 +55,7 @@ export function BrowserSettingsFeatureSpeechToText(
       >
         Save file
       </button>
-      {loading && <CircularProgress />}
+      {loading && <RcCircularProgress />}
       {res && (
         <>
           <p className="whitespace-pre-wrap">{res.source.name}</p>
