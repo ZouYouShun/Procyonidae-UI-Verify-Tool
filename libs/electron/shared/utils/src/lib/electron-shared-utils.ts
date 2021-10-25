@@ -1,5 +1,4 @@
 import { app } from 'electron';
-import path from 'path';
 
 export type WindowOptions = {
   url: string;
@@ -9,7 +8,7 @@ export type WindowOptions = {
 export const getWindowRouteUrl = ({ url, route }: WindowOptions) => {
   const toRoute = `#${route}`;
 
-  return app.isPackaged ? `${url}${toRoute}` : path.join(url, toRoute);
+  return app.isPackaged ? `${url}${toRoute}` : `${url}/${toRoute}`;
 };
 
 export const getAppPath = () => {
