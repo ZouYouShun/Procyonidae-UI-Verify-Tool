@@ -1,9 +1,10 @@
 import './browser-screen.module.scss';
 
-import { BrowserScreenViewsRecorder } from '@procyonidae/browser/screen/feature/recorder';
-import { BrowserScreenFeatureScreenshot } from '@procyonidae/browser/screen/feature/screenshot';
 import { Link, Route, useRouteMatch } from 'react-router-dom';
 import urljoin from 'url-join';
+
+import { BrowserScreenViewsRecorder } from '@procyonidae/browser/screen/feature/recorder';
+import { BrowserScreenFeatureScreenshot } from '@procyonidae/browser/screen/feature/screenshot';
 
 /* eslint-disable-next-line */
 export interface BrowserScreenProps {}
@@ -39,7 +40,7 @@ export function BrowserScreen(props: BrowserScreenProps) {
         <BrowserScreenViewsRecorder />
       </Route>
       <Route path={urljoin(path, 'screenshot')}>
-        <BrowserScreenFeatureScreenshot />
+        {<BrowserScreenFeatureScreenshot />}
       </Route>
     </>
   );

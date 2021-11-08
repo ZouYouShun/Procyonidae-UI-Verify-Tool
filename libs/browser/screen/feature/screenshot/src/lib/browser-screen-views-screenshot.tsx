@@ -90,7 +90,7 @@ const ToolBox = styled.div`
 export function BrowserScreenFeatureScreenshot(
   props: BrowserScreenFeatureScreenshotProps,
 ) {
-  const { screen } = useContextBridge();
+  const { screen } = useContextBridge<'electron'>();
 
   const cropperRef = useRef<HTMLImageElement & { cropper: Cropper }>(null);
   const zoomRef = useRef<HTMLDivElement>(null);

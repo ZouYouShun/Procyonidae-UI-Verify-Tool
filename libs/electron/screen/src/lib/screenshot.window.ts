@@ -1,11 +1,12 @@
-import {
-  getWindowRouteUrl,
-  WindowOptions,
-} from '@procyonidae/electron/shared/utils';
 import { BrowserWindow, clipboard, nativeImage, Rectangle } from 'electron';
 import max from 'lodash/max';
 import min from 'lodash/min';
 import path from 'path';
+
+import {
+  getWindowRouteUrl,
+  WindowOptions,
+} from '@procyonidae/electron/shared/utils';
 
 import { DisplayScreenDetail, getAllDisplayScreenshots } from './getScreenshot';
 import { screenIpcKeys } from './screenIpcKeys';

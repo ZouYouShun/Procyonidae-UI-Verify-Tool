@@ -1,9 +1,18 @@
-import { ScreenshotWindow } from '@procyonidae/electron/screen';
-import { SpeechToText } from '@procyonidae/electron/speech-to-text';
-import { BrowserWindow, globalShortcut, Menu, screen, shell } from 'electron';
+import {
+  BrowserWindow,
+  globalShortcut,
+  Menu,
+  nativeImage,
+  screen,
+  shell,
+  Tray,
+} from 'electron';
 import { SettingsWindow } from 'libs/electron/settings/src/lib/settings.window';
 import { join } from 'path';
 import { format } from 'url';
+
+import { ScreenshotWindow } from '@procyonidae/electron/screen';
+import { SpeechToText } from '@procyonidae/electron/speech-to-text';
 
 import { environment } from '../environments/environment';
 import { rendererAppName, rendererAppPort } from './constants';
@@ -217,6 +226,18 @@ export default class App {
       this.onReady();
 
       this.bindShortcut();
+
+      const tray = new Tray(
+        nativeImage.createFromPath(
+          `C:\\Users\\neil\\Downloads\\note-gdb0137e9a_640.png`,
+        ),
+      );
+
+      const contextMenu = Menu.buildFromTemplate([
+        { label: '設定', type: 'normal' },
+      ]);
+      tray.setToolTip('This is my application.');
+      tray.setContextMenu(contextMenu);
     }); // App is ready to load data
     this.application.on('activate', () => this.onActivate()); // App is activated
     this.application.on('before-quit', () => (this.willQuitApp = true));
