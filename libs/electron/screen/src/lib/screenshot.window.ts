@@ -65,7 +65,13 @@ export class ScreenshotWindow {
 
     this.captureWindow.webContents.send(screenIpcKeys.onReady, sources);
 
-    this.setWindowCoverAllDisplays(sources);
+    // this.setWindowCoverAllDisplays(sources);
+    if (this.captureWindow) {
+      const [{ x, y, width, height }] = sources;
+      this.captureWindow.setPosition(x, y);
+      this.captureWindow.setSize(width, height);
+    }
+
     this.captureWindow.show();
   }
 

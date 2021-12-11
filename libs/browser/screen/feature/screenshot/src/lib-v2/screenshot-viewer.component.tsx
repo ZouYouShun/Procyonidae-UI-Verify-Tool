@@ -132,7 +132,7 @@ export default class ScreenshotViewer extends PureComponent<
   }
 
   componentDidMount() {
-    this.ctx = this.canvasRef.current!.getContext('2d')!;
+    this.ctx = this.canvasRef.current?.getContext('2d')!;
     this.draw();
     window.addEventListener('mousemove', this.onMousemove);
     window.addEventListener('mouseup', this.onMouseup);
