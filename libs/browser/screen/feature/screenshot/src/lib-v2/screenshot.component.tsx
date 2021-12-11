@@ -153,22 +153,26 @@ export default class Screenshot extends PureComponent<ScreenshotProps> {
           height: 0,
         });
       }
+
       const $image = new Image();
-      $image.src = image;
-      $image.addEventListener('load', () => {
+
+      $image.onload = () => {
         resolve({
           el: $image,
           width: $image.width,
           height: $image.height,
         });
-      });
-      $image.addEventListener('error', () => {
+      };
+
+      $image.onerror = (err) => {
         resolve({
           el: undefined,
           width: 0,
           height: 0,
         });
-      });
+      };
+
+      $image.src = image;
     });
   }
 
@@ -261,7 +265,7 @@ export default class Screenshot extends PureComponent<ScreenshotProps> {
       y1 = viewer.y1;
     }
 
-    this.setState((state: any) => ({
+    this.setState((state: ScreenshotContextType) => ({
       viewer: { ...state.viewer, x1, y1, x2, y2 },
     }));
   };

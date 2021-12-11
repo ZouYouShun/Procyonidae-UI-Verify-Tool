@@ -132,7 +132,7 @@ export default class ScreenshotViewer extends PureComponent<
   }
 
   componentDidMount() {
-    this.ctx = this.canvasRef.current?.getContext('2d')!;
+    this.ctx = this.canvasRef.current!.getContext('2d')!;
     this.draw();
     window.addEventListener('mousemove', this.onMousemove);
     window.addEventListener('mouseup', this.onMouseup);
@@ -159,7 +159,10 @@ export default class ScreenshotViewer extends PureComponent<
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     this.ctx.clearRect(0, 0, w, h);
-    this.ctx.drawImage(image.el!, x * rx, y * ry, w * rx, h * ry, 0, 0, w, h);
+
+    if (image.el) {
+      this.ctx.drawImage(image.el, x * rx, y * ry, w * rx, h * ry, 0, 0, w, h);
+    }
 
     stack!.forEach((item) => item.draw(this.ctx, item.history[0], item)); // action draw
   };

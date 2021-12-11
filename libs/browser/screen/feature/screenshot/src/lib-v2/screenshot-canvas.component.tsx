@@ -45,21 +45,26 @@ export default class ScreenshotCanvas extends PureComponent<
 
   draw = () => {
     const { image, width, height } = this.props;
+
     if (!image) return;
+
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     this.ctx.clearRect(0, 0, width!, height!);
-    this.ctx.drawImage(
-      image.el!,
-      0,
-      0,
-      image.width,
-      image.height,
-      0,
-      0,
-      width!,
-      height!,
-    );
+
+    if (image.el) {
+      this.ctx.drawImage(
+        image.el,
+        0,
+        0,
+        image.width,
+        image.height,
+        0,
+        0,
+        width!,
+        height!,
+      );
+    }
   };
 
   onMousedown = (e: React.MouseEvent) => {
