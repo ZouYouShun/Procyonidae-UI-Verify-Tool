@@ -25,7 +25,7 @@ export default class ScreenshotMagnifier extends PureComponent<ScreenshotContext
   }
 
   componentDidMount() {
-    this.ctx = this.magnifierRef.current.getContext('2d');
+    this.ctx = this.magnifierRef.current!.getContext('2d')!;
     this.draw();
   }
 
@@ -37,7 +37,8 @@ export default class ScreenshotMagnifier extends PureComponent<ScreenshotContext
     const { image, viewer, magnifyPoint, width, height } = this.props;
     const { x, y } = magnifyPoint || { x: 0, y: 0 };
 
-    if (!image || x < 0 || y < 0 || viewer!?.resizing) return;
+    if (!image?.el || x < 0 || y < 0 || !viewer?.resizing) return;
+
     const magnifyX = (image.width * x) / Number(width);
     const magnifyY = (image.height * y) / Number(height);
     const magnifyW = this.state.width;
