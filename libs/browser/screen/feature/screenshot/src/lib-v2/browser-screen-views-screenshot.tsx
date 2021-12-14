@@ -29,7 +29,7 @@ export const BrowserScreenFeatureScreenshot = () => {
     (image && (
       <Screenshot
         className={''}
-        image={''}
+        image={image.src}
         width={image.width}
         height={image.height}
       />

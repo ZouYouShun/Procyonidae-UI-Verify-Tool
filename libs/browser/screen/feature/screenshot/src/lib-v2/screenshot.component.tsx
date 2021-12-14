@@ -94,6 +94,46 @@ export default class Screenshot extends PureComponent<ScreenshotProps> {
     this.getImage().then((image) => {
       this.setState({ image });
     });
+
+    const $image = new Image();
+
+    // $image.onload = () => {
+    //   this.setState({
+    //     image: {
+    //       el: $image,
+    //       width: this.props.width,
+    //       height: this.props.height,
+    //     },
+    //   });
+    // };
+
+    // $image.src = this.props.image;
+
+    // this.setState({
+    //   image: {
+    //     el: $image,
+    //     width: this.props.width,
+    //     height: this.props.height,
+    //   },
+    // });
+
+    // Promise.resolve({
+    //   el: $image,
+    //   width: this.props.width,
+    //   height: this.props.height,
+    // }).then((image) => {
+    //   this.setState({ image });
+    // });
+
+    // setTimeout(() => {
+    //   this.setState({
+    //     image: {
+    //       el: $image,
+    //       width: this.props.width,
+    //       height: this.props.height,
+    //     },
+    //   });
+    // }, 1000);
   }
 
   // 某些 context 不能變更
@@ -288,6 +328,8 @@ export default class Screenshot extends PureComponent<ScreenshotProps> {
     const { className, width, height } = this.props;
     if (className) classNames.push(className);
 
+    console.log('this.state :>> ', this.state);
+
     return (
       <ScreenshotContext.Provider
         value={{
@@ -324,7 +366,10 @@ export default class Screenshot extends PureComponent<ScreenshotProps> {
 
           {viewer?.resizing && magnifyPoint && (
             <ScreenshotContext.Consumer>
-              {(context) => <ScreenshotMagnifier {...context} />}
+              {(context) => {
+                console.log('context :>> ', context);
+                return <ScreenshotMagnifier {...context} />;
+              }}
             </ScreenshotContext.Consumer>
           )}
 
