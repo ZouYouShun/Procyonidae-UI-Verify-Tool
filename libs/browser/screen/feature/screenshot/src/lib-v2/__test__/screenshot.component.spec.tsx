@@ -35,20 +35,16 @@ function setSrc(src: string) {
   }
 }
 
-describe.skip('ScreenshotCanvas', () => {
+describe.only('ScreenshotCanvas', () => {
   beforeAll(() => {
     jest.spyOn(global.Image.prototype, 'src', 'set').mockImplementation(setSrc);
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    jest.clearAllMocks();
   });
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
-  it('should render screenshot-canvas when `image.src` is the correct image resource', () => {
+  it('should render screenshot-canvas when `image.src` is the correct image resource', async () => {
     const { container } = render(
       <Screenshot
         image={SUCCESS_IMAGE.src}
@@ -60,8 +56,6 @@ describe.skip('ScreenshotCanvas', () => {
     const screenshotCanvas = container.querySelector(
       '.screenshot-canvas canvas',
     );
-
-    jest.runAllTimers();
 
     expect(screenshotCanvas).toBeDefined();
     expect(screenshotCanvas?.getAttribute('width')).toBe(
@@ -84,8 +78,6 @@ describe.skip('ScreenshotCanvas', () => {
     const screenshotCanvas = container.querySelector(
       '.screenshot-canvas canvas',
     );
-
-    jest.runAllTimers();
 
     expect(screenshotCanvas).toBeDefined();
     expect(screenshotCanvas?.getAttribute('width')).toBe(
@@ -122,19 +114,27 @@ describe.skip('ScreenshotCanvas', () => {
 describe.only('ScreenshotMagnifier', () => {
   const getBoundingClientRectSpy = jest
     .spyOn(global.Element.prototype, 'getBoundingClientRect')
-    .mockImplementation(
-      () =>
-        ({
-          x: 0,
-          y: 0,
-          width: 1920,
-          height: 1080,
-          top: 0,
-          right: 1920,
-          bottom: 1080,
-          left: 0,
-        } as DOMRect),
-    );
+    .mockReturnValue({
+      x: 0,
+      y: 0,
+      width: 1920,
+      height: 1080,
+      top: 0,
+      right: 1920,
+      bottom: 1080,
+      left: 0,
+    } as DOMRect);
+
+  const clearRectSpy = jest.spyOn(
+    global.CanvasRenderingContext2D.prototype,
+    'clearRect',
+  );
+
+  const getImageDataSpy = jest
+    .spyOn(global.CanvasRenderingContext2D.prototype, 'getImageData')
+    .mockReturnValue({
+      data: [0, 0, 0],
+    } as any);
 
   beforeAll(() => {
     jest.spyOn(global.Image.prototype, 'src', 'set').mockImplementation(setSrc);
@@ -145,8 +145,6 @@ describe.only('ScreenshotMagnifier', () => {
   });
 
   it('should render screenshot-magnifier', async () => {
-    jest.useFakeTimers();
-
     const { container } = render(
       <Screenshot
         image={SUCCESS_IMAGE.src}
@@ -155,7 +153,7 @@ describe.only('ScreenshotMagnifier', () => {
       />,
     );
 
-    jest.advanceTimersByTime(1000);
+    await Promise.resolve();
 
     const screenshotCanvas = container.querySelector('.screenshot-canvas');
 
@@ -176,31 +174,49 @@ describe.only('ScreenshotMagnifier', () => {
       clientX: 0,
       clientY: 0,
     });
-    expect(getBoundingClientRectSpy).toHaveBeenCalledTimes(2);
+    expect(getImageDataSpy).toHaveBeenLastCalledWith(60, 45, 1, 1);
+    expect(clearRectSpy).toHaveBeenLastCalledWith(0, 0, 120, 90);
 
-    let screenshotMagnifier = container.querySelector('.screenshot-magnifier');
-    expect(screenshotMagnifier).not.toBeNull();
+    let magnifierEl = container.querySelector('.screenshot-magnifier');
+    expect(magnifierEl).not.toBeNull();
 
+    let rgbEl = magnifierEl?.querySelector('.screenshot-magnifier-explain-rgb');
+    expect(magnifierEl).not.toBeNull();
+    expect(rgbEl?.textContent).toContain('(0,0,0)');
+
+    getImageDataSpy.mockReturnValue({
+      data: [1, 1, 1],
+    } as any);
     fireEvent.mouseMove(document, { clientX: 200, clientY: 200 });
-    expect(getBoundingClientRectSpy).toHaveBeenCalledTimes(4);
-    expect(screenshotMagnifier?.getAttribute('style')).toEqual(
+
+    expect(magnifierEl?.getAttribute('style')).toEqual(
       'transform: translate(205px, 205px);',
     );
+    expect(rgbEl?.textContent).toContain('(1,1,1)');
 
+    getImageDataSpy.mockReturnValue({
+      data: [2, 2, 2],
+    } as any);
     fireEvent.mouseMove(document, { clientX: 400, clientY: 400 });
-    expect(getBoundingClientRectSpy).toHaveBeenCalledTimes(6);
-    expect(screenshotMagnifier?.getAttribute('style')).toBe(
+
+    expect(magnifierEl?.getAttribute('style')).toBe(
       'transform: translate(405px, 405px);',
     );
+    expect(rgbEl?.textContent).toContain('(2,2,2)');
 
+    getImageDataSpy.mockReturnValue({
+      data: [3, 3, 3],
+    } as any);
     fireEvent.mouseMove(document, { clientX: 600, clientY: 600 });
-    expect(getBoundingClientRectSpy).toHaveBeenCalledTimes(8);
-    expect(screenshotMagnifier?.getAttribute('style')).toBe(
+
+    expect(magnifierEl?.getAttribute('style')).toBe(
       'transform: translate(605px, 605px);',
     );
+    expect(rgbEl?.textContent).toContain('(3,3,3)');
 
     fireEvent.mouseUp(document, { clientX: 610, clientY: 610 });
-    screenshotMagnifier = container.querySelector('.screenshot-magnifier');
-    expect(screenshotMagnifier).toBeNull();
+
+    magnifierEl = container.querySelector('.screenshot-magnifier');
+    expect(magnifierEl).toBeNull();
   });
 });
