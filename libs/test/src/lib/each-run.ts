@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { RenderResult } from '@testing-library/react';
 
 export function EachRun<
