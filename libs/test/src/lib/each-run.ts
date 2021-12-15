@@ -1,11 +1,11 @@
-import { RenderResult } from '@testing-library/react';
-
 export function EachRun<
+  /** args */
   T = any,
+  /** context type in one test unit */
   K extends {
-    result: RenderResult;
+    result: any;
   } = {
-    result: RenderResult;
+    result: any;
   },
 >(titles: TemplateStringsArray, ...actions: ((args: T, context: K) => void)[]) {
   const context: K = {} as K;
@@ -24,9 +24,9 @@ export function EachRun<
         // }
       }
 
-      context.result?.unmount();
+      // context.result?.unmount();
     } catch (error) {
-      context.result?.unmount();
+      // context.result?.unmount();
       throw error;
     }
   };
