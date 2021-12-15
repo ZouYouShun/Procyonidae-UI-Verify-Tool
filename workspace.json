@@ -739,27 +739,6 @@
         }
       }
     },
-    "shared-utils": {
-      "root": "libs/shared/utils",
-      "sourceRoot": "libs/shared/utils/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/utils/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/utils"],
-          "options": {
-            "jestConfig": "libs/shared/utils/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "rainbowfish": {
       "root": "libs/rainbowfish",
       "sourceRoot": "libs/rainbowfish/src",
@@ -834,6 +813,48 @@
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/rainbowfish-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "shared-utils": {
+      "root": "libs/shared/utils",
+      "sourceRoot": "libs/shared/utils/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/utils/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/utils"],
+          "options": {
+            "jestConfig": "libs/shared/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "test": {
+      "root": "libs/test",
+      "sourceRoot": "libs/test/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/test/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/test"],
+          "options": {
+            "jestConfig": "libs/test/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

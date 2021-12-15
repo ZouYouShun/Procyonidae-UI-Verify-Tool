@@ -118,15 +118,18 @@
     "procyonidae-electron": {
       "tags": []
     },
-    "shared-utils": {
-      "tags": []
-    },
     "rainbowfish": {
       "tags": []
     },
     "rainbowfish-e2e": {
       "tags": [],
       "implicitDependencies": ["rainbowfish"]
+    },
+    "shared-utils": {
+      "tags": []
+    },
+    "test": {
+      "tags": []
     }
   }
 }

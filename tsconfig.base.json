@@ -79,7 +79,8 @@
         "libs/electron/speech-to-text/src/index.ts"
       ],
       "@procyonidae/ffmpeg": ["libs/ffmpeg/src/index.ts"],
-      "@procyonidae/shared/utils": ["libs/shared/utils/src/index.ts"]
+      "@procyonidae/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@procyonidae/test": ["libs/test/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
